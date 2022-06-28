@@ -1,0 +1,89 @@
+<template>
+  <div class="container-fluid px-4">
+    <h1 class="mt-4 mb-3">Reporte Doctores</h1>
+
+    <a href="/export/doctor" class="btn btn-outline-success mb-3" download="Doctores.xlsx">Exportar Reporte</a>
+    <div>
+      <div class="card mb-4">
+        <div class="card-body">
+          <div class="form-group col-md-4 mb-3">
+            <input
+              type="text"
+              class="form-control"
+              id="exampleInputEmail1"
+              aria-describedby="emailHelp"
+              placeholder="Buscar"
+              v-model="buscador"
+              @keyup="buscarDoctor"
+            />
+          </div>
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">NOMBRE</th>
+                <th scope="col">APELLIDOS</th>
+                <th scope="col">ESPECIALIDAD</th>
+                <th scope="col">FOLIO</th>
+                <th scope="col">LIGA</th>
+                <th scope="col">DESCARGAS</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="doc in doctores.data" :key="doc.id">
+                <th scope="row">{{doc.id}}</th>
+                <td>{{doc.nombre}}</td>
+                <td>{{doc.apellidos}}</td>
+                <td>{{doc.especialidad.nombre}}</td>
+                <td>{{doc.folio}}</td>
+                <td>{{doc.ligas.slug}}</td>
+                <td>{{doc.descargas}}</td>
+              </tr>
+              
+            </tbody>
+          </table>
+          <Pagination
+            :data="doctores"
+            @pagination-change-page="traerDoctor"
+            class="d-flex justify-content-center"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+
+  data(){
+    return{
+      doctores:{},
+      buscador: "",
+      timeBuscador: "",
+    }
+  },
+  mounted()
+  {
+    this.traerDoctor()
+  },
+  methods:{
+      traerDoctor(page=1)
+      {
+        axios.get('/api/show/doctores?page='+page,{params:{buscador:this.buscador}})
+        .then(res => {
+            this.doctores = res.data
+        })
+        .catch(error => console.log())
+      },
+      buscarDoctor() {
+      clearTimeout(this.timeBuscador);
+      this.timeBuscador = setTimeout(this.traerDoctor, 360);
+    }
+  }
+
+};
+</script>
+
+<style>
+</style>
