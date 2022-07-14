@@ -52,7 +52,7 @@ class UsuarioController extends Controller
         $user->update([
             'name'=> $request->nombre,
             'email'=> $request->usuario,
-            'password'=> Hash::make($request->contraseña),
+            'password'=> $request->contraseña ? Hash::make($request->contraseña) : $user->password,
         ]);
 
         DB::table('model_has_roles')->where('model_id',$id)->delete();

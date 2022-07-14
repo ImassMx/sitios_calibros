@@ -165,5 +165,10 @@ class LigaController extends Controller
         $doctor->save();
     }
 
+    public function donwload( Request $request)
+    {   
+  
+          return Storage::disk('local')->download('/public/qr/'.$request->image);
+    }
  
 }

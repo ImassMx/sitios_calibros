@@ -131,11 +131,11 @@ class LibrosController extends Controller
     {
 
         $libro = Libro::find($id);
+        $libro->delete();
         $libropdf = public_path('libros') . "/" . $libro->pdf;
-        $port = public_path('portada') . "/" . $libro->portada;
+        $port = public_path('admin/portada') . "/" . $libro->portada;
         unlink($port);
         unlink($libropdf);
-        $libro->delete();
     }
 
     public function desactivar($id)

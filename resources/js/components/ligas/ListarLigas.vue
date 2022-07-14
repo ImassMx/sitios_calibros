@@ -33,8 +33,7 @@
                   </button>
 
                   <a
-                    :href="'/storage/qr/'+liga.codigo_qr"
-                    :download="liga.nombre"
+                    @click="donwload(liga.codigo_qr)"
                     class="btn btn-outline-success qr"
                     >Descargar QR</a
                   >
@@ -122,6 +121,21 @@ export default {
         showConfirmButton: false,
         timer: 500,
       });
+    },
+    donwload(image)
+    {
+      axios.get("/download/qr?image="+image, {responseType: 'blob'})
+                .then(response => {
+                   const url = window.URL.createObjectURL(new Blob([response.data]));
+                  const link = document.createElement('a');
+                  link.href = url;
+                  link.setAttribute('download', image);
+                  document.body.appendChild(link);
+                  link.click();
+                })
+                .catch(e => {
+                console.log(e);
+                });
     }
   },
 };

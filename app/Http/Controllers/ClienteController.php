@@ -60,10 +60,12 @@ class ClienteController extends Controller
             ]
         );
       
-        $doctor = Doctor::where('folio', $request->folio)->with('ligas')->first();
-        $libro_id = DB::table('publicacions')->where('liga_id',$doctor->liga_id)->get();
-
+        
         try {
+
+            $doctor = Doctor::where('folio', $request->folio)->with('ligas')->first();
+            $libro_id = DB::table('publicacions')->where('liga_id',$doctor->liga_id)->get();
+
             if ($doctor->ligas->slug) {
                 $usuario = User::create([
                     'name' => $request->nombre_paciente,

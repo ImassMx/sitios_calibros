@@ -76,6 +76,9 @@ Route::get('/export/book',[LibrosController::class,'exportBook'])->name('export.
 Route::get('/export/doctor',[DoctorController::class,'exportDoctor'])->name('export.doctor');
 Route::get('/export/cliente',[ClienteController::class,'exportClient'])->name('export.cliente');
 
+//DESCARGAR QR
+Route::get('/download/qr',[LigaController::class,'donwload']);
+
 /* Route::view('/{any}', 'home')
 ->middleware(['auth'])
 ->where('any','.*'); */

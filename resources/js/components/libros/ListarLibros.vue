@@ -169,7 +169,7 @@ export default {
       Swal.fire({
         icon: "error",
         title: "No se puede eliminar",
-        text: "La clasificacion esta ligada a un libro",
+        text: "El libro esta relacionado a una liga",
       });
     },
   },
