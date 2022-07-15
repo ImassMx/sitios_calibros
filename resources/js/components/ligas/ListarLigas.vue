@@ -29,7 +29,7 @@
                     class="btn btn-outline-success"
                     @click="copiar(liga.slug)"
                   >
-                    Copiar Slug
+                    Copiar URL
                   </button>
 
                   <a
@@ -152,6 +152,9 @@ export default {
 }
 
 .nombre_liga {
+  text-align: center;
+}
+.td-btn{
   text-align: center;
 }
 </style>

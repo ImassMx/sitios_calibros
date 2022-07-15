@@ -23,7 +23,7 @@
                 </div>
               </div>
               <div class="form-group mb-3">
-                <label for="exampleInputEmail1" class="mb-1">Celular</label>
+                <label for="exampleInputEmail1" class="mb-1">Teléfono de Contacto</label>
                 <input
                   type="text"
                   class="form-control"

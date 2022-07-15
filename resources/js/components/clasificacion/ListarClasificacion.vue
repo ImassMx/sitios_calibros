@@ -1,6 +1,6 @@
 <template>
   <div class="container-fluid px-4">
-    <h1 class="mt-4 mb-3">Listar Libros</h1>
+    <h1 class="mt-4 mb-3">Listar Clasificación</h1>
     <div>
       <div class="card mb-4">
         <div class="card-body">
@@ -26,8 +26,8 @@
             </thead>
             <tbody>
               <tr v-for="cla in clasificacion.data" :key="cla.id">
-                <th scope="row">{{ cla.id }}</th>
-                <td>{{ cla.nombre }}</td>
+                <th scope="row cla-id">{{ cla.id }}</th>
+                <td class="cla-nombre">{{ cla.nombre }}</td>
                 <td class="d-flex justify-content-center gap-2">
                   <router-link :to="`/admin/editar-clasificacion/${cla.id}`" class="btn btn-outline-primary"
                     >Editar</router-link
@@ -112,5 +112,8 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.cla-nombre,.cla-id{
+  text-align: center !important;
+}
 </style>

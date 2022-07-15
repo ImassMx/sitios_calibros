@@ -30,9 +30,9 @@
 
         <form action="{{route('cliente.registrar')}}" method="POST">
         @if (session('mensaje'))
-                    <div class="alert" role="alert">
-                        {{ session('mensaje') }}
-                    </div>
+        <div class="alert" role="alert">
+            {{ session('mensaje') }}
+        </div>
                 @endif
         @csrf
         <div>
