@@ -12,7 +12,6 @@
           placeholder="Ingresa tu nombre"
           id="nombre"
           v-model="nombre"
-          @keyup="nombre"
         />
         <div v-if="errors && errors.nombre" class="content-error">
           <p class="errors">{{ errors.nombre[0] }}</p>
@@ -128,10 +127,10 @@ export default {
       this.id_slug =""
     },
     showAlert(num) {
-      Swal.fire("Registro Exitoso !!", `El código para sus descargas es el <b style="color:black;font-weight:bold;">${num}</b> el cual deberá proporcionar a sus pacientes para que puedan realizar la descarga desde este sitio <a href="${this.dominio}" style="text-decoration:none;font-weight:bold;color:black; ">www.google.com</a>`, "success");
+      Swal.fire("Registro Exitoso !!", `El código para sus descargas es el <b style="color:black;font-weight:bold;">${num}</b> el cual deberá proporcionar a sus pacientes para que puedan realizar la descarga desde este sitio <a href="${this.dominio}" style="text-decoration:none;font-weight:bold;color:black; ">${this.dominio}</a>`, "success");
       var btn_confirm = document.querySelector('.swal2-confirm')
       btn_confirm.addEventListener('click',()=>{
-        window.location =this.dominio
+        window.location =`https://${this.dominio}`
       })
    }
   },

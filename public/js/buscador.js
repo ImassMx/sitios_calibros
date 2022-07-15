@@ -25,7 +25,7 @@
           url:'/api/codigo/postal?codigo='+cos
       })
       .then(res => {
- 
+        
           if(res.data.d_codigo){
               this.alcaldia.value= res.data.d_mnpio
               this.ciudad.value=res.data.d_ciudad

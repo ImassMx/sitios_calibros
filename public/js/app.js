@@ -23163,10 +23163,10 @@ __webpack_require__.r(__webpack_exports__);
     showAlert: function showAlert(num) {
       var _this3 = this;
 
-      Swal.fire("Registro Exitoso !!", "El c\xF3digo para sus descargas es el <b style=\"color:black;font-weight:bold;\">".concat(num, "</b> el cual deber\xE1 proporcionar a sus pacientes para que puedan realizar la descarga desde este sitio <a href=\"").concat(this.dominio, "\" style=\"text-decoration:none;font-weight:bold;color:black; \">www.google.com</a>"), "success");
+      Swal.fire("Registro Exitoso !!", "El c\xF3digo para sus descargas es el <b style=\"color:black;font-weight:bold;\">".concat(num, "</b> el cual deber\xE1 proporcionar a sus pacientes para que puedan realizar la descarga desde este sitio <a href=\"").concat(this.dominio, "\" style=\"text-decoration:none;font-weight:bold;color:black; \">").concat(this.dominio, "</a>"), "success");
       var btn_confirm = document.querySelector('.swal2-confirm');
       btn_confirm.addEventListener('click', function () {
-        window.location = _this3.dominio;
+        window.location = "https://".concat(_this3.dominio);
       });
     }
   }
@@ -24520,7 +24520,7 @@ var _hoisted_17 = /*#__PURE__*/_withScopeId(function () {
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [_hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
     action: "",
-    onSubmit: _cache[5] || (_cache[5] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function ($event) {
+    onSubmit: _cache[4] || (_cache[4] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function ($event) {
       return $options.saveDoctor();
     }, ["prevent"]))
   }, [$data.errors && $data.errors.id_slug ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.id_slug[0]), 1
@@ -24531,19 +24531,16 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     id: "nombre",
     "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
       return $data.nombre = $event;
-    }),
-    onKeyup: _cache[1] || (_cache[1] = function () {
-      return $data.nombre && $data.nombre.apply($data, arguments);
     })
-  }, null, 544
-  /* HYDRATE_EVENTS, NEED_PATCH */
+  }, null, 512
+  /* NEED_PATCH */
   ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.nombre]]), $data.errors && $data.errors.nombre ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.nombre[0]), 1
   /* TEXT */
   )])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [_hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     type: "text",
     placeholder: "Ingresa tu Apellido Paterno",
     id: "apellidoP",
-    "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
+    "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
       return $data.apellidos = $event;
     })
   }, null, 512
@@ -24554,7 +24551,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     type: "email",
     placeholder: "Ingresar Especialidad",
     id: "estado",
-    "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
+    "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
       return $data.especialidad = $event;
     })
   }, [_hoisted_12, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.especialidades, function (especial) {
@@ -24573,7 +24570,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   )])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), _hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     type: "hidden",
     id: "slug",
-    "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
+    "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
       return $data.id_slug = $event;
     })
   }, null, 512
