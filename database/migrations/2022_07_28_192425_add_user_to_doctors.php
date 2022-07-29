@@ -15,7 +15,6 @@ class AddUserToDoctors extends Migration
     {
         Schema::table('doctors', function (Blueprint $table) {
             $table->string('cp')->nullable();
-            $table->foreignId('user_id')->constrained();
             $table->date('fecha_descarga')->nullable();
         });
     }
@@ -29,7 +28,7 @@ class AddUserToDoctors extends Migration
     {
         Schema::table('doctors', function (Blueprint $table) {
             $table->dropColumn('cp');
-            $table->dropColumn('user_id');
+
             $table->dropColumn('fecha_descarga');
         });
     }
