@@ -117,13 +117,25 @@
                     />
                   </div>
                 </div>
+                <div class="form-group mb-3">
+                <label for="exampleInputEmail1" class="mb-1">Logo Laboratorio</label>
+                <input
+                  type="file"
+                  class="form-control"
+                  id="logoLaboratorio"
+                  aria-describedby="emailHelp"
+                  @change="LogoLab"
+                  accept=".png, .jpg, .jpeg"
+                />
+
+              </div>
               </div>
               <button type="submit" class="btn btn-dark mt-3">Agregar</button>
             </form>
           </div>
         </div>
         <div class="col contenido-qr">
-          <img src="img/codigo-qr.png" alt="" class="qr" />
+          <img :src="url" alt="" class="logo" v-if="url" />
         </div>
       </div>
     </div>
@@ -140,7 +152,9 @@ export default {
       celular: '',
       email: '',
       estado: 1,
-      errors:{}
+      errors:{},
+      url:'',
+      logo:''
     };
   },
   created() {
@@ -155,18 +169,24 @@ export default {
         });
     },
     saveLiga() {
+
+      const config = { headers: { "content-type": "multipart/form-data" } };
+
+      let data = new FormData();
+      data.append('nombre',this.nombre)
+      data.append('celular',this.celular)
+      data.append('email',this.email)
+      data.append('estado',this.estado)
+      data.append('book',this.book)
+      data.append('logo',this.logo)
+
       axios
-        .post("/liga", {
-          nombre: this.nombre,
-          celular: this.celular,
-          email: this.email,
-          estado: this.estado,
-          book: this.book,
-        })
+        .post("/liga", data,config)
         .then((response) => {
           this.showAlert();
           this.limpiar()
           this.errors={}
+          
         })
         .catch((error) => {
             if(error.response.status === 422){
@@ -180,6 +200,8 @@ export default {
         (this.email = ""),
         (this.estado = ""),
         (this.book = []);
+        let logo = document.querySelector('#logoLaboratorio')
+        logo.value= ""
     },
     showAlert() {
       Swal.fire("Correcto", "Liga creada correctamente", "success");
@@ -188,6 +210,12 @@ export default {
       clearTimeout(this.timeBuscador);
       this.timeBuscador = setTimeout(this.traerLibros, 360);
     },
+    LogoLab(e)
+    {
+        let file = e.target.files[0];
+        this.url = URL.createObjectURL(file);
+        this.logo = file
+    }
     
   },
 };
@@ -205,7 +233,7 @@ export default {
     display: flex;
     justify-content: center;
   }
-  .qr {
+  .logo {
     width: 100px;
     margin: 0 auto;
   }
@@ -219,7 +247,7 @@ export default {
     display: flex;
     justify-content: center;
   }
-  .qr {
+  .logo {
     width: 200px;
     margin: 0 auto;
   }
@@ -233,4 +261,13 @@ export default {
   color: red;
   font-weight: bold;
 }
+.contenido-qr{
+  display: flex;
+  justify-content: center;
+}
+.logo{
+  width: 300px !important;
+  height: 300px !important;
+}
+
 </style>

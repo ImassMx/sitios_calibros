@@ -23,10 +23,12 @@
                 <th scope="col">ID</th>
                 <th scope="col">NOMBRE</th>
                 <th scope="col">APELLIDOS</th>
+                <th scope="col">CODIGO POSTAL</th>
                 <th scope="col">ESPECIALIDAD</th>
                 <th scope="col">FOLIO</th>
                 <th scope="col">LIGA</th>
                 <th scope="col">DESCARGAS</th>
+                <th scope="col">FECHA DESCARGA</th>
               </tr>
             </thead>
             <tbody>
@@ -34,10 +36,12 @@
                 <th scope="row">{{doc.id}}</th>
                 <td>{{doc.nombre}}</td>
                 <td>{{doc.apellidos}}</td>
+                <td>{{doc.cp}}</td>
                 <td>{{doc.especialidad.nombre}}</td>
                 <td>{{doc.folio}}</td>
                 <td>{{doc.ligas.slug}}</td>
                 <td>{{doc.descargas}}</td>
+                <td>{{doc.fecha_descarga}}</td>
               </tr>
               
             </tbody>

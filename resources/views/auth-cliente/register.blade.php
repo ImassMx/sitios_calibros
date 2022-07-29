@@ -25,7 +25,7 @@
         </div>
     </nav>
     <div class="registro">
-        <h1>Registrate para poder descargar los libros</h1>
+        <h1>Registro del paciente para descargar el libro.</h1>
 
         <form action="{{route('cliente.registrar')}}" method="POST">
         @if (session('mensaje'))

@@ -15,7 +15,9 @@ class Doctor extends Model
         'nombre',
         'apellidos',
         'folio',
-        'descargas'
+        'descargas',
+        'user_id',
+        'cp'
     ];
 
     public function ligas()

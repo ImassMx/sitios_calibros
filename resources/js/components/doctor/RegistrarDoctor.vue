@@ -1,6 +1,22 @@
 <template>
   <div class="registro">
-    <h1>Registro de Doctor</h1>
+    <div class="content-presentacio">
+      <div class="content-logo">
+        <img :src="url" alt="" class="img">
+      </div>
+      <h2>{{titulo}}</h2>
+      <h4>Pensando en la salud y bienestar del paciente.</h4>
+      <p>Le estamos ofreciendo la descarga del libro digital {{tituloLibro}} editado por médicos especialistas  enfocados en dar a conocer a sus pacientes:</p>
+        <div class="content">
+          <ul>
+            <li>CAUSA</li>
+            <li>PREVENCIÓN</li>
+            <li>TRATAMIENTO</li>
+            <li>BIENESTAR</li>
+          </ul>
+        </div>
+    </div>
+    <h1>Registro del doctor para descargar el libro.</h1>
     <form action="" v-on:submit.prevent="saveDoctor()">
       <div v-if="errors && errors.id_slug" class="invalida">
         <p class="errors">{{ errors.id_slug[0] }}</p>
@@ -24,7 +40,6 @@
           placeholder="Ingresa tu Apellido Paterno"
           id="apellidoP"
           v-model="apellidos"
-        
           />
         <div v-if="errors && errors.apellidos" class="content-error">
           <p class="errors">{{ errors.apellidos[0] }}</p>
@@ -33,7 +48,6 @@
       <div>
         <label for="email">Especialidad</label>
         <select
-          type="email"
           placeholder="Ingresar Especialidad"
           id="estado"
           v-model="especialidad"
@@ -50,9 +64,28 @@
           <p class="errors">{{ errors.especialidad[0] }}</p>
         </div>
       </div>
+        <div>
+          <label for="">Email</label>
+          <input type="text" v-model="email" @keyup="validarCorreo">
+            <p class="validacion-correo"></p>
+        </div>
+        <div>
+          <label for="">Código Postal</label>
+          <input type="text" v-model="postal">
+        </div>
+        <div>
+          <label for="">Celular</label>
+          <input type="text" v-model="celular" @keyup="validarCelular">
+          <p class="validacion-celular"></p>
+        </div>
         <p id="especialidad"></p>
       <input type="hidden"  id="slug" v-model="id_slug" />
+      
       <input type="submit" value="Registrarse" class="registrar" />
+      <div class="btn_ingresar" v-if="boton">
+        <input type="hidden" v-model="contraseña">
+        <input @click="redireccionar" type="button" value="Descargar" class="registrar" />
+      </div>
     </form>
   </div>
 </template>
@@ -68,11 +101,23 @@ export default {
       especialidades: {},
       errors: {},
       dominio: document.domain,
+      email:'',
+      postal:'',
+      celular:'',
+      contraseña : 12345,
+      boton:false,
+      timeBuscador:"",
+      titulo: '',
+      tituloLibro:'',
+      url:'',
+      slug:''
     };
   },
   mounted() {
     this.obtenerSlug();
     this.obtenerEspecialidad();
+    this.mostrarDatosSlug();
+    this.getLogo()
   },
   methods: {
     obtenerSlug() {
@@ -93,6 +138,11 @@ export default {
           apellidos: this.apellidos,
           especialidad: this.especialidad,
           id_slug: this.id_slug,
+          email:this.email,
+          postal:this.postal,
+          password:this.contraseña,
+          celular: this.celular
+          
         })
         .then((response) => {
            var folio =  document.querySelector('#especialidad')
@@ -100,8 +150,9 @@ export default {
            folio.innerHTML= `Su número de folio es: <b>${num}</b>`
            this.limpiar()
            this.showAlert(num)
+           this.boton = true
         })
-        .catch((error) => {
+        .catch((error) => { 
           if (error.response.status === 422) {
             this.errors = error.response.data.errors;
           }
@@ -125,15 +176,66 @@ export default {
       this.apellidos=""
       this.especialidad=""
       this.id_slug =""
+      this.postal =""
+      this.email=""
+      this.celular=""
     },
     showAlert(num) {
       Swal.fire("Registro Exitoso !!", `El código para sus descargas es el <b style="color:black;font-weight:bold;">${num}</b> el cual deberá proporcionar a sus pacientes para que puedan realizar la descarga desde este sitio <a href="${this.dominio}" style="text-decoration:none;font-weight:bold;color:black; ">${this.dominio}</a>`, "success");
-      var btn_confirm = document.querySelector('.swal2-confirm')
+      /* var btn_confirm = document.querySelector('.swal2-confirm')
       btn_confirm.addEventListener('click',()=>{
         window.location =`https://${this.dominio}`
+      }) */
+   },
+   validarCorreo(){
+      clearTimeout(this.timeBuscador);
+      this.timeBuscador = setTimeout(this.validarEmail, 360);
+   },
+   validarEmail()
+   {
+        axios.get('/validar/email/doctor/',{params :{correo:this.email}})
+        .then(res =>{
+          var validacion = document.querySelector('.validacion-correo')
+          if(this.email === res.data.email)
+          { 
+           validacion.innerHTML="El email ya esta registrado"
+          }else{
+            validacion.innerHTML=""
+          }
+        })
+   },
+   validarCelular()
+   {
+    clearTimeout(this.timeBuscador);
+      this.timeBuscador = setTimeout(this.validarPhone, 360);
+   },
+   validarPhone()
+   {
+    axios.get('/validar/phone/doctor/',{params :{celular:this.celular}})
+        .then(res =>{
+          var validacion = document.querySelector('.validacion-celular')
+          if(this.celular === res.data.celular)
+          { 
+           validacion.innerHTML="El número de celular ya esta registrado"
+          }else{
+            validacion.innerHTML=""
+          }
+        })
+   },
+   mostrarDatosSlug()
+   {
+      axios.get("/api/mostrar/datos/slug",{params:{id:this.id_slug}})
+      .then(res =>{
+        this.titulo = res.data[0].nombre
+        this.tituloLibro = res.data[1].nombre
+        this.url = `/storage/logo/${res.data[0].img_lab}`
+        this.slug= res.data[0].slug
       })
+   },redireccionar()
+   {
+      window.location.href=`/descargas/${this.slug}`
    }
-  },
+  }
 };
 </script>
 
@@ -143,6 +245,7 @@ export default {
 }
 .content-error p {
   margin: 0;
+  font-size: .8rem;
 }
 .invalida {
   background-color: #f8d7da;
@@ -151,12 +254,12 @@ export default {
   text-align: center;
   padding: .2rem;
   border-radius: 5px;
-  font-size: 1.1rem;
   display: flex;
   align-items: center;
 }
 .invalida .errors{
   color: #721c24;
+  font-size: .8rem;
 }
 #especialidad{
   color: #155724;
@@ -168,6 +271,31 @@ export default {
 .registro{
   height: 100vh;
 }
+.btn_ingresar{
+  margin-top: 1rem;
+}
+.validacion-correo,.validacion-celular{
+  margin: 0;
+  color: red;
+  font-weight: bold;
+  font-size: .8rem;
+}
+.content-logo img{
+  width: 100px;
+  border-radius: 10px;
+}
+.content-presentacio{
+  margin-bottom: 10;
+  width: 40%;
+}
 
-
+.registro{
+  height: 100%;
+  min-height: 100vh;
+  color: white;
+}
+.content ul{
+  display: flex;
+  gap: 3rem;
+}
 </style>

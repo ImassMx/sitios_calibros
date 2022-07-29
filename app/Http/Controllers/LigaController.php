@@ -63,7 +63,11 @@ class LigaController extends Controller
                 'book.required' => 'Debe asignar un libro a la liga',
             ]
         );
+
         $nombre_qr = Str::uuid() . '.png';
+
+        if ($request->hasFile('logo'))
+        $nombre_img = Str::uuid() . "." . $request->logo->getClientOriginalExtension();
 
         $liga = new Liga();
         $liga->nombre =  $request->nombre;
@@ -72,12 +76,17 @@ class LigaController extends Controller
         $liga->correo  = $request->email;
         $liga->estado = $request->estado;
         $liga->codigo_qr = $nombre_qr;
-         $liga->save();
+        $liga->img_lab  = $nombre_img?? '';
+        $liga->save();
+
+        if ($request->hasFile('logo'))
+        $request->logo->move(public_path('/storage/logo'), $nombre_img);
 
         Publicacion::create([
             'liga_id' => $liga->id,
             'libro_id' => $request->book
         ]);
+
 
         $dominio = $_SERVER['HTTP_HOST'];
         $slug = $dominio . '/registrar/doctor?slug_id=' . $liga->id;
@@ -105,16 +114,34 @@ class LigaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        /* dump($id); */
+
         //OBTENER LA RELACION CON PUBLICACION
         $liga_relacion = Liga::where('id', $id)->with('publicacion')->get();
+        
         //OBTENER LA LIGA PARA PODER HACER LA ACTUALIZACION
         $liga = Liga::find($id);
+
+        //ACTUALIZAR LA IMAGEN
+        if ($request->hasFile('logo')) {
+            if($liga->img_lab)
+            {
+                $port = public_path('/storage/logo') . "\\" . $liga->img_lab;
+            if (file_exists($port)) {
+                unlink($port);
+            }
+            }
+            $imagen = $request->file('logo');
+            $nombreImagen = Str::uuid().".". $imagen->extension();
+            $request->logo->move(public_path('/storage/logo'), $nombreImagen);
+        }
+
         $liga->nombre = $request->nombre;
         $liga->slug = Str::slug($request->nombre);
         $liga->celular = $request->celular;
         $liga->estado = $request->estado;
+        $liga->img_lab = $nombreImagen ?? $liga->img_lab;
         $liga->save();
+
 
         $id_publicacion =  $liga_relacion[0]->publicacion[0]->id;
 
@@ -130,12 +157,6 @@ class LigaController extends Controller
         return response()->json($actualizado);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Liga  $liga
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         $liga = Liga::find($id);
@@ -156,13 +177,17 @@ class LigaController extends Controller
         ]);
 
         $cliente = Cliente::where('user_id', $request->id_usuario)->first();
+        if($cliente)
+        {
         $cliente->libro_id = $id;
         $cliente->fecha_descarga = Carbon::now();
         $cliente->save();
-
-        $doctor = Doctor::where('folio', $cliente->folio)->first();
+        }else{
+        $doctor = Doctor::where('user_id', $request->id_usuario)->first();
         $doctor->descargas = $doctor->descargas + 1;
-        $doctor->save();
+        $doctor->fecha_descarga = Carbon::now()->format('Y-m-d');
+        $doctor->save();   
+        }
     }
 
     public function donwload( Request $request)

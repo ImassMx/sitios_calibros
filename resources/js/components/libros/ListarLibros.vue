@@ -120,6 +120,7 @@ export default {
         .get("/api/book?page=" + page, { params: { buscador: this.buscador } })
         .then((response) => {
           this.Libros = response.data;
+          console.log(this.Libros)
           /* console.log(this.Libros) */
         })
         .catch((error) => {
@@ -169,7 +170,7 @@ export default {
       Swal.fire({
         icon: "error",
         title: "No se puede eliminar",
-        text: "El libro esta relacionado a una liga",
+        text: "El libro esta relacionado  a una liga",
       });
     },
   },

@@ -109,6 +109,8 @@ class LibrosController extends Controller
             $request->pdf->move(public_path('libros'), $nombre_pdf);
         }
 
+        
+
         $libro->update([
             'nombre' => $request->nombre,
             'portada' => $nombre_img ?? $libro->portada,

@@ -21,6 +21,7 @@ import EditarClasificacion from './components/clasificacion/EditarClasificacion.
 import RegistrarCliente from './components/cliente/RegistrarCliente.vue'
 import ReporteClientes from './components/reporte/ListaReporte.vue'
 import ReporteDoctores from './components/reporte/ListaDoctores.vue'
+import ZonaDoctor from './components/doctor/ZonaDoctor.vue'
 import LaravelVuePagination from 'laravel-vue-pagination';
 
 const app = createApp({})
@@ -46,5 +47,6 @@ app.component('RegistrarDoctor', RegistrarDoctor)
 app.component('RegistrarCliente', RegistrarCliente)
 app.component('ReporteClientes', ReporteClientes)
 app.component('ReporteDoctores', ReporteDoctores)
+app.component('ZonaDoctor', ZonaDoctor)
 
 app.mount('#app')

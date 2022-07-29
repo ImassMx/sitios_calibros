@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Exports\DoctorsExport;
 use App\Models\Liga;
 use App\Models\Doctor;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Exports\DoctorsExport;
+use App\Models\User;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Facades\Excel;
 
 class DoctorController extends Controller
@@ -21,22 +24,6 @@ class DoctorController extends Controller
         return view('auth-doctor.register');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $this->validate($request,[
@@ -53,15 +40,29 @@ class DoctorController extends Controller
         
         $liga = Liga::where('id',$request->id_slug)->first();
 
+
         if($liga->estado === 1){
+            $user = new User();
+            $user->name = $request->nombre;
+            $user->email = $request->email;
+            $user->password = Hash::make($request->password);
+            $user->celular = $request->celular;
+            $user->save();
+
             $folio = mt_rand(10000,99999);
+
             Doctor::create([
+                'user_id' => $user->id,
                 'especialidad_id'=> $request->especialidad,
-                'liga_id'=> $request->id_slug,
                 'nombre' => $request->nombre,
+                'liga_id'=> $request->id_slug,
                 'apellidos' => $request->apellidos,
-                'folio' => $folio
+                'cp' => $request->postal,
+                'folio' => $folio,
             ]);
+
+            auth()->attempt($request->only('email', 'password'));
+
             return response()->json($folio);
         }else{
             return response()->json(1,500);
@@ -69,52 +70,28 @@ class DoctorController extends Controller
         
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Doctor  $doctor
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Doctor $doctor)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Doctor  $doctor
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Doctor $doctor)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Doctor  $doctor
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Doctor $doctor)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Doctor  $doctor
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Doctor $doctor)
-    {
-        //
-    }
     public function exportDoctor()
     {
         return Excel::download(new DoctorsExport, 'Doctores.xlsx'); 
+    }
+
+    public function ValidarEmail(Request $request)
+    {
+       $user = DB::table('users')->where('email',$request->correo)->first();
+
+       return response()->json($user);
+    }
+
+    public function ValidarPhone(Request $request)
+    {
+        $user = DB::table('users')->where('celular',$request->celular)->first();
+
+       return response()->json($user);
+    }
+
+
+    public function viewDoctor()
+    {
+        return view('auth-doctor.login');
     }
 }

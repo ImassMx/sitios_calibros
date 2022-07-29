@@ -38,7 +38,7 @@
         </div>
 
         <div class="form-group mb-3">
-          <label for="inputState" class="mb-1">Clasificacion</label>
+          <label for="inputState" class="mb-1">Clasificación</label>
           <select id="inputState" class="form-select" v-model="clasificacion">
             <option value="">---Selecionar---</option>
             <option v-for="cla in clasificaciones" :value="cla.id" :key="cla.id">{{cla.nombre}}</option>
@@ -61,7 +61,7 @@
           >
           <input
             type="file"
-             class="custom-file-input" 
+             class="form-control" 
             id="exampleFormControlFile2"
             @change="subirImage"
           />
@@ -75,7 +75,7 @@
           >
           <input
             type="file"
-            class="form-control-file"
+            class="form-control"
             id="exampleFormControlFile1"
             @change="subirPdf"
           />

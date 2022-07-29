@@ -5,12 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\Liga;
 use App\Models\User;
 use App\Models\Libro;
-use App\Models\Cliente;
 use App\Models\Doctor;
+use App\Models\Cliente;
 use App\Models\Especialidad;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Facade\FlareClient\Http\Client;
+use Illuminate\Support\Facades\Storage;
 
 class ApiController extends Controller
 {
@@ -75,5 +76,31 @@ class ApiController extends Controller
                 return response()->json($nombre_doctor);
             }
         }
+    }
+
+    public function ValidarEmail(Request $request)
+    {
+       
+        if($request->correo){
+            $email = User::where('email','LIKE',$request->correo)->get();
+        dump($email);
+        return response()->json($email);
+        }
+    }
+    public function getDatosSlug(Request $request)
+    {
+        $liga = Liga::where('id',$request->id)->first();
+        $publicacion = DB::table('publicacions')->where('liga_id',$request->id)->first();
+        $libro = Libro::find($publicacion->libro_id);
+
+        return response()->json([$liga,$libro]);
+    }
+
+    public function getLogo(Request $request)
+    {
+        $logo = Liga::find($request->id);
+        $url = Storage::url($logo->img_lab);
+
+        return response()->json($url);
     }
 }

@@ -45,10 +45,10 @@ Route::post('/des/{id}',[LibrosController::class,'desactivar']);
 Route::post('/act/{id}',[LibrosController::class,'activar']);
 Route::delete('/eliminar-libros/{id}',[LibrosController::class,'destroy']);
 //LIGAS
-Route::get('/descargas/{liga:slug}',[ClienteController::class,'zonaDescarga'])->name('zona.descarga');
+Route::get('/descargas/{liga:slug}',[ClienteController::class,'zonaDescarga'])->name('zona.descarga')->middleware('auth');
 Route::post('/descarga/{id}',[LigaController::class,'viewDescarga']);
 Route::get('/liga/{id}/edit',[LigaController::class,'edit']);
-Route::post('/liga/{id}',[LigaController::class,'update']);
+Route::post('/update/liga/{id}',[LigaController::class,'update']);
 Route::post('/delete-liga/{id}',[LigaController::class,'destroy']);
 
 //REGISTRO CLIENTE
@@ -66,6 +66,8 @@ Route::delete('/delete-user/{id}',[UsuarioController::class,'destroy']);
 //DOCTOR
 Route::get('/registrar/doctor',[DoctorController::class,'index']);
 Route::post('/registrar-doctor',[DoctorController::class,'store']);
+Route::get('/validar/email/doctor',[DoctorController::class,'ValidarEmail']);
+Route::get('/validar/phone/doctor',[DoctorController::class,'ValidarPhone']);
 //CLASIFICACION
 Route::post('clasificacion/create',[ClasificacionController::class,'store']);
 Route::get('/clasificacion/{id}/edit',[ClasificacionController::class,'edit']);
@@ -75,6 +77,9 @@ Route::delete('/eleminiar-clasificacion/{id}',[ClasificacionController::class,'d
 Route::get('/export/book',[LibrosController::class,'exportBook'])->name('export.excel');
 Route::get('/export/doctor',[DoctorController::class,'exportDoctor'])->name('export.doctor');
 Route::get('/export/cliente',[ClienteController::class,'exportClient'])->name('export.cliente');
+//ENVIO SMS DOCTOR
+/* Route::get('/zona/doctor',[DoctorController::class,'viewDoctor']); */
+Route::get('/login/doctor',[DoctorController::class,'viewDoctor']);
 
 //DESCARGAR QR
 Route::get('/download/qr',[LigaController::class,'donwload']);

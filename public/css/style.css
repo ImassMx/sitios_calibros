@@ -319,6 +319,7 @@ main .imagen {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 }
 
 .content-login .login form {
@@ -326,7 +327,7 @@ main .imagen {
   flex-direction: column;
   background-color: white;
   padding: 1rem;
-  width: 20%;
+  width: 25%;
   border-radius: 10px;
 }
 
@@ -655,4 +656,48 @@ hr {
   padding: .5rem;
   border-radius: 5px;
 
+}
+
+/*MAIN LOGIN DOCTOR*/
+.main-login-doctor h1{
+  color: #01924D;
+  font-size: 4rem;
+  text-align: center;
+}
+.main-login-doctor h4{
+  color: #01924D;
+  text-align: center;
+  font-size: 1.5rem;
+}
+
+.content-login-doctor {
+  width: 40%;
+  margin: 0 auto;
+  box-shadow: 2px -1px 31px -1px rgba(0,0,0,0.14);
+  -webkit-box-shadow: 2px -1px 31px -1px rgba(0,0,0,0.14);
+  -moz-box-shadow: 2px -1px 31px -1px rgba(0,0,0,0.14);
+  padding: 1rem;
+  border-radius: 5px;
+}
+.main-login-doctor{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.main-login-doctor form input{
+  padding: .4rem;
+  display: block;
+  width: 100%;
+  margin: 1rem;
+}
+.btn_ingresar{
+  background: rgba(0, 0, 0, 0.0);
+  border: 2px solid #056743;
+  cursor: pointer;
+  border-radius: 5px;
+  color: #056743;
+  text-transform: uppercase;
+  font-weight: 300;
 }

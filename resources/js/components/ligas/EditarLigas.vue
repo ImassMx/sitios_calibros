@@ -99,13 +99,24 @@
                     <Pagination :data="Libros" @pagination-change-page="traerLibros" />
                   </div>
                 </div>
+                <div class="form-group mb-3">
+                <label for="exampleInputEmail1" class="mb-1">Logo Laboratorio</label>
+                <input
+                  type="file"
+                  class="form-control"
+                  id="logoLaboratorio"
+                  aria-describedby="emailHelp"
+                  @change="LogoLab"
+                />
+
+              </div>
               </div>
               <button type="submit" class="btn btn-dark mt-3">Agregar</button>
             </form>
           </div>
         </div>
-        <div class="col contenido-qr">
-          <img src="img/codigo-qr.png" alt="" class="qr" />
+        <div class="col contenido-logo" v-if="url">
+          <img :src="url" alt="" class="logo" />
         </div>
       </div>
     </div>
@@ -123,6 +134,7 @@ export default {
       email: null,
       estado: '',
       id:this.$route.params.id,
+      url:''
     };
   },
   created() {
@@ -151,18 +163,24 @@ export default {
             this.email = response.data[0].correo
             this.estado = response.data[0].estado
            this.book =  response.data[0].publicacion[0].libro_id
+           this.url = `/storage/logo/${response.data[0].img_lab}`
+
         })
     }
     ,
     saveLiga() {
+  const config = { headers: { "content-type": "multipart/form-data" } };
+
+      let data = new FormData();
+      data.append('nombre',this.nombre)
+      data.append('celular',this.celular)
+      data.append('email',this.email)
+      data.append('estado',this.estado)
+      data.append('book',this.book)
+      data.append('logo',this.logo)
+
       axios
-        .post('/liga/'+this.id, {
-          nombre: this.nombre,
-          celular: this.celular,
-          email: this.email,
-          estado: this.estado,
-          book: this.book,
-        })
+        .post("/update/liga/"+this.id, data,config)
         .then((response) => {
           if(response.data === 1){
             this.$router.push({path: '/admin/listar-ligas'})
@@ -178,7 +196,13 @@ export default {
       buscarLibros(){
           clearTimeout(this.timeBuscador)
           this.timeBuscador = setTimeout(this.traerLibros,360)
-      }
+      },
+    LogoLab(e)
+    {
+        let file = e.target.files[0];
+        this.url = URL.createObjectURL(file);
+        this.logo = file
+    }
   },
 };
 </script>
@@ -215,5 +239,15 @@ export default {
     display: flex;
     flex-direction: column-reverse;
   }
+}
+
+.contenido-logo{
+  display: flex;
+  justify-content: center;
+
+}
+.contenido-logo .logo{
+  width: 300px;
+  height: 300px;
 }
 </style>

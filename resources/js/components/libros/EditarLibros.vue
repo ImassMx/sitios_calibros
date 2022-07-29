@@ -54,7 +54,7 @@
           >
           <input
             type="file"
-            class="form-control-file"
+            class="form-control"
             id="exampleFormControlFile2"
             @change="subirImage"
           />
@@ -65,7 +65,7 @@
           >
           <input
             type="file"
-            class="form-control-file"
+            class="form-control"
             id="exampleFormControlFile1"
             @change="subirPdf"
           />
