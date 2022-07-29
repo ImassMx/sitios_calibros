@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddUserToDoctors extends Migration
+class AddUseridToDoctors extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,9 @@ class AddUserToDoctors extends Migration
      */
     public function up()
     {
-        if (!Schema::hasTable('doctors')) {
         Schema::table('doctors', function (Blueprint $table) {
-            $table->string('cp')->nullable();
-            $table->date('fecha_descarga')->nullable();
+            $table->integer('user_id');
         });
-    }
     }
 
     /**
@@ -29,9 +26,7 @@ class AddUserToDoctors extends Migration
     public function down()
     {
         Schema::table('doctors', function (Blueprint $table) {
-            $table->dropColumn('cp');
-
-            $table->dropColumn('fecha_descarga');
+            $table->dropColumn('user_id');
         });
     }
 }
