@@ -23195,7 +23195,7 @@ __webpack_require__.r(__webpack_exports__);
     validarEmail: function validarEmail() {
       var _this3 = this;
 
-      axios.get('/validar/email/doctor/', {
+      axios.get('/validar/email/doctor', {
         params: {
           correo: this.email
         }
@@ -23216,7 +23216,7 @@ __webpack_require__.r(__webpack_exports__);
     validarPhone: function validarPhone() {
       var _this4 = this;
 
-      axios.get('/validar/phone/doctor/', {
+      axios.get('/validar/phone/doctor', {
         params: {
           celular: this.celular
         }

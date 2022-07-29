@@ -193,7 +193,7 @@ export default {
    },
    validarEmail()
    {
-        axios.get('/validar/email/doctor/',{params :{correo:this.email}})
+        axios.get('/validar/email/doctor',{params :{correo:this.email}})
         .then(res =>{
           var validacion = document.querySelector('.validacion-correo')
           if(this.email === res.data.email)
@@ -211,7 +211,7 @@ export default {
    },
    validarPhone()
    {
-    axios.get('/validar/phone/doctor/',{params :{celular:this.celular}})
+    axios.get('/validar/phone/doctor',{params :{celular:this.celular}})
         .then(res =>{
           var validacion = document.querySelector('.validacion-celular')
           if(this.celular === res.data.celular)
