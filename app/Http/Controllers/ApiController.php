@@ -103,4 +103,26 @@ class ApiController extends Controller
 
         return response()->json($url);
     }
+
+    public function getDatosDoctor($folio)
+    {
+        $doctor = Doctor::where('folio',$folio)->first();
+
+        if($doctor)
+        {
+          $user = User::find($doctor->user_id);
+ 
+          return response()->json($user);
+        }else{
+ 
+         return response()->json(500,2);
+        }
+    }
+
+    public function getNombreDoctor($folio)
+    {
+        $doctor = Doctor::where('folio',$folio)->first();
+          return response()->json($doctor);
+    
+    }
 }

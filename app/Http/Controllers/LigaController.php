@@ -87,7 +87,6 @@ class LigaController extends Controller
             'libro_id' => $request->book
         ]);
 
-
         $dominio = $_SERVER['HTTP_HOST'];
         $slug = $dominio . '/registrar/doctor?slug_id=' . $liga->id;
 

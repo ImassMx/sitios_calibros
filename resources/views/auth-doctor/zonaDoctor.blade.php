@@ -15,8 +15,16 @@
     <nav class="menu">
         <img src="{{asset('img/logo_ascobereta.jpg')}}" alt="" class="logo">
         <ul class="menu_items">
-            <li><a href="#pro">¿Quienes Somos?</a></li>
-            <li><a href="#contact">Contactenos</a></li>
+            @auth
+            <form method="POST" action="{{route('logout.doctor')}}">
+                 @csrf
+                 <button type="submit"  class="logout">Cerrar Session</button>
+             </form>
+             @endauth
+             @guest
+                 <li><a href="#pro">¿Quienes Somos?</a></li>
+             <li><a href="#contact">Contactenos</a></li>
+             @endguest
         </ul>
         <div id="hamburguer">
             <button>
@@ -26,11 +34,22 @@
             </button>
         </div>
     </nav>
+        
     <div id="app">
-        <zona-doctor />
+        <zona-doctor  />
+        
     </div>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{asset('js/index.js')}}"></script>
     <script src="{{asset('js/app.js')}}"></script>
+
+    <style>
+        .logout{
+            background:rgba(0,0,0,0);
+            border:none;
+            font-size:1rem;
+            cursor: pointer;
+        }
+    </style>
     </body>
     </html>

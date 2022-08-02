@@ -17,4 +17,10 @@ class LogoutController extends Controller
         auth()->logout();
         return redirect()->route('login.cliente');
     }
+
+    public function cerrarSesionDoctor()
+    {
+        auth()->logout();
+        return redirect()->route('login.doctor');
+    }
 }

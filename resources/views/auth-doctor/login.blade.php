@@ -35,16 +35,19 @@
                         {{ session('mensaje') }}
                     </div>
                 @endif
-            <form action="" method="POST">
+            <form action="{{route('login.zona.doctor')}}" method="POST">
             @csrf
                 <label for="celular">Ingrese su Código de Registro</label>
-                <input type="text" placeholder="Ingrese el código de registro" id="celular" name="celular">
+                <input type="text" placeholder="Ingrese el código de registro" id="folio" name="folio">
+                <p class="error" style="margin-top: .5rem"></p>
                 <input type="hidden"  name="password" value="12345">
+                <input type="hidden"  name="email" value="" id="email">
                 <input type="submit" class="ingresar" value="Ingresar">
             </form>
         </div>
     </div>
     <script src="{{asset('js/index.js')}}"></script>
+    <script src="{{asset('js/doctor.js')}}"></script>
 </body>
 
 </html>

@@ -38,4 +38,7 @@ Route::get('/mostrar/datos/slug',[ApiController::class,'getDatosSlug']);
 
 Route::get('/mostrar/logo/slug',[ApiController::class,'getLogo']);
 
+Route::get('/mostrar/datos/doctor/{folio}',[ApiController::class,'getDatosDoctor']);
+Route::get('/mostrar/nombre/doctor/{folio}',[ApiController::class,'getNombreDoctor']);
+
 

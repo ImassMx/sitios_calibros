@@ -78,8 +78,13 @@ Route::get('/export/book',[LibrosController::class,'exportBook'])->name('export.
 Route::get('/export/doctor',[DoctorController::class,'exportDoctor'])->name('export.doctor');
 Route::get('/export/cliente',[ClienteController::class,'exportClient'])->name('export.cliente');
 //ENVIO SMS DOCTOR
-/* Route::get('/zona/doctor',[DoctorController::class,'viewDoctor']); */
-Route::get('/login/doctor',[DoctorController::class,'viewDoctor']);
+Route::get('/zona/doctor/{users:name}',[DoctorController::class,'zonaDoctor'])->name('zona.doctor')->middleware('auth');
+Route::get('/login/doctor',[DoctorController::class,'viewDoctor'])->name('login.doctor');
+
+Route::get('/enviar/sms/doctor/{telefono}/{folio}',[DoctorController::class,'smsEnvia']);
+
+Route::post('/zona/login/doctor',[DoctorController::class,'ZonaLoginDoctor'])->name('login.zona.doctor');
+Route::post('/logout/doctor',[LogoutController::class,'cerrarSesionDoctor'])->name('logout.doctor');
 
 //DESCARGAR QR
 Route::get('/download/qr',[LigaController::class,'donwload']);
