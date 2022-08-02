@@ -20,7 +20,7 @@
             </div>
         @endif
         <div class="contenido">
-            <img src="{{asset('img/logo_ascobereta.jpg')}}" alt="">
+            <img src="{{asset('img/logo.jpg')}}" alt="">
             <div class="body-login">
                 <form action="{{ route('login') }}" method="POST">
                     @csrf

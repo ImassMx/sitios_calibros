@@ -15,7 +15,7 @@
 
 <body>
     <nav class="menu">
-        <img src="{{ asset('img/logo_ascobereta.jpg') }}" alt="" class="logo">
+        <img src="{{ asset('img/logo.jpg') }}" alt="" class="logo">
         <ul class="menu_items">
             @auth
            <form method="POST" action="{{route('logout.cliente')}}">
