@@ -48,20 +48,29 @@ class ApiController extends Controller
         $filtro = $request->buscador;
         $clientes = Cliente::whereHas('user', function ($query) use ($filtro) {
             $query->where('name', 'LIKE', '%' . $filtro . '%')
-                ->orWhere('folio', 'LIKE', '%' . $filtro . '%');
+                ->orWhere('folio', 'LIKE', '%' . $filtro . '%')
+                ->orWhere('nombre_doctor', 'LIKE', '%' . $filtro . '%');
         })->with(['user', 'libro'])->paginate(4);
+
+       
         return response()->json($clientes);
     }
 
     public function doctores(Request $request)
     {
-        $filtro = $request->filtro;
-
-        $doctores = Doctor::where('nombre', 'LIKE', '%' . $filtro . '%')
+        $filtro = $request->buscador;
+        $especialidad = $request->especialidad;
+        /* $doctores = Doctor::where('nombre', 'LIKE', '%' . $filtro . '%')
             ->orWhere('folio', 'LIKE', '%' . $filtro . '%')
-            ->with('ligas')
-            ->with('especialidad')
-            ->paginate(4);
+
+            ->with(['ligas','especialidad'])
+            ->paginate(4); */
+        $doctores = Doctor::whereHas('especialidad', function ($query) use ($filtro) {
+                $query->where('nombre', 'LIKE', '%' . $filtro . '%')
+                    ->orWhere('folio', 'LIKE', '%' . $filtro . '%')
+                    ->orWhere('apellidos', 'LIKE', '%' . $filtro . '%')
+                    ->orWhere('nombres', 'LIKE', '%' . $filtro . '%');
+            })->with(['ligas', 'especialidad'])->paginate(4);
         return response()->json($doctores);
     }
 
@@ -71,7 +80,7 @@ class ApiController extends Controller
             $doctor = Doctor::where('folio', 'LIKE', $request->folio)->first();
 
             if ($doctor) {
-                $nombre_doctor = $doctor->nombre . " " . $doctor->apellidos;
+                $nombre_doctor = $doctor->nombres . " " . $doctor->apellidos;
 
                 return response()->json($nombre_doctor);
             }

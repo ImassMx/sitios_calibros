@@ -12,4 +12,6 @@ class Especialidad extends Model
     protected $fillable = [
         'nombre'
     ];
+
+    
 }

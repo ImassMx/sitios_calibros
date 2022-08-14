@@ -120,8 +120,6 @@ export default {
         .get("/api/book?page=" + page, { params: { buscador: this.buscador } })
         .then((response) => {
           this.Libros = response.data;
-          console.log(this.Libros)
-          /* console.log(this.Libros) */
         })
         .catch((error) => {
           console.log(error);

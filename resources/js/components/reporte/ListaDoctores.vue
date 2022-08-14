@@ -6,7 +6,7 @@
     <div>
       <div class="card mb-4">
         <div class="card-body">
-          <div class="form-group col-md-4 mb-3">
+          <div class="d-flex gap-4 col-md-4 mb-3">
             <input
               type="text"
               class="form-control"
@@ -16,6 +16,10 @@
               v-model="buscador"
               @keyup="buscarDoctor"
             />
+            <!-- <select class="form-select" aria-label="Default select example" v-model="special"  >
+           <option selected value="">Seleccione</option>
+            <option v-for="especialidad in Especialidades" :key="especialidad.id" :value="especialidad.id">{{especialidad.nombre}}</option>
+           </select> -->
           </div>
           <table class="table">
             <thead>
@@ -34,7 +38,7 @@
             <tbody>
               <tr v-for="doc in doctores.data" :key="doc.id">
                 <th scope="row">{{doc.id}}</th>
-                <td>{{doc.nombre}}</td>
+                <td>{{doc.nombres}}</td>
                 <td>{{doc.apellidos}}</td>
                 <td>{{doc.cp}}</td>
                 <td>{{doc.especialidad.nombre}}</td>
@@ -42,8 +46,7 @@
                 <td>{{doc.ligas.slug}}</td>
                 <td>{{doc.descargas}}</td>
                 <td>{{doc.fecha_descarga}}</td>
-              </tr>
-              
+              </tr>              
             </tbody>
           </table>
           <Pagination
@@ -64,12 +67,16 @@ export default {
     return{
       doctores:{},
       buscador: "",
+      buscadorEspecilidad:"",
       timeBuscador: "",
+      Especialidades : {},
+      special:''
     }
   },
   mounted()
   {
     this.traerDoctor()
+    this.getEspecialidades()
   },
   methods:{
       traerDoctor(page=1)
@@ -83,6 +90,13 @@ export default {
       buscarDoctor() {
       clearTimeout(this.timeBuscador);
       this.timeBuscador = setTimeout(this.traerDoctor, 360);
+    },
+    getEspecialidades()
+    {
+      axios.get('/api/especialidades')
+      .then( res =>{
+        this.Especialidades = res.data
+      })
     }
   }
 

@@ -23519,8 +23519,6 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (response) {
         _this.Libros = response.data;
-        console.log(_this.Libros);
-        /* console.log(this.Libros) */
       })["catch"](function (error) {
         console.log(error);
       });
@@ -23914,11 +23912,15 @@ __webpack_require__.r(__webpack_exports__);
     return {
       doctores: {},
       buscador: "",
-      timeBuscador: ""
+      buscadorEspecilidad: "",
+      timeBuscador: "",
+      Especialidades: {},
+      special: ''
     };
   },
   mounted: function mounted() {
     this.traerDoctor();
+    this.getEspecialidades();
   },
   methods: {
     traerDoctor: function traerDoctor() {
@@ -23938,6 +23940,13 @@ __webpack_require__.r(__webpack_exports__);
     buscarDoctor: function buscarDoctor() {
       clearTimeout(this.timeBuscador);
       this.timeBuscador = setTimeout(this.traerDoctor, 360);
+    },
+    getEspecialidades: function getEspecialidades() {
+      var _this2 = this;
+
+      axios.get('/api/especialidades').then(function (res) {
+        _this2.Especialidades = res.data;
+      });
     }
   }
 });
@@ -26447,7 +26456,7 @@ var _hoisted_5 = {
   "class": "card-body"
 };
 var _hoisted_6 = {
-  "class": "form-group col-md-4 mb-3"
+  "class": "d-flex gap-4 col-md-4 mb-3"
 };
 var _hoisted_7 = {
   "class": "table"
@@ -26495,12 +26504,12 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     })
   }, null, 544
   /* HYDRATE_EVENTS, NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.buscador]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("table", _hoisted_7, [_hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tbody", null, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.doctores.data, function (doc) {
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.buscador]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <select class=\"form-select\" aria-label=\"Default select example\" v-model=\"special\"  >\r\n           <option selected value=\"\">Seleccione</option>\r\n            <option v-for=\"especialidad in Especialidades\" :key=\"especialidad.id\" :value=\"especialidad.id\">{{especialidad.nombre}}</option>\r\n           </select> ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("table", _hoisted_7, [_hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tbody", null, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.doctores.data, function (doc) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("tr", {
       key: doc.id
     }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", _hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(doc.id), 1
     /* TEXT */
-    ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(doc.nombre), 1
+    ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(doc.nombres), 1
     /* TEXT */
     ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(doc.apellidos), 1
     /* TEXT */
@@ -26583,7 +26592,7 @@ var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
   scope: "col"
 }, "CELULAR"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", {
   scope: "col"
-}, "CODIGO POSTAL"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", {
+}, "CODIGO P."), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", {
   scope: "col"
 }, "CIUDAD"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", {
   scope: "col"
@@ -26591,7 +26600,9 @@ var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
   scope: "col"
 }, "FECHA DE DESCARGA"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", {
   scope: "col"
-}, "LIBRO DESCARGADO")])], -1
+}, "LIBRO DESCARGADO"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", {
+  scope: "col"
+}, "DOCTOR")])], -1
 /* HOISTED */
 );
 
@@ -26642,7 +26653,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       );
     }), 128
     /* KEYED_FRAGMENT */
-    ))]);
+    )), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(client.nombre_doctor), 1
+    /* TEXT */
+    )]);
   }), 128
   /* KEYED_FRAGMENT */
   ))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Pagination, {
