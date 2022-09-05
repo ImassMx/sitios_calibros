@@ -179,7 +179,7 @@ class DoctorController extends Controller
                     'phones' => [$telefono],
                     'message' => $mensaje
                 ];
-                dump($token);
+
                 $headers = [
                     'Authorization' => 'Bearer ' . $token,
                     'Content-Type' => 'application/json',

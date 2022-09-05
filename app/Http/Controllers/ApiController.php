@@ -17,6 +17,7 @@ class ApiController extends Controller
 {
     public function libros(Request $request)
     {
+        dump(auth()->user()->id);
         $filtro = $request->buscador;
         $libro = Libro::where('nombre', 'LIKE', '%' . $filtro . '%')->paginate(5);
         return response()->json($libro);
