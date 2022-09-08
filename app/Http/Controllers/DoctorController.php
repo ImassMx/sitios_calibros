@@ -209,7 +209,7 @@ class DoctorController extends Controller
                 $datos = User::where("celular","LIKE",$telefono)->first();
 
                 if($datos->email !== "")
-                Mail::to("jhersontrigoso14@gmail.com")->send(new LigaPaciente($folio,$dominio));
+                Mail::to($datos->email)->send(new LigaPaciente($folio,$dominio));
 
                } catch (\Exception $e) {
                 Log::info('Error' . $e->getMessage());
