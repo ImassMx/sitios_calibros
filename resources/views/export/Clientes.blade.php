@@ -19,7 +19,7 @@
                 <td>{{ $cliente->user->id }}</td>
                 <td>{{ $cliente->user->name }}</td>
                 <td>{{ $cliente->folio }}</td>
-                <td>{{ $cliente->celular }}</td>
+                <td>{{ $cliente->user->celular }}</td>
                 <td>
                     {{ $cliente->codigo_postal }}
                 </td>

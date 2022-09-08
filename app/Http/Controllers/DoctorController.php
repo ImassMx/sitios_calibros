@@ -9,10 +9,14 @@ use GuzzleHttp\Client;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Exports\DoctorsExport;
+use App\Mail\LigaDoctor;
+use App\Mail\LigaPaciente;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Maatwebsite\Excel\Facades\Excel;
+use PhpParser\Node\Stmt\TryCatch;
 
 class DoctorController extends Controller
 {
@@ -165,6 +169,7 @@ class DoctorController extends Controller
 
     function smsEnvia($telefono,$folio)
     {
+
         $token = $this->smsGetToken();
 
             $datos = [];
@@ -198,7 +203,17 @@ class DoctorController extends Controller
                 $rawResponse = $client->request('POST', $liga, $options)->getBody()->getContents();
 
                 Log::info('response' . $rawResponse);
-   
+                
+               try {
+
+                $datos = User::where("celular","LIKE",$telefono)->first();
+
+                if($datos->email !== "")
+                Mail::to("jhersontrigoso14@gmail.com")->send(new LigaPaciente($folio,$dominio));
+
+               } catch (\Exception $e) {
+                Log::info('Error' . $e->getMessage());
+               }
 
             } catch (\Exception $e) {
                 $error = ["error" => "No se puede conectar al sistema de envio SMS =>" . $e->getMessage()];

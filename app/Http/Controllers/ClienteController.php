@@ -19,10 +19,7 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class ClienteController extends Controller
 {
-    public function __construct()
-    {
-        /* $this->middleware('auth')->except(['registro', 'index', 'store']); */
-    }
+
     public function index()
     {
         return view('auth-cliente.login');
@@ -42,7 +39,6 @@ class ClienteController extends Controller
                 'alcaldia' => 'required',
                 'ciudad' => 'required',
                 'estado' => 'required'
-
             ],
             [
                 'nombre_doctor.required' => 'El nombre del doctor es requerido',
@@ -60,7 +56,6 @@ class ClienteController extends Controller
             ]
         );
       
-        
         try {
 
             $doctor = Doctor::where('folio', $request->folio)->with('ligas')->first();
@@ -92,18 +87,13 @@ class ClienteController extends Controller
         } catch (\Throwable $th) {
             return back()->with('mensaje', 'El número de folio es inválido');
         }
-
-        //$doctor[0]->ligas->slug  => Obtener el slug de acuerdo al numero de folio
-
-        /* 
-        return redirect()->route('zona.descarga', $request->slug); */
     }
+
     public function login(Request $request)
     {
         
         if (!auth()->attempt($request->only(['celular', 'password']), $request->remember)) {
             return back()->with('mensaje', 'El número de celular es incorrecto');
-
         }
         $cliente = User::where('celular',$request->celular)->with('cliente')->first();
         $libro =$cliente->cliente->libro_id;
@@ -126,8 +116,9 @@ class ClienteController extends Controller
         $estados = Estado::all();
         return view('auth-cliente.register', compact('estados'));
     }
+
     public function exportClient()
     {
-        return Excel::download(new ClientExport, 'Clientes.xlsx');
+        return Excel::download(new ClientExport, 'Pacientes.xlsx');
     }
 }

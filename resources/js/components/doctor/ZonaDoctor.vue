@@ -1,9 +1,9 @@
 <template>
     <h1>DR. {{this.nombre}}</h1>
-        <h4>Compartir acceso a cliente</h4>
+        <h4>Compartir acceso a paciente</h4>
     <div class="content-form">
         <form action="" v-on:submit.prevent="enviarMensaje()">
-            <input type="text" v-model="numero" placeholder="Ingrese un numero de celular" class="numero-cliente">
+            <input type="text" v-model="numero" placeholder="Ingrese un número de celular" class="numero-cliente">
             <input type="submit" class="btn" value="Enviar SMS">
         </form>
     </div>
@@ -40,7 +40,7 @@ export default {
 
          axios.get('/api/mostrar/nombre/doctor/'+producto)
          .then(res =>{
-            this.nombre = `${res.data.nombre} ${res.data.apellidos}`
+            this.nombre = `${res.data.nombres} ${res.data.apellidos}`
          })
         
        }

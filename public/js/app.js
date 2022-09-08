@@ -23295,7 +23295,7 @@ __webpack_require__.r(__webpack_exports__);
       var producto = urlParams.get("folio");
       this.folio = producto;
       axios.get('/api/mostrar/nombre/doctor/' + producto).then(function (res) {
-        _this2.nombre = "".concat(res.data.nombre, " ").concat(res.data.apellidos);
+        _this2.nombre = "".concat(res.data.nombres, " ").concat(res.data.apellidos);
       });
     }
   }
@@ -24887,7 +24887,7 @@ var _withScopeId = function _withScopeId(n) {
 };
 
 var _hoisted_1 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h4", null, "Compartir acceso a cliente", -1
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h4", null, "Compartir acceso a paciente", -1
   /* HOISTED */
   );
 });
@@ -24919,7 +24919,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
       return $data.numero = $event;
     }),
-    placeholder: "Ingrese un numero de celular",
+    placeholder: "Ingrese un número de celular",
     "class": "numero-cliente"
   }, null, 512
   /* NEED_PATCH */
