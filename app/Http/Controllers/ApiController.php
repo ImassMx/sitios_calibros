@@ -60,18 +60,18 @@ class ApiController extends Controller
     public function doctores(Request $request)
     {
         $filtro = $request->buscador;
-        $especialidad = $request->especialidad;
-        /* $doctores = Doctor::where('nombre', 'LIKE', '%' . $filtro . '%')
+
+        $doctores = Doctor::where('nombre', 'LIKE', '%' . $filtro . '%')
             ->orWhere('folio', 'LIKE', '%' . $filtro . '%')
 
             ->with(['ligas','especialidad'])
-            ->paginate(4); */
-        $doctores = Doctor::whereHas('especialidad', function ($query) use ($filtro) {
+            ->paginate(4);
+        /* $doctores = Doctor::whereHas('especialidad', function ($query) use ($filtro) {
                 $query->where('nombre', 'LIKE', '%' . $filtro . '%')
                     ->orWhere('folio', 'LIKE', '%' . $filtro . '%')
                     ->orWhere('apellidos', 'LIKE', '%' . $filtro . '%')
                     ->orWhere('nombres', 'LIKE', '%' . $filtro . '%');
-            })->with(['ligas', 'especialidad'])->paginate(4);
+            })->with(['ligas', 'especialidad'])->paginate(4); */
         return response()->json($doctores);
     }
 

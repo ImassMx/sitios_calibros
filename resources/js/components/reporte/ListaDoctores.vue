@@ -16,10 +16,6 @@
               v-model="buscador"
               @keyup="buscarDoctor"
             />
-            <!-- <select class="form-select" aria-label="Default select example" v-model="special"  >
-           <option selected value="">Seleccione</option>
-            <option v-for="especialidad in Especialidades" :key="especialidad.id" :value="especialidad.id">{{especialidad.nombre}}</option>
-           </select> -->
           </div>
           <table class="table">
             <thead>
