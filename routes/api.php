@@ -31,7 +31,7 @@ Route::get('/clasificacion-book',[ClasificacionController::class,'clasificacionB
 Route::get('/especialidades',[ApiController::class,'especialidad']);
 Route::get('/codigo/postal',[ApiController::class,'codigoPostal']);
 Route::get('/show/clientes',[ApiController::class,'clientes']);
-Route::get('/show/doctores',[ApiController::class,'doctores']);
+Route::get('/show/reporte/doctores',[ApiController::class,'doctores']);
 Route::get('/mostrar/folio',[ApiController::class,'folio']);
 
 Route::get('/mostrar/datos/slug',[ApiController::class,'getDatosSlug']);

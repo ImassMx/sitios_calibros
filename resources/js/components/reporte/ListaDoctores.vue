@@ -77,7 +77,7 @@ export default {
   methods:{
       traerDoctor(page=1)
       {
-        axios.get('/api/show/doctores?page='+page,{params:{buscador:this.buscador}})
+        axios.get('/api/show/reporte/doctores?page='+page,{params:{buscador:this.buscador}})
         .then(res => {
             this.doctores = res.data
         })

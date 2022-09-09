@@ -23930,7 +23930,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
-      axios.get('/api/show/doctores?page=' + page, {
+      axios.get('/api/show/reporte/doctores?page=' + page, {
         params: {
           buscador: this.buscador
         }
