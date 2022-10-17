@@ -45,10 +45,7 @@ class UsuarioController extends Controller
     public function update(Request $request,$id)
     {
         $user = User::find($id);
-        
-     /*  $user->roles[0]->pivot->role_id = 1;
-      $user->save();
-         */
+
         $user->update([
             'name'=> $request->nombre,
             'email'=> $request->usuario,
@@ -61,9 +58,7 @@ class UsuarioController extends Controller
 
             $actualizado = 1;
     
-
         return response()->json($actualizado);
-        
     }
 
     public function usuarios(Request $request)

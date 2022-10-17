@@ -117,7 +117,7 @@ export default {
   methods: {
     traerLibros(page = 1) {
       axios
-        .get("/api/book?page=" + page, { params: { buscador: this.buscador } })
+        .get("/api/traer/book?page=" + page, { params: { buscador: this.buscador } })
         .then((response) => {
           this.Libros = response.data;
         })

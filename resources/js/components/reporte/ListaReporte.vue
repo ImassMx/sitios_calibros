@@ -24,12 +24,13 @@
                 <th scope="col">NOMBRE</th>
                 <th scope="col">FOLIO</th>
                 <th scope="col">CELULAR</th>
-                <th scope="col">CODIGO P.</th>
+                <th scope="col">CP.</th>
                 <th scope="col">CIUDAD</th>
-                <th scope="col">FECHA DE REGISTRO</th>
-                <th scope="col">FECHA DE DESCARGA</th>
+                <th scope="col">F. REGISTRO</th>
+                <th scope="col">F. DESCARGA</th>
                 <th scope="col">LIBRO DESCARGADO</th>
                 <th scope="col">DOCTOR</th>
+                <th scope="col">DESCARGAS</th>
               </tr>
             </thead>
             <tbody>
@@ -46,6 +47,7 @@
                   {{ lib.nombre }}
                 </td>
                 <td>{{ client.nombre_doctor }}</td>
+                <td>{{ client.descargas }}</td>
               </tr>
             </tbody>
           </table>

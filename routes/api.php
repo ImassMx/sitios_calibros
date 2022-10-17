@@ -22,7 +22,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/book',[ApiController::class,'libros']);
+Route::get('/traer/book',[ApiController::class,'libros']);
 Route::get('/ligas',[ApiController::class,'ligas']);
 Route::get('/libro',[LigaController::class,'zonaDescarga']);
 Route::get('/usuarios',[UsuarioController::class,'usuarios']);
@@ -40,5 +40,7 @@ Route::get('/mostrar/logo/slug',[ApiController::class,'getLogo']);
 
 Route::get('/mostrar/datos/doctor/{folio}',[ApiController::class,'getDatosDoctor']);
 Route::get('/mostrar/nombre/doctor/{folio}',[ApiController::class,'getNombreDoctor']);
+
+Route::get('/validacion/descargas/{id}',[ApiController::class,'validacionDescarga']);
 
 

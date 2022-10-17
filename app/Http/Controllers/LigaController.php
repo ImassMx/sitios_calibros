@@ -15,37 +15,6 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class LigaController extends Controller
 {
-
-    public function __construct()
-    {
-        /* $this->middleware('auth'); */
-    }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $this->validate(
@@ -97,20 +66,12 @@ class LigaController extends Controller
         return response()->json(['respuesta' => 'Creado']);
     }
 
-
     public function edit($id)
     {
         $liga = Liga::where('id', $id)->with('publicacion')->get();
         return response()->json($liga);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Liga  $liga
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
 
@@ -140,7 +101,6 @@ class LigaController extends Controller
         $liga->estado = $request->estado;
         $liga->img_lab = $nombreImagen ?? $liga->img_lab;
         $liga->save();
-
 
         $id_publicacion =  $liga_relacion[0]->publicacion[0]->id;
 
@@ -179,6 +139,7 @@ class LigaController extends Controller
         if($cliente)
         {
         $cliente->libro_id = $id;
+        $cliente->descargas = $cliente->descargas+1;
         $cliente->fecha_descarga = Carbon::now();
         $cliente->save();
         }else{

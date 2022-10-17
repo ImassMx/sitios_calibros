@@ -7,11 +7,7 @@ use Illuminate\Http\Request;
 
 class ClasificacionController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index(Request $request)
     {
 
@@ -19,13 +15,6 @@ class ClasificacionController extends Controller
         return response()->json($clasificacion);
     }
 
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $this->validate(
@@ -44,13 +33,6 @@ class ClasificacionController extends Controller
 
     }
 
-   
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Clasificacion  $clasificacion
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         $clasificacion = Clasificacion::where('id',$id)->first();
@@ -58,13 +40,6 @@ class ClasificacionController extends Controller
         return response()->json($clasificacion);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Clasificacion  $clasificacion
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         $this->validate($request,[
@@ -75,7 +50,6 @@ class ClasificacionController extends Controller
         ]
         );
 
-
         $clasificacion = Clasificacion::where('id',$id)->first();
         $clasificacion->update([
             'nombre' => $request->nombre
@@ -84,12 +58,6 @@ class ClasificacionController extends Controller
         return response()->json($actualizado);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Clasificacion  $clasificacion
-     * @return \Illuminate\Http\Response
-     */
     public function destroy( $id)
     {
         Clasificacion::find($id)->delete();

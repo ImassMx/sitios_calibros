@@ -11,6 +11,7 @@
             <th>LIBRO</th>
             <th>FECHA REGISTRO</th>
             <th>FECHA DESCARGA</th>
+            <th>DESCARGAS</th>
         </tr>
     </thead>
     <tbody>
@@ -37,10 +38,13 @@
                    @endif
                    
                 <td>
-                    {{ $date::parse( $cliente->created_at)->format('d/m/Y') }}
+                    {{ $date::parse( $cliente->created_at)->format('d-m-Y') }}
                 </td>
                 <td>
-                    {{ $cliente->fecha_descarga }}
+                    {{ $date::parse($cliente->fecha_descarga)->format('d-m-Y')}}
+                </td>
+                <td>
+                    {{ $cliente->descargas}}
                 </td>
         </tr>
          @endforeach

@@ -17,7 +17,7 @@ class ApiController extends Controller
 {
     public function libros(Request $request)
     {
-        dump(auth()->user()->id);
+
         $filtro = $request->buscador;
         $libro = Libro::where('nombre', 'LIKE', '%' . $filtro . '%')->paginate(5);
         return response()->json($libro);
@@ -59,13 +59,7 @@ class ApiController extends Controller
 
     public function doctores(Request $request)
     {
-        $filtro = $request->buscador;
-       
-        /*  $doctores = Doctor::where('nombre', 'LIKE', '%' . $filtro . '%')
-            ->orWhere('folio', 'LIKE', '%' . $filtro . '%')
-
-            ->with(['ligas','especialidad'])
-            ->paginate(4); */
+        $filtro = $request->buscador;   
 
         $doctores = Doctor::whereHas('especialidad', function ($query) use ($filtro) {
                 $query->where('nombre', 'LIKE', '%' . $filtro . '%')
@@ -135,5 +129,12 @@ class ApiController extends Controller
         $doctor = Doctor::where('folio',$folio)->first();
           return response()->json($doctor);
     
+    }
+
+    public function validacionDescarga($id)
+    {   
+       $cliente = Cliente::where("user_id",$id)->first();
+
+       return response()->json($cliente->descargas);
     }
 }

@@ -18,6 +18,7 @@ class Cliente extends Authenticatable
         'celular',
         'codigo_postal',
         'alcaldia',
+        'descargas',
         'ciudad',
         'estado',
         'libro_id',

@@ -20,10 +20,10 @@
     function traerCodigo()
     {
       var cos = codigo.value
-      axios({
-          method:'get',
-          url:'/api/codigo/postal?codigo='+cos
-      })
+        axios({
+            method:'get',
+            url:'/api/codigo/postal?codigo='+cos
+        })
       .then(res => {
         
           if(res.data.d_codigo){

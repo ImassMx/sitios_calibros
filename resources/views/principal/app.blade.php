@@ -60,11 +60,9 @@
             @endif
             <hr>
         </div>
-        {{-- <div id="app">
 
-            <zona-descarga />
-        </div> --}}
     </div>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{ asset('js/index.js') }}"></script>
     <script src="{{ asset('js/app.js') }}"></script>
       <script src="{{ asset('js/libros.js') }}"></script>

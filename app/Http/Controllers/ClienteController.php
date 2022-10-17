@@ -11,10 +11,12 @@ use App\Models\Estado;
 use App\Models\Cliente;
 use Illuminate\Http\Request;
 use App\Exports\ClientExport;
+use App\Mail\PacienteWelcome;
 use Illuminate\Support\Facades\DB;
 use Facade\FlareClient\Http\Client;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ClienteController extends Controller
@@ -80,6 +82,16 @@ class ClienteController extends Controller
                     'libro_id'=> $libro_id[0]->libro_id,
                     'created_at' => date('d-m-Y')
                 ]);
+
+                $dominio = $_SERVER['HTTP_HOST'];
+
+            if ($dominio === "127.0.0.1") {
+                $dominio = "http://127.0.0.1:8000";
+            } else {
+                $dominio = $_SERVER['HTTP_HOST'];
+            }
+
+            Mail::to($request->email)->send(new PacienteWelcome($doctor->folio,$dominio));
 
                 auth()->attempt($request->only('email', 'password'));
                 return redirect()->route('zona.descarga', $doctor->ligas->slug);

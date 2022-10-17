@@ -12,16 +12,6 @@ use Illuminate\Support\Facades\Storage;
 class LibrosController extends Controller
 {
 
-    public function __construct()
-    {
-        /* $this->middleware('auth'); */
-    }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $libro = Libro::all();
@@ -29,11 +19,6 @@ class LibrosController extends Controller
         return response()->json($libro);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $this->validate(
@@ -75,12 +60,6 @@ class LibrosController extends Controller
         return response()->json(['resultado' => $request]);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         $libros = Libro::where('id', $id)->first();
@@ -124,12 +103,6 @@ class LibrosController extends Controller
         return response()->json();
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
 

@@ -2,10 +2,11 @@
 
 namespace App\Exports;
 
+use Carbon\Carbon;
 use App\Models\Doctor;
 use Illuminate\Contracts\View\View;
-use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\FromView;
+use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 
 class DoctorsExport implements FromView,ShouldAutoSize
@@ -16,7 +17,8 @@ class DoctorsExport implements FromView,ShouldAutoSize
     public function view():View
     {
         $doctor = Doctor::with('ligas')->with('especialidad')->get();
+        $date = new Carbon();
 
-        return view('export.Doctores',['doctores' => $doctor]);
+        return view('export.Doctores',['doctores' => $doctor,'date'=> $date]);
     }
 }
