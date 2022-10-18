@@ -46,6 +46,7 @@
             </form>
         </div>
     </div>
+    
     <script src="{{asset('js/index.js')}}"></script>
     <script src="{{asset('js/doctor.js')}}"></script>
 </body>

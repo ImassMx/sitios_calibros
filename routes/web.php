@@ -33,7 +33,7 @@ Route::get('/', function () {
 Route::get('/admin/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth');
 
 Route::post('/create/book', [LibrosController::class,'store']);
-Route::post('/liga', [LigaController::class,'store']);
+Route::post('/request/liga', [LigaController::class,'store']);
 Route::get('/admin/login',[LoginController::class,'index'])->name('login');
 Route::post('/admin/login',[LoginController::class,'store']);
 Route::post('/logout',[LogoutController::class,'store'])->name('logout');

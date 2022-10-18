@@ -23632,7 +23632,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
-      axios.get("/api/book?page=" + page, {
+      axios.get("/api/traer/book?page=" + page, {
         params: {
           buscador: this.buscador
         }
@@ -23655,7 +23655,7 @@ __webpack_require__.r(__webpack_exports__);
       data.append('estado', this.estado);
       data.append('book', this.book);
       data.append('logo', this.logo);
-      axios.post("/liga", data, config).then(function (response) {
+      axios.post("/request/liga", data, config).then(function (response) {
         _this2.showAlert();
 
         _this2.limpiar();

@@ -24,7 +24,7 @@
         margin: 0 auto;
     }
     .logo-email{
-        width: 30%;
+        width: 10%;
         margin: 0 auto;
     }
     .contenido-email h3{
