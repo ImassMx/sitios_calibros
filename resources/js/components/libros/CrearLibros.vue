@@ -117,6 +117,9 @@ export default {
         this.pdf = pdf
     },
     savebook(file) {
+
+      this.AlertProcess()
+      
       const config = { headers: { "content-type": "multipart/form-data" } };
       let data = new FormData();
       data.append("nombre", this.nombre);
@@ -157,6 +160,20 @@ export default {
           this.clasificaciones = response.data
       })
       .catch(error => console.log(error))
+    },
+    AlertProcess()
+    {
+      swal.fire({
+            title: 'Procesando....',
+            text: 'Un momento por favor se estan enviando los datos',
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            allowEnterKey: false,
+            showConfirmButton: false,
+            onBeforeOpen: () => {
+                swal.showLoading();
+            }
+        });
     }
   }
 };

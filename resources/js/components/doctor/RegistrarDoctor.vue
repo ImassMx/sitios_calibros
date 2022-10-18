@@ -146,7 +146,7 @@ export default {
     },
     saveDoctor() {
       this.axios
-        .post("/registrar-doctor", {
+        .post("/request/registrar/doctor", {
           nombre: this.nombre,
           apellidos: this.apellidos,
           especialidad: this.especialidad,

@@ -23134,7 +23134,7 @@ __webpack_require__.r(__webpack_exports__);
     saveDoctor: function saveDoctor() {
       var _this2 = this;
 
-      this.axios.post("/registrar-doctor", {
+      this.axios.post("/request/registrar/doctor", {
         nombre: this.nombre,
         apellidos: this.apellidos,
         especialidad: this.especialidad,
@@ -23342,6 +23342,7 @@ __webpack_require__.r(__webpack_exports__);
     savebook: function savebook(file) {
       var _this = this;
 
+      this.AlertProcess();
       var config = {
         headers: {
           "content-type": "multipart/form-data"
@@ -23383,6 +23384,19 @@ __webpack_require__.r(__webpack_exports__);
         _this2.clasificaciones = response.data;
       })["catch"](function (error) {
         return console.log(error);
+      });
+    },
+    AlertProcess: function AlertProcess() {
+      swal.fire({
+        title: 'Procesando....',
+        text: 'Un momento por favor se estan enviando los datos',
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        allowEnterKey: false,
+        showConfirmButton: false,
+        onBeforeOpen: function onBeforeOpen() {
+          swal.showLoading();
+        }
       });
     }
   }

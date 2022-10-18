@@ -65,7 +65,7 @@ Route::post('/usuario/{id}',[UsuarioController::class,'update']);
 Route::delete('/delete-user/{id}',[UsuarioController::class,'destroy']);
 //DOCTOR
 Route::get('/registrar/doctor',[DoctorController::class,'index']);
-Route::post('/registrar-doctor',[DoctorController::class,'store']);
+Route::post('/request/registrar/doctor',[DoctorController::class,'store']);
 Route::get('/validar/email/doctor',[DoctorController::class,'ValidarEmail']);
 Route::get('/validar/phone/doctor',[DoctorController::class,'ValidarPhone']);
 //CLASIFICACION
