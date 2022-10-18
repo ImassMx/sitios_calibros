@@ -9,6 +9,7 @@
             <th>LIGA</th>
             <th>CÓDIGO POSTAL</th>
             <th>FECHA DESCARGA</th>
+            <th>DESCARGAS</th>
         </tr>
     </thead>
     <tbody>
@@ -29,6 +30,9 @@
                 </td>
                 <td>
                     {{ $date::parse($doctor->fecha_descarga)->format('d-m-Y') }}
+                </td>
+                <td>
+                    {{$doctor->descargas}}
                 </td>
         </tr>
          @endforeach
