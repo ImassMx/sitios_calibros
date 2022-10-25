@@ -24303,7 +24303,7 @@ var _hoisted_1 = {
 var _hoisted_2 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h1", {
     "class": "mt-4 mb-3"
-  }, "Listar Clasificación", -1
+  }, "Listado de Clasificaciones", -1
   /* HOISTED */
   );
 });
@@ -25413,7 +25413,7 @@ var _hoisted_1 = {
 var _hoisted_2 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h1", {
     "class": "mt-4 mb-3"
-  }, "Listar Libros", -1
+  }, "Listado de Libros", -1
   /* HOISTED */
   );
 });
@@ -26290,7 +26290,7 @@ var _hoisted_1 = {
 var _hoisted_2 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h1", {
     "class": "mt-4 mb-3"
-  }, "Listar Ligas", -1
+  }, "Lista de Clientes", -1
   /* HOISTED */
   );
 });
@@ -26458,7 +26458,7 @@ var _hoisted_1 = {
 
 var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h1", {
   "class": "mt-4 mb-3"
-}, "Reporte Doctores", -1
+}, "Reporte de Doctores", -1
 /* HOISTED */
 );
 
@@ -26579,7 +26579,7 @@ var _hoisted_1 = {
 
 var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h1", {
   "class": "mt-4 mb-3"
-}, "Reporte Pacientes", -1
+}, "Reporte de Pacientes", -1
 /* HOISTED */
 );
 

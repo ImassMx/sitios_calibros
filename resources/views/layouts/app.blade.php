@@ -82,9 +82,9 @@
                                 data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
                                     <router-link to="/admin/create-libros" class="nav-link text-white">Crear Libro</router-link>
-                                    <router-link to="/admin/listar-libros" class="nav-link text-white">Listar Libro</router-link>
+                                    <router-link to="/admin/listar-libros" class="nav-link text-white">Lista de Libros</router-link>
                                     <router-link to="/admin/crear-clasificacion" class="nav-link text-white">Crear Clasificacion</router-link>
-                                    <router-link to="/admin/listar-clasificacion" class="nav-link text-white">Listar Clasificacion</router-link>
+                                    <router-link to="/admin/listar-clasificacion" class="nav-link text-white">Lista de Clasificacion</router-link>
                                 </nav>
                             </div>
                            @endcan
@@ -99,7 +99,7 @@
                                 data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
                                     <router-link to="/admin/ligas" class="nav-link text-white">Crear Cliente</router-link>
-                                    <router-link to="/admin/listar-ligas" class="nav-link text-white">Listar Clientes</router-link>
+                                    <router-link to="/admin/listar-ligas" class="nav-link text-white">Lista de Clientes</router-link>
                                 </nav>
                             </div>
                             @endcan
@@ -112,8 +112,8 @@
                             <div class="collapse" id="collapsereporte" aria-labelledby="headingOne"
                                 data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <router-link to="/admin/reporte/doctores" class="nav-link text-white">Reporte Doctores</router-link>
-                                    <router-link to="/admin/reporte/pacientes" class="nav-link text-white">Reporte Pacientes</router-link>
+                                    <router-link to="/admin/reporte/doctores" class="nav-link text-white">Reporte de Doctores</router-link>
+                                    <router-link to="/admin/reporte/pacientes" class="nav-link text-white">Reporte de Pacientes</router-link>
                                     
                                 </nav>
                             </div>

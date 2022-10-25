@@ -1,6 +1,6 @@
 <template>
   <div class="container-fluid px-4">
-    <h1 class="mt-4 mb-3">Listar Clientes</h1>
+    <h1 class="mt-4 mb-3">Lista de Clientes</h1>
     <div>
       <div class="card mb-4">
         <div class="card-body">

@@ -1,6 +1,6 @@
 <template>
   <div class="container-fluid px-4">
-    <h1 class="mt-4 mb-3">Reporte Doctores</h1>
+    <h1 class="mt-4 mb-3">Reporte de Doctores</h1>
 
     <a href="/export/doctor" class="btn btn-outline-success mb-3" download="Doctores.xlsx">Exportar Reporte</a>
     <div>
