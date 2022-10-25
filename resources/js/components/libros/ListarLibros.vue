@@ -1,6 +1,6 @@
 <template>
   <div class="container-fluid px-4">
-    <h1 class="mt-4 mb-3">Listar Libros</h1>
+    <h1 class="mt-4 mb-3">Listado de Libros</h1>
     <div>
       <a href="/export/book" class="btn btn-outline-success mb-3"
         >Exportar Excel</a

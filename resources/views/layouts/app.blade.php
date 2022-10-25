@@ -99,7 +99,7 @@
                                 data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
                                     <router-link to="/admin/ligas" class="nav-link text-white">Crear Cliente</router-link>
-                                    <router-link to="/admin/listar-ligas" class="nav-link text-white">Listar Cliente</router-link>
+                                    <router-link to="/admin/listar-ligas" class="nav-link text-white">Listar Clientes</router-link>
                                 </nav>
                             </div>
                             @endcan
