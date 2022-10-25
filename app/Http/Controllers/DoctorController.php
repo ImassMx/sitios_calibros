@@ -124,7 +124,7 @@ class DoctorController extends Controller
 
     public function exportDoctor()
     {
-        return Excel::download(new DoctorsExport, 'Doctores.xlsx');
+        return Excel::download(new DoctorsExport, 'Reporte Doctores.xlsx');
     }
 
     public function ValidarEmail(Request $request)

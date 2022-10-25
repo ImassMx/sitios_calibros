@@ -1,15 +1,24 @@
+
+<table style="width:100%">
+</table>
+
+<h3>Reporte de Doctores</h3>
+<table style="width:100%">
+
+</table>
+
 <table>
     <thead>
         <tr>
-            <th>ID</th>
-            <th>NOMBRE</th>
-            <th>APELLIDOS</th>
-            <th>ESPECIALIDAD</th>
-            <th>FOLIO</th>
-            <th>LIGA</th>
-            <th>CÓDIGO POSTAL</th>
-            <th>FECHA DESCARGA</th>
-            <th>DESCARGAS</th>
+            <th style="text-align: center;font-weight:bold;">ID</th>
+            <th style="text-align: center;font-weight:bold;">NOMBRE</th>
+            <th style="text-align: center;font-weight:bold;">APELLIDOS</th>
+            <th style="text-align: center;font-weight:bold;">ESPECIALIDAD</th>
+            <th style="text-align: center;font-weight:bold;">FOLIO</th>
+            <th style="text-align: center;font-weight:bold;">LIGA</th>
+            <th style="text-align: center;font-weight:bold;">CÓDIGO POSTAL</th>
+            <th style="text-align: center;font-weight:bold;">FECHA DESCARGA</th>
+            <th style="text-align: center;font-weight:bold;">DESCARGAS</th>
         </tr>
     </thead>
     <tbody>

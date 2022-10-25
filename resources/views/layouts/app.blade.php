@@ -56,9 +56,9 @@
 
                             <div class="sb-sidenav-menu-heading"></div>
                             @can('usuarios')
-                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                            <a class="nav-link collapsed text-white" href="#" data-bs-toggle="collapse"
                                 data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-                                <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
+                                <div class="sb-nav-link-icon"><i class="fas fa-users text-white"></i></div>
                                 USUARIOS
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
@@ -66,54 +66,54 @@
                                 <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne"
                                 data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <router-link class="nav-link" to="/admin/crear-usuario">Crear Usuarios</router-link>
-                                    <router-link class="nav-link" to="/admin/listar-usuarios">Ver Usuarios</router-link>
+                                    <router-link class="nav-link text-white" to="/admin/crear-usuario">Crear Usuarios</router-link>
+                                    <router-link class="nav-link text-white" to="/admin/listar-usuarios">Ver Usuarios</router-link>
                                 </nav>
                             </div>
                             @endcan
                            @can('libros')
-                                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                                <a class="nav-link collapsed text-white" href="#" data-bs-toggle="collapse"
                                 data-bs-target="#collapsebook" aria-expanded="false" aria-controls="collapseLayouts">
-                                <div class="sb-nav-link-icon"><i class="fas fa-book"></i></div>
+                                <div class="sb-nav-link-icon"><i class="fas fa-book text-white"></i></div>
                                 LIBROS
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
                             <div class="collapse" id="collapsebook" aria-labelledby="headingOne"
                                 data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <router-link to="/admin/create-libros" class="nav-link">Crear Libro</router-link>
-                                    <router-link to="/admin/listar-libros" class="nav-link">Listar Libro</router-link>
-                                    <router-link to="/admin/crear-clasificacion" class="nav-link">Crear Clasificacion</router-link>
-                                    <router-link to="/admin/listar-clasificacion" class="nav-link">Listar Clasificacion</router-link>
+                                    <router-link to="/admin/create-libros" class="nav-link text-white">Crear Libro</router-link>
+                                    <router-link to="/admin/listar-libros" class="nav-link text-white">Listar Libro</router-link>
+                                    <router-link to="/admin/crear-clasificacion" class="nav-link text-white">Crear Clasificacion</router-link>
+                                    <router-link to="/admin/listar-clasificacion" class="nav-link text-white">Listar Clasificacion</router-link>
                                 </nav>
                             </div>
                            @endcan
                             @can('ligas')
-                                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                                <a class="nav-link collapsed text-white" href="#" data-bs-toggle="collapse"
                                 data-bs-target="#collapseligas" aria-expanded="false" aria-controls="collapseLayouts">
-                                <div class="sb-nav-link-icon"><i class="fas fa-link"></i></div>
-                                LIGAS
+                                <div class="sb-nav-link-icon"><i class="fas fa-link text-white"></i></div>
+                                CLIENTES
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
                             <div class="collapse" id="collapseligas" aria-labelledby="headingOne"
                                 data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <router-link to="/admin/ligas" class="nav-link">Crear Ligas</router-link>
-                                    <router-link to="/admin/listar-ligas" class="nav-link">Listar Ligas</router-link>
+                                    <router-link to="/admin/ligas" class="nav-link text-white">Crear Cliente</router-link>
+                                    <router-link to="/admin/listar-ligas" class="nav-link text-white">Listar Cliente</router-link>
                                 </nav>
                             </div>
                             @endcan
-                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                            <a class="nav-link collapsed text-white" href="#" data-bs-toggle="collapse"
                                 data-bs-target="#collapsereporte" aria-expanded="false" aria-controls="collapseLayouts">
-                                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                                <div class="sb-nav-link-icon"><i class="fas fa-table text-white"></i></div>
                                 REPORTES
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
                             <div class="collapse" id="collapsereporte" aria-labelledby="headingOne"
                                 data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <router-link to="/admin/reporte/doctores" class="nav-link">Reporte Doctores</router-link>
-                                    <router-link to="/admin/reporte/pacientes" class="nav-link">Reporte Pacientes</router-link>
+                                    <router-link to="/admin/reporte/doctores" class="nav-link text-white">Reporte Doctores</router-link>
+                                    <router-link to="/admin/reporte/pacientes" class="nav-link text-white">Reporte Pacientes</router-link>
                                     
                                 </nav>
                             </div>

@@ -131,6 +131,6 @@ class ClienteController extends Controller
 
     public function exportClient()
     {
-        return Excel::download(new ClientExport, 'Pacientes.xlsx');
+        return Excel::download(new ClientExport, 'Reporte Pacientes.xlsx');
     }
 }

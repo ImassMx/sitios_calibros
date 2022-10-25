@@ -29,6 +29,6 @@ class LigaPaciente extends Mailable
      */
     public function build()
     {
-        return $this->view('email.emailPaciente',['folio'=> $this->folio,'dominio'=> $this->dominio]);
+        return $this->view('email.emailPaciente',['folio'=> $this->folio,'dominio'=> $this->dominio])->subject("Liga Paciente");
     }
 }

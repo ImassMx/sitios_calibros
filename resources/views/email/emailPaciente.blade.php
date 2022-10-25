@@ -24,7 +24,7 @@
         margin: 0 auto;
     }
     .logo-email{
-        width: 10%;
+        width: 1rem !important;
         margin: 0 auto;
     }
     .contenido-email h3{
@@ -37,9 +37,9 @@
         .contenido-email{
             width: 90%;
         }
-        .logo-email{
+        /* .logo-email{
         width: 40%;
-        }
+        } */
         .contenido-email h3{
         text-align: center;
     }
@@ -53,9 +53,9 @@
         .contenido-email{
             width: 70%;
         }
-        .logo-email{
+        /* .logo-email{
         width: 40%;
-        }
+        } */
         .contenido-email h3{
         text-align: center;
         }
@@ -68,7 +68,7 @@
 <body>
 
     <div class="contenido-email">
-        <img src="{{asset("img/logo.jpg")}}" alt="" class="logo-email">
+        <img src="https://demo.vistobuenoeditores.com.mx/img/logo.jpg" alt="" width="200px" style="display:flex;justify-content:center margin: 0 auto;">
         <h3>Gracias por ser parte de Visto Bueno Editores</h3>
         <p>Ingresa a esta liga <a href="{{$dominio}}">{{$dominio}}</a> para descargar el libro con el codigo {{$folio}}.</p>
     </div>

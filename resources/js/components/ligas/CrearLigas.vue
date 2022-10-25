@@ -1,6 +1,6 @@
 <template>
   <div class="container-fluid px-4">
-    <h1 class="mt-4 mb-4">Agregar Liga</h1>
+    <h1 class="mt-4 mb-4">Agregar Nuevo Cliente</h1>
     <div class="container">
       <div class="row cambiar">
         <!-- {{ book }} -->

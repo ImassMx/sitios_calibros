@@ -29,6 +29,6 @@ class PacienteWelcome extends Mailable
      */
     public function build()
     {
-        return $this->view('email.WelcomePaciente',["folio"=>$this->folio,"dominio"=>$this->dominio]);
+        return $this->view('email.WelcomePaciente',["folio"=>$this->folio,"dominio"=>$this->dominio])->subject("Bienvenida Paciente");
     }
 }
