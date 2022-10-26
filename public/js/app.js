@@ -24097,13 +24097,14 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
-      axios.get("/api/usuarios?page=" + page, {
+      axios.get("/api/traer/usuarios?page=" + page, {
         params: {
           buscador: this.buscador
         }
       }).then(function (response) {
         _this.usuarios = response.data;
-        console.log(response.data);
+      })["catch"](function (error) {
+        console.log(error);
       });
     },
     buscarUsuario: function buscarUsuario() {

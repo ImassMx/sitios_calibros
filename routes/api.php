@@ -25,7 +25,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('/traer/book',[ApiController::class,'libros']);
 Route::get('/ligas',[ApiController::class,'ligas']);
 Route::get('/libro',[LigaController::class,'zonaDescarga']);
-Route::get('/usuarios',[UsuarioController::class,'usuarios']);
+Route::get('/traer/usuarios',[UsuarioController::class,'usuarios']);
 Route::get('/clasificacion',[ClasificacionController::class,'index']);
 Route::get('/clasificacion-book',[ClasificacionController::class,'clasificacionBook']);
 Route::get('/especialidades',[ApiController::class,'especialidad']);

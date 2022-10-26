@@ -71,12 +71,13 @@ export default {
   methods: {
     buscarUser(page = 1) {
       axios
-        .get("/api/usuarios?page=" + page, {
+        .get("/api/traer/usuarios?page=" + page, {
           params: { buscador: this.buscador },
         })
         .then((response) => {
           this.usuarios = response.data;
-          console.log(response.data);
+        }).catch(error=>{
+          console.log(error)
         });
     },
     buscarUsuario() {
