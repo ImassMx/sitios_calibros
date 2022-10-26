@@ -36,6 +36,7 @@
             <option value="">--- Seleccione ---</option>
             <option value="Admin">Admin</option>
             <option value="Asistente">Asistente</option>
+            <option value="Ejecutivo">Ejecutivo</option>
           </select>
           <div v-if="errors && errors.rol">
                   <p class="errors">{{errors.rol[0]}}</p>

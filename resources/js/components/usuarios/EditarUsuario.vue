@@ -1,6 +1,6 @@
 <template>
   <div class="container px-4">
-    <h1 class="mt-4">Crear Usuario</h1>
+    <h1 class="mt-4">Editar Usuario</h1>
     <div class="m-5 col-lg-4 col-md-8">
       <form class="" v-on:submit.prevent="saveUser">
         <div class="form-group mb-3">
@@ -46,6 +46,7 @@
             <option value="">--- Seleccione ---</option>
             <option value="Admin">Admin</option>
             <option value="Asistente">Asistente</option>
+            <option value="Ejecutivo">Ejecutivo</option>
           </select>
           <div v-if="errors && errors.rol">
             <p class="errors">{{ errors.rol[0] }}</p>

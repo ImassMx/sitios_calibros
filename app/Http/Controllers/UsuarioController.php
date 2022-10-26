@@ -64,12 +64,13 @@ class UsuarioController extends Controller
     public function usuarios(Request $request)
     {
         $filtro = $request->buscador;
-        $users = User::where('name','LIKE','%'.$filtro.'%')->role(['Admin','Asistente'])->with('roles')->paginate(4);
+        $users = User::where('name','LIKE','%'.$filtro.'%')->role(['Admin','Asistente','Ejecutivo'])->with('roles')->paginate(4);
         return response()->json($users);
     }
 
     public function destroy( $id)
     {
+        DB::table('model_has_roles')->where('model_id',$id)->delete();
         $user = User::where('id',$id)->first();
         $user->delete();
     }
