@@ -26,7 +26,7 @@
                 <th scope="col">CODIGO POSTAL</th>
                 <th scope="col">ESPECIALIDAD</th>
                 <th scope="col">FOLIO</th>
-                <th scope="col">PACIENTE</th>
+                <th scope="col">CLIENTE</th>
                 <th scope="col">DESCARGAS</th>
                 <th scope="col">FECHA DESCARGA</th>
               </tr>

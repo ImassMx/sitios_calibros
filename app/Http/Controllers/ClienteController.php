@@ -108,15 +108,15 @@ class ClienteController extends Controller
             if (!auth()->attempt($request->only(['celular', 'password']), $request->remember)) {
                 return back()->with('mensaje', 'El número de celular es incorrecto');
             }
-            $cliente = User::where('celular', $request->celular)->with('cliente')->first();
-            $libro = $cliente->cliente->libro_id;
-
-            $libro_id = DB::table('publicacions')->where('libro_id', $libro)->first();
+            $user = User::where('celular', $request->celular)->first();
+            $cliente = Cliente::where("user_id",$user->id)->first();
+    
+            $libro_id = DB::table('publicacions')->where('libro_id', $cliente->libro_id)->first();
             $slug = Liga::where('id', $libro_id->liga_id)->first();
-
+    
             return redirect()->route('zona.descarga', $slug->slug);
         } catch (\Throwable $th) {
-
+            return back()->with('mensaje', 'La liga no existe.');
         }
     }
 
@@ -132,7 +132,7 @@ class ClienteController extends Controller
         $estados = Estado::all();
         return view('auth-cliente.register', compact('estados'));
     }
-    
+
     public function exportClient()
     {
         return Excel::download(new ClientExport, 'Reporte Pacientes.xlsx');
