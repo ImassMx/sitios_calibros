@@ -15,7 +15,7 @@ class LibrosController extends Controller
     public function index()
     {
         $libro = Libro::all();
-        dump(auth()->user->id);
+
         return response()->json($libro);
     }
 

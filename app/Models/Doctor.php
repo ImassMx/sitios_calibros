@@ -2,31 +2,43 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Liga;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletingTrait;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Especialidad;
+use Hrshadhin\Userstamps\UserstampsTrait;
 
 class Doctor extends Model
 {
-    use HasFactory;
+  use HasFactory;
 
-    protected $fillable =[
-        'especialidad_id',
-        'liga_id',
-        'nombres',
-        'apellidos',
-        'folio',
-        'descargas',
-        'user_id',
-        'cp'
-    ];
 
-    public function ligas()
-    {
-      return  $this->hasOne(Liga::class,'id','liga_id');
-    }
+  protected $softDelete = true;
 
-    public function especialidad()
-    {
-      return $this->hasOne(Especialidad::class,'id','especialidad_id');
-    }
+  protected $fillable = [
+    'especialidad_id',
+    'liga_id',
+    'nombres',
+    'apellidos',
+    'folio',
+    'descargas',
+    'user_id',
+    'cp'
+  ];
+
+  public function ligas()
+  {
+    return  $this->hasOne(Liga::class, 'id', 'liga_id')->withTrashed();
+  }
+
+  public function especialidad()
+  {
+    return $this->hasOne(Especialidad::class, 'id', 'especialidad_id');
+  }
+
+  /* public function ligas_trashed()
+  {
+    return  $this->hasOne(Liga::class, 'id', 'liga_id');
+  } */
 }

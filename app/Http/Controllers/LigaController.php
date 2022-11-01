@@ -10,6 +10,9 @@ use App\Models\Cliente;
 use App\Models\Publicacion;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Doctrine\DBAL\Schema\Table;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
@@ -119,9 +122,8 @@ class LigaController extends Controller
     public function destroy($id)
     {
         $liga = Liga::find($id);
-
-        $liga->estado = 0;
-        $liga->save();
+        $liga->publicacion()->delete();
+        $liga->delete();
 
         $eliminado = 1;
 

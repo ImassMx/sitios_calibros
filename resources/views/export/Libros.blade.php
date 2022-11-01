@@ -1,3 +1,11 @@
+
+<table style="width:100%">
+</table>
+
+<h3>Reporte de Libros</h3>
+<table style="width:100%">
+
+</table>
 <table>
     <thead>
         <tr>

@@ -1,6 +1,6 @@
 <template>
   <div class="container-fluid px-4">
-    <h1 class="mt-4 mb-4">Agregar Liga {{id}}</h1>
+    <h1 class="mt-4 mb-4">Editar Liga</h1>
     <div class="container">
       <div class="row cambiar">
         <div class="col">
@@ -145,7 +145,7 @@ export default {
 
     traerLibros(page=1){
         axios
-      .get('/api/book?page='+page,{params:{buscador:this.buscador}})
+      .get('/api/traer/book?page='+page,{params:{buscador:this.buscador}})
       .then((response) => {
         this.Libros = response.data
         console.log(this.Libros)

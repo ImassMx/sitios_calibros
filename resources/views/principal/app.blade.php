@@ -18,14 +18,14 @@
         <img src="{{ asset('img/logo.jpg') }}" alt="" class="logo">
         <ul class="menu_items">
             @auth
-           <form method="POST" action="{{route('logout.cliente')}}">
-                @csrf
-                <button type="submit"  class="logout">Cerrar Session</button>
-            </form>
+                <form method="POST" action="{{ route('logout.cliente') }}">
+                    @csrf
+                    <button type="submit" class="logout">Cerrar Session</button>
+                </form>
             @endauth
             @guest
                 <li><a href="#pro">¿Quienes Somos?</a></li>
-            <li><a href="#contact">Contactenos</a></li>
+                <li><a href="#contact">Contactenos</a></li>
             @endguest
         </ul>
         <div id="hamburguer">
@@ -39,22 +39,26 @@
 
     <div class="descargas container">
         <div class="content-descargas">
-            @if ($libro->estado === 1)
-                <h2>{{ $libro->nombre }}</h2>
-            <div class="cuerpo-descargas">
-                <div class="image">
-                    <img src="{{ asset('/admin/portada/' . $libro->portada) }}" alt="">
-                </div>
-                <div class="descripcion">
-                    <p>{{ $libro->descripcion }}</p>
+            @if ($libro)
+                @if ($libro->estado === 1)
+                    <h2>{{ $libro->nombre }}</h2>
+                    <div class="cuerpo-descargas">
+                        <div class="image">
+                            <img src="{{ asset('/admin/portada/' . $libro->portada) }}" alt="">
+                        </div>
+                        <div class="descripcion">
+                            <p>{{ $libro->descripcion }}</p>
 
-                    <a href="{{ asset('libros/' . $libro->pdf) }}" id="descargar-libro"
-                        download="{{ $libro->nombre . '.pdf' }}">Descargar</a>
-                    <input type="hidden" value="{{ $libro->descargas }}" id="numerodescarga">
-                    <input type="hidden" value="{{auth()->user()->id}}" id="id_usuario">
-                    <input type="hidden" value="{{ $libro->id }}" id="id_libro">
-                </div>
-            </div>
+                            <a href="{{ asset('libros/' . $libro->pdf) }}" id="descargar-libro"
+                                download="{{ $libro->nombre . '.pdf' }}">Descargar</a>
+                            <input type="hidden" value="{{ $libro->descargas }}" id="numerodescarga">
+                            <input type="hidden" value="{{ auth()->user()->id }}" id="id_usuario">
+                            <input type="hidden" value="{{ $libro->id }}" id="id_libro">
+                        </div>
+                    </div>
+                @else
+                    <h2>El contenido no esta disponible por el momento.</h2>
+                @endif
             @else
                 <h2>El contenido ya no esta disponible</h2>
             @endif
@@ -65,13 +69,13 @@
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{ asset('js/index.js') }}"></script>
     <script src="{{ asset('js/app.js') }}"></script>
-      <script src="{{ asset('js/libros.js') }}"></script>
+    <script src="{{ asset('js/libros.js') }}"></script>
 
     <style>
-        .logout{
-            background:rgba(0,0,0,0);
-            border:none;
-            font-size:1rem;
+        .logout {
+            background: rgba(0, 0, 0, 0);
+            border: none;
+            font-size: 1rem;
         }
     </style>
 </body>

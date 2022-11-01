@@ -25,7 +25,7 @@ class ApiController extends Controller
 
     public function ligas()
     {
-        $ligas = Liga::paginate(4);
+        $ligas = Liga::where("estado","1")->paginate(4);
         return response()->json($ligas);
     }
     public function especialidad()
@@ -65,8 +65,11 @@ class ApiController extends Controller
                 $query->where('nombre', 'LIKE', '%' . $filtro . '%')
                     ->orWhere('folio', 'LIKE', '%' . $filtro . '%')
                     ->orWhere('apellidos', 'LIKE', '%' . $filtro . '%')
-                    ->orWhere('nombres', 'LIKE', '%' . $filtro . '%');
+                    ->orWhere('nombres', 'LIKE', '%' . $filtro . '%')
+                    ;
             })->with(['ligas', 'especialidad'])->paginate(4);
+
+
         return response()->json($doctores);
     }
 

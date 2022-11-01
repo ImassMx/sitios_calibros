@@ -7,7 +7,7 @@ use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 
-class BooksExport implements FromView ,ShouldAutoSize
+class BooksExport implements FromView 
 {
     /**
     * @return \Illuminate\Support\Collection

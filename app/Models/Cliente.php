@@ -32,7 +32,7 @@ class Cliente extends Authenticatable
 
     public function libro()
     {
-        return $this->hasMany(Libro::class,'id','libro_id');
+        return $this->hasMany(Libro::class,'id','libro_id')->withTrashed();
     }
 
     public function user()

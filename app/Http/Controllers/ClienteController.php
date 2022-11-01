@@ -57,11 +57,11 @@ class ClienteController extends Controller
                 'estado.required' => 'El estado es requerido',
             ]
         );
-      
+
         try {
 
             $doctor = Doctor::where('folio', $request->folio)->with('ligas')->first();
-            $libro_id = DB::table('publicacions')->where('liga_id',$doctor->liga_id)->get();
+            $libro_id = DB::table('publicacions')->where('liga_id', $doctor->liga_id)->get();
 
             if ($doctor->ligas->slug) {
                 $usuario = User::create([
@@ -79,19 +79,19 @@ class ClienteController extends Controller
                     'alcaldia' => $request->alcaldia,
                     'ciudad' => $request->ciudad,
                     'estado' => $request->estado,
-                    'libro_id'=> $libro_id[0]->libro_id,
+                    'libro_id' => $libro_id[0]->libro_id,
                     'created_at' => date('d-m-Y')
                 ]);
 
                 $dominio = $_SERVER['HTTP_HOST'];
 
-            if ($dominio === "127.0.0.1") {
-                $dominio = "http://127.0.0.1:8000";
-            } else {
-                $dominio = $_SERVER['HTTP_HOST'];
-            }
+                if ($dominio === "127.0.0.1") {
+                    $dominio = "http://127.0.0.1:8000";
+                } else {
+                    $dominio = $_SERVER['HTTP_HOST'];
+                }
 
-            Mail::to($request->email)->send(new PacienteWelcome($doctor->folio,$dominio));
+                Mail::to($request->email)->send(new PacienteWelcome($doctor->folio, $dominio));
 
                 auth()->attempt($request->only('email', 'password'));
                 return redirect()->route('zona.descarga', $doctor->ligas->slug);
@@ -103,17 +103,21 @@ class ClienteController extends Controller
 
     public function login(Request $request)
     {
-        
-        if (!auth()->attempt($request->only(['celular', 'password']), $request->remember)) {
-            return back()->with('mensaje', 'El número de celular es incorrecto');
+
+        try {
+            if (!auth()->attempt($request->only(['celular', 'password']), $request->remember)) {
+                return back()->with('mensaje', 'El número de celular es incorrecto');
+            }
+            $cliente = User::where('celular', $request->celular)->with('cliente')->first();
+            $libro = $cliente->cliente->libro_id;
+
+            $libro_id = DB::table('publicacions')->where('libro_id', $libro)->first();
+            $slug = Liga::where('id', $libro_id->liga_id)->first();
+
+            return redirect()->route('zona.descarga', $slug->slug);
+        } catch (\Throwable $th) {
+
         }
-        $cliente = User::where('celular',$request->celular)->with('cliente')->first();
-        $libro =$cliente->cliente->libro_id;
-
-        $libro_id = DB::table('publicacions')->where('libro_id',$libro)->first();
-        $slug = Liga::where('id',$libro_id->liga_id)->first();
-
-        return redirect()->route('zona.descarga', $slug->slug);
     }
 
     public function zonaDescarga(Liga $liga)
@@ -128,7 +132,7 @@ class ClienteController extends Controller
         $estados = Estado::all();
         return view('auth-cliente.register', compact('estados'));
     }
-
+    
     public function exportClient()
     {
         return Excel::download(new ClientExport, 'Reporte Pacientes.xlsx');
