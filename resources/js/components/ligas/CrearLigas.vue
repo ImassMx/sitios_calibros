@@ -87,8 +87,8 @@
                           <th class="text-center" scope="col">ESTADO</th>
                         </tr>
                       </thead>
-                      <tbody v-for="lib in Libros.data" :key="lib.id">
-                        <tr>
+                      <tbody>
+                        <tr v-for="lib in Libros.data" :key="lib.id">
                           <td class="text-center">
                             <input
                               type="radio"
@@ -99,12 +99,14 @@
                             />
                           </td>
                           <td>{{ lib.nombre }}</td>
-                          <div v-if="lib.estado === 1">
+                          <td>
+                            <div v-if="lib.estado === 1">
                             <td class="text-center">Activo</td>
                           </div>
                           <div v-else>
                             <td class="text-center">Inactivo</td>
                           </div>
+                          </td>
                         </tr>
                       </tbody>
                     </table>
@@ -202,6 +204,7 @@ export default {
         (this.book = []);
         let logo = document.querySelector('#logoLaboratorio')
         logo.value= ""
+        this.url=""
     },
     showAlert() {
       Swal.fire("Correcto", "Liga creada correctamente", "success");

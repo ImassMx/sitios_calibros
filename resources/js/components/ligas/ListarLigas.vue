@@ -4,6 +4,17 @@
     <div>
       <div class="card mb-4">
         <div class="card-body">
+          <div class="form-group col-md-4 mb-3">
+            <input
+              type="text"
+              class="form-control"
+              id="exampleInputEmail1"
+              aria-describedby="emailHelp"
+              placeholder="Buscar"
+              v-model="buscador"
+              @keyup="buscarClientes"
+            />
+          </div>
           <table class="table">
             <thead>
               <tr>
@@ -74,6 +85,8 @@ export default {
       Ligas: {},
       dominio: document.domain,
       url: "",
+      buscador: "",
+      timeBuscador: "",
     };
   },
   mounted() {
@@ -81,8 +94,8 @@ export default {
   },
   methods: {
     traerLigas(page = 1) {
-      axios.get("/api/ligas?page=" + page).then((response) => {
-        console.log(response.data);
+      axios.get("/api/ligas?page=" + page,{params:{buscador:this.buscador}}).then((response) => {
+
         this.Ligas = response.data;
       });
     },
@@ -136,6 +149,10 @@ export default {
                 .catch(e => {
                 console.log(e);
                 });
+    },
+    buscarClientes() {
+      clearTimeout(this.timeBuscador);
+      this.timeBuscador = setTimeout(this.traerLigas, 360);
     }
   },
 };

@@ -11,7 +11,7 @@ class ClasificacionController extends Controller
     public function index(Request $request)
     {
 
-        $clasificacion = Clasificacion::where('nombre','LIKE','%'.$request->buscador.'%')->paginate(4);
+        $clasificacion = Clasificacion::where('nombre','LIKE','%'.$request->buscador.'%')->orderBy("created_at","desc")->paginate(4);
         return response()->json($clasificacion);
     }
 

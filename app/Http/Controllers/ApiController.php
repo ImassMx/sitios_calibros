@@ -19,18 +19,19 @@ class ApiController extends Controller
     {
 
         $filtro = $request->buscador;
-        $libro = Libro::where('nombre', 'LIKE', '%' . $filtro . '%')->paginate(5);
+        $libro = Libro::where('nombre', 'LIKE', '%' . $filtro . '%')->orderBy("created_at","desc")->paginate(5);
         return response()->json($libro);
     }
 
-    public function ligas()
+    public function ligas(Request $request)
     {
-        $ligas = Liga::where("estado","1")->paginate(4);
+        $filtro = $request->buscador;
+        $ligas = Liga::where("nombre","LIKE","%".$filtro."%")->where("estado","1")->orderBy("created_at","desc")->paginate(4);
         return response()->json($ligas);
     }
     public function especialidad()
     {
-        $especialida = Especialidad::all();
+        $especialida = Especialidad::orderBy("created_at","desc")->get();
 
         return response()->json($especialida);
     }
@@ -51,7 +52,7 @@ class ApiController extends Controller
             $query->where('name', 'LIKE', '%' . $filtro . '%')
                 ->orWhere('folio', 'LIKE', '%' . $filtro . '%')
                 ->orWhere('nombre_doctor', 'LIKE', '%' . $filtro . '%');
-        })->with(['user', 'libro'])->paginate(4);
+        })->with(['user', 'libro'])->orderBy("created_at","desc")->paginate(4);
 
        
         return response()->json($clientes);
@@ -67,7 +68,7 @@ class ApiController extends Controller
                     ->orWhere('apellidos', 'LIKE', '%' . $filtro . '%')
                     ->orWhere('nombres', 'LIKE', '%' . $filtro . '%')
                     ;
-            })->with(['ligas', 'especialidad'])->paginate(4);
+            })->with(['ligas', 'especialidad'])->orderBy("created_at","desc")->paginate(4);
 
 
         return response()->json($doctores);
