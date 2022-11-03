@@ -89,7 +89,7 @@ class LibrosController extends Controller
             $request->pdf->move(public_path('libros'), $nombre_pdf);
         }
 
-        
+
 
         $libro->update([
             'nombre' => $request->nombre,
@@ -107,11 +107,17 @@ class LibrosController extends Controller
     {
 
         $libro = Libro::find($id);
-        $libro->delete();
         $libropdf = public_path('libros') . "/" . $libro->pdf;
+
+        if (file_exists($libropdf))
+            unlink($libropdf);
+
         $port = public_path('admin/portada') . "/" . $libro->portada;
-        unlink($port);
-        unlink($libropdf);
+
+        if (file_exists($port))
+            unlink($port);
+
+        $libro->delete();
     }
 
     public function desactivar($id)

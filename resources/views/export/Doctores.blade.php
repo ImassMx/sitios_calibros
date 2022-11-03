@@ -15,7 +15,7 @@
             <th style="text-align: center;font-weight:bold;">APELLIDOS</th>
             <th style="text-align: center;font-weight:bold;">ESPECIALIDAD</th>
             <th style="text-align: center;font-weight:bold;">FOLIO</th>
-            <th style="text-align: center;font-weight:bold;">LIGA</th>
+            <th style="text-align: center;font-weight:bold;">CLIENTE</th>
             <th style="text-align: center;font-weight:bold;">CÓDIGO POSTAL</th>
             <th style="text-align: center;font-weight:bold;">FECHA DESCARGA</th>
             <th style="text-align: center;font-weight:bold;">DESCARGAS</th>

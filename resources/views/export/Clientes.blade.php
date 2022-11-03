@@ -26,7 +26,7 @@
     <tbody>
         @foreach ($clientes as $cliente)
             <tr>
-                <td>{{ $cliente->user->id }}</td>
+                <td>{{ $cliente->id }}</td>
                 <td>{{ $cliente->user->name }}</td>
                 <td>{{ $cliente->folio }}</td>
                 <td>{{ $cliente->user->celular }}</td>
