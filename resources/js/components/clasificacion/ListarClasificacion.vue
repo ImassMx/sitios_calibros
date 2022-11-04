@@ -78,12 +78,13 @@ export default {
       alerta(id) {
       Swal.fire({
         title: "¿Esta seguro que desea eliminar?",
-        text: "Despues de eliminar ya no se puede revertir",
+        text: "Puede que algunos libros queden sin clasificación.",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
         confirmButtonText: "Si",
+        cancelButtonText: "Cancelar",
       }).then((result) => {
         if (result.isConfirmed) {
           this.axios.delete('/eleminiar-clasificacion/'+id)

@@ -22951,12 +22951,13 @@ __webpack_require__.r(__webpack_exports__);
 
       Swal.fire({
         title: "¿Esta seguro que desea eliminar?",
-        text: "Despues de eliminar ya no se puede revertir",
+        text: "Puede que algunos libros queden sin clasificación.",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
-        confirmButtonText: "Si"
+        confirmButtonText: "Si",
+        cancelButtonText: "Cancelar"
       }).then(function (result) {
         if (result.isConfirmed) {
           _this2.axios["delete"]('/eleminiar-clasificacion/' + id).then(function (response) {
