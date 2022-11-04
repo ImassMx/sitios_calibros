@@ -63,9 +63,9 @@ class ClasificacionController extends Controller
 
     public function destroy($id)
     {
-        $Sinclasificacion = Clasificacion::where("nombre", "Sin Clasificacion")->first();
+        $libros = Libro::where("clasificacion_id", $id)->withTrashed()->get();
 
-        $libros = Libro::where("clasificacion_id", $id)->get();
+        $Sinclasificacion = Clasificacion::where("nombre", "Sin Clasificacion")->first();
 
         if (count($libros) > 0) {
             foreach ($libros as $book) {
@@ -81,7 +81,6 @@ class ClasificacionController extends Controller
 
     public function clasificacionBook()
     {
-
         $clasificacion = Clasificacion::where("nombre", "!=", "Sin Clasificacion")->get();
         return response()->json($clasificacion);
     }

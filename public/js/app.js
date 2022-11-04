@@ -23676,7 +23676,7 @@ __webpack_require__.r(__webpack_exports__);
       this.url = "";
     },
     showAlert: function showAlert() {
-      Swal.fire("Correcto", "Liga creada correctamente", "success");
+      Swal.fire("Correcto", "Paciente creado correctamente", "success");
     },
     buscarLibros: function buscarLibros() {
       clearTimeout(this.timeBuscador);
