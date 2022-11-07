@@ -23135,6 +23135,7 @@ __webpack_require__.r(__webpack_exports__);
     saveDoctor: function saveDoctor() {
       var _this2 = this;
 
+      this.AlertProcess();
       this.axios.post("/request/registrar/doctor", {
         nombre: this.nombre,
         apellidos: this.apellidos,
@@ -23157,12 +23158,15 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {
         if (error.response.status === 422) {
           _this2.errors = error.response.data.errors;
+          swal.close();
         }
 
         if (error.response.status === 500) {
           _this2.errorAlert();
 
           _this2.limpiar();
+
+          swal.close();
         }
       });
     },
@@ -23194,8 +23198,6 @@ __webpack_require__.r(__webpack_exports__);
       this.timeBuscador = setTimeout(this.validarEmail, 360);
     },
     validarEmail: function validarEmail() {
-      var _this3 = this;
-
       axios.get("/validar/email/doctor", {
         params: {
           correo: this.email
@@ -23208,9 +23210,6 @@ __webpack_require__.r(__webpack_exports__);
         } else {
           validacion.innerHTML = "";
         }
-
-        console.log(res.data.email);
-        console.log(_this3.email);
       });
     },
     validarCelular: function validarCelular() {
@@ -23218,7 +23217,7 @@ __webpack_require__.r(__webpack_exports__);
       this.timeBuscador = setTimeout(this.validarPhone, 360);
     },
     validarPhone: function validarPhone() {
-      var _this4 = this;
+      var _this3 = this;
 
       axios.get("/validar/phone/doctor", {
         params: {
@@ -23227,7 +23226,7 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (res) {
         var validacion = document.querySelector(".validacion-celular");
 
-        if (_this4.celular === res.data.celular) {
+        if (_this3.celular === res.data.celular) {
           validacion.innerHTML = "El número de celular ya esta registrado";
         } else {
           validacion.innerHTML = "";
@@ -23235,21 +23234,34 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     mostrarDatosSlug: function mostrarDatosSlug() {
-      var _this5 = this;
+      var _this4 = this;
 
       axios.get("/api/mostrar/datos/slug", {
         params: {
           id: this.id_slug
         }
       }).then(function (res) {
-        _this5.titulo = res.data[0].nombre;
-        _this5.tituloLibro = res.data[1].nombre;
-        _this5.url = "/storage/logo/".concat(res.data[0].img_lab);
-        _this5.slug = res.data[0].slug;
+        _this4.titulo = res.data[0].nombre;
+        _this4.tituloLibro = res.data[1].nombre;
+        _this4.url = "/storage/logo/".concat(res.data[0].img_lab);
+        _this4.slug = res.data[0].slug;
       });
     },
     redireccionar: function redireccionar() {
       window.location.href = "/descargas/".concat(this.slug);
+    },
+    AlertProcess: function AlertProcess() {
+      swal.fire({
+        title: 'Procesando....',
+        text: 'Un momento por favor se estan enviando los datos',
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        allowEnterKey: false,
+        showConfirmButton: false,
+        onBeforeOpen: function onBeforeOpen() {
+          swal.showLoading();
+        }
+      });
     }
   }
 });
@@ -23676,7 +23688,7 @@ __webpack_require__.r(__webpack_exports__);
       this.url = "";
     },
     showAlert: function showAlert() {
-      Swal.fire("Correcto", "Paciente creado correctamente", "success");
+      Swal.fire("", "Cliente creado correctamente", "success");
     },
     buscarLibros: function buscarLibros() {
       clearTimeout(this.timeBuscador);

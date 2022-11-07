@@ -37,8 +37,4 @@ class Doctor extends Model
     return $this->hasOne(Especialidad::class, 'id', 'especialidad_id');
   }
 
-  /* public function ligas_trashed()
-  {
-    return  $this->hasOne(Liga::class, 'id', 'liga_id');
-  } */
 }

@@ -207,7 +207,7 @@ export default {
         this.url=""
     },
     showAlert() {
-      Swal.fire("Correcto", "Paciente creado correctamente", "success");
+      Swal.fire("", "Cliente creado correctamente", "success");
     },
     buscarLibros() {
       clearTimeout(this.timeBuscador);

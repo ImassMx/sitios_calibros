@@ -2,9 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\Especialidad;
 use Carbon\Carbon;
+use App\Models\Especialidad;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class EspecialidadSeeder extends Seeder
 {
@@ -15,82 +16,79 @@ class EspecialidadSeeder extends Seeder
      */
     public function run()
     {
-        Especialidad::create([
-            'nombre'=> 'Cirujano',
+        
+        Especialidad::updateOrCreate([
+            'nombre'=> 'Médicos Generales',
             'created_at'=> Carbon::now(),
             'updated_at'=> Carbon::now()
         ]);
 
-        Especialidad::create([
-            'nombre'=> 'Pediatra',
+        Especialidad::updateOrCreate([
+            'nombre'=> 'Dermatólogos ',
             'created_at'=> Carbon::now(),
             'updated_at'=> Carbon::now()
         ]);
 
-        Especialidad::create([
-            'nombre'=> 'Neurologo',
+        Especialidad::updateOrCreate([
+            'nombre'=> 'Cardiólogos',
             'created_at'=> Carbon::now(),
             'updated_at'=> Carbon::now()
         ]);
-        Especialidad::create([
-            'nombre'=> 'Cardiología',
+        Especialidad::updateOrCreate([
+            'nombre'=> 'Internistas',
             'created_at'=> Carbon::now(),
             'updated_at'=> Carbon::now()
         ]);
-        Especialidad::create([
-            'nombre'=> 'Psiquiatría',
+        Especialidad::updateOrCreate([
+            'nombre'=> 'Endocrinólogos',
             'created_at'=> Carbon::now(),
             'updated_at'=> Carbon::now()
         ]);
-        Especialidad::create([
-            'nombre'=> 'Neurocirugía',
+        Especialidad::updateOrCreate([
+            'nombre'=> 'Psiquiatras',
             'created_at'=> Carbon::now(),
             'updated_at'=> Carbon::now()
         ]);
-        Especialidad::create([
-            'nombre'=> 'Oftalmología',
+        Especialidad::updateOrCreate([
+            'nombre'=> 'Psicólogos',
             'created_at'=> Carbon::now(),
             'updated_at'=> Carbon::now()
         ]);
-        Especialidad::create([
-            'nombre'=> 'Anestesiología',
+        Especialidad::updateOrCreate([
+            'nombre'=> 'Urólogos',
             'created_at'=> Carbon::now(),
             'updated_at'=> Carbon::now()
         ]);
-        Especialidad::create([
-            'nombre'=> 'Cirugía Pediátrica',
+        Especialidad::updateOrCreate([
+            'nombre'=> 'Ginecólogos',
             'created_at'=> Carbon::now(),
             'updated_at'=> Carbon::now()
         ]);
-        Especialidad::create([
-            'nombre'=> 'Cirugía General',
+        Especialidad::updateOrCreate([
+            'nombre'=> 'Odontólogos',
             'created_at'=> Carbon::now(),
             'updated_at'=> Carbon::now()
         ]);
-        Especialidad::create([
-            'nombre'=> 'Dermatología',
+        Especialidad::updateOrCreate([
+            'nombre'=> 'Pediatras',
             'created_at'=> Carbon::now(),
             'updated_at'=> Carbon::now()
         ]);
-        Especialidad::create([
-            'nombre'=> 'Medicina Interna',
+        Especialidad::updateOrCreate([
+            'nombre'=> 'Gastroenterólogos',
             'created_at'=> Carbon::now(),
             'updated_at'=> Carbon::now()
         ]);
-        Especialidad::create([
-            'nombre'=> 'Neumología',
+        Especialidad::updateOrCreate([
+            'nombre'=> 'Oncólogos',
             'created_at'=> Carbon::now(),
             'updated_at'=> Carbon::now()
         ]);
-        Especialidad::create([
-            'nombre'=> 'Ortopedia',
+        Especialidad::updateOrCreate([
+            'nombre'=> 'Hematólogos',
             'created_at'=> Carbon::now(),
             'updated_at'=> Carbon::now()
         ]);
-        Especialidad::create([
-            'nombre'=> 'Otorrinolaringología',
-            'created_at'=> Carbon::now(),
-            'updated_at'=> Carbon::now()
-        ]);
+
     }
 }

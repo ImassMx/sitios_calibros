@@ -74,14 +74,10 @@ class DoctorController extends Controller
 
             Mail::to($request->email)->send(new DoctorWelcome($folio, $dominio));
 
-            //ENVIO DE SMS AL DOCTOR
             $token = $this->smsGetToken();
 
             $datos = [];
             try {
-
-
-
                 $mensaje = htmlspecialchars("Ingrese a esta liga para poder compartir el libro " . $dominio . '/login/doctor?folio=' . $folio . " su número de registro es " . $folio);
 
                 $liga = env("SMS_URL") . '/message';

@@ -70,7 +70,7 @@
     <div class="contenido-email">
         <img src="{{asset("img/logo.jpg")}}" alt="" class="logo-email">
         <h3>Gracias por ser parte de Visto Bueno Editores</h3>
-        <p>Ingresa a esta liga <a href="{{$dominio}}'/login/doctor?folio='{{$folio}} ">{{$dominio}}</a> para descargar el libro con el codigo {{$folio}} .</p>
+        <p>Ingresa a esta liga <a href="{{url('/login/doctor?folio='.$folio)}} ">{{$dominio}}</a> para descargar el libro con el codigo {{$folio}} .</p>
     </div>
 
 </body>

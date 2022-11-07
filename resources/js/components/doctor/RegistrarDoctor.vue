@@ -145,6 +145,7 @@ export default {
       });
     },
     saveDoctor() {
+      this.AlertProcess()
       this.axios
         .post("/request/registrar/doctor", {
           nombre: this.nombre,
@@ -167,11 +168,13 @@ export default {
         .catch((error) => {
           if (error.response.status === 422) {
             this.errors = error.response.data.errors;
+            swal.close()
           }
 
           if (error.response.status === 500) {
             this.errorAlert();
             this.limpiar();
+            swal.close()
           }
         });
     },
@@ -216,8 +219,7 @@ export default {
           } else {
             validacion.innerHTML = "";
           }
-          console.log(res.data.email);
-          console.log(this.email);
+
         });
     },
     validarCelular() {
@@ -249,6 +251,20 @@ export default {
     redireccionar() {
       window.location.href = `/descargas/${this.slug}`;
     },
+    AlertProcess()
+    {
+      swal.fire({
+            title: 'Procesando....',
+            text: 'Un momento por favor se estan enviando los datos',
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            allowEnterKey: false,
+            showConfirmButton: false,
+            onBeforeOpen: () => {
+                swal.showLoading();
+            }
+        });
+    }
   },
 };
 </script>
