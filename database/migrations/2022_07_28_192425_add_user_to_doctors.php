@@ -14,11 +14,12 @@ class AddUserToDoctors extends Migration
     public function up()
     {
         if (!Schema::hasTable('doctors')) {
-        Schema::table('doctors', function (Blueprint $table) {
-            $table->string('cp')->nullable();
-            $table->date('fecha_descarga')->nullable();
-        });
-    }
+            Schema::table('doctors', function (Blueprint $table) {
+                $table->integer('user_id')->nullable();
+                $table->string('cp')->nullable();
+                $table->date('fecha_descarga')->nullable();
+            });
+        }
     }
 
     /**
@@ -30,7 +31,7 @@ class AddUserToDoctors extends Migration
     {
         Schema::table('doctors', function (Blueprint $table) {
             $table->dropColumn('cp');
-
+            $table->dropColumn('user_id');
             $table->dropColumn('fecha_descarga');
         });
     }
