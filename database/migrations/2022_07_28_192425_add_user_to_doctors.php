@@ -13,7 +13,7 @@ class AddUserToDoctors extends Migration
      */
     public function up()
     {
-        if (!Schema::hasTable('doctors')) {
+        if (Schema::hasTable('doctors')) {
             Schema::table('doctors', function (Blueprint $table) {
                 $table->integer('user_id')->nullable();
                 $table->string('cp')->nullable();
