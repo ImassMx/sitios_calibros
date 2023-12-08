@@ -144,7 +144,7 @@ class ApiController extends Controller
     }
 
     public function sendEmail(Request $request){
-        Mail::to(env('EMAIL_CONTACTs'))->send(new ContactForm($request->all()));
+        Mail::to(env('EMAIL_CONTACT'))->send(new ContactForm($request->all()));
         return back()->with('mensaje','Se envió correctamente');
      }
 }
