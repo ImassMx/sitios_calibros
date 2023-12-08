@@ -30,7 +30,7 @@ class ContactForm extends Mailable
     public function build()
     {
         $data = $this->data;
-        return $this->from(env('MAIL_FROM_ADDRESS'), 'Visto Bueno Editores')
+        return $this->from(env('EMAIL_CONTACT'), 'Visto Bueno Editores')
                ->subject('Datos Formulario de Contacto')
                ->view('email.ContactForm',compact('data'));
     }
