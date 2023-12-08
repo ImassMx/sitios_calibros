@@ -44,3 +44,4 @@ Route::get('/mostrar/nombre/doctor/{folio}',[ApiController::class,'getNombreDoct
 Route::get('/validacion/descargas/{id}',[ApiController::class,'validacionDescarga']);
 
 
+

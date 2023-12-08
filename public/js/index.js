@@ -28,6 +28,6 @@ function efectoMenu() {
 }
 
 
-function scrollNava(){
+/* function scrollNava(){
     document.querySelectorAll(".menu_items li").forEach((function(e){e.addEventListener("click",(function(e){e.preventDefault();
-    document.querySelector(e.target.attributes.href.value).scrollIntoView({behavior:"smooth"})}))}))}
+    document.querySelector(e.target.attributes.href.value).scrollIntoView({behavior:"smooth"})}))}))} */

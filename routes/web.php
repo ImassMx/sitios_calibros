@@ -1,17 +1,18 @@
 <?php
 
-use App\Http\Controllers\ClasificacionController;
 use App\Models\Estado;
+use App\Models\Clasificacion;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ApiController;
 use App\Http\Controllers\LigaController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\LibrosController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\ClienteController;
-use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\UsuarioController;
-use App\Models\Clasificacion;
+use App\Http\Controllers\ClasificacionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,8 +30,10 @@ Route::get('/', function () {
     return view('home');
 })->name('inicio');
 
+Route::get('/contacto', [App\Http\Controllers\HomeController::class, 'contacto']);
 
 Route::get('/admin/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth');
+Route::post('/send/email',[ApiController::class,'sendEmail'])->name('send.email');
 
 Route::post('/create/book', [LibrosController::class,'store']);
 Route::post('/request/liga', [LigaController::class,'store']);

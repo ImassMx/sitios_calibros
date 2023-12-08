@@ -1,0 +1,80 @@
+/* Estilos CSS correspondientes a las clases utilizadas en el formulario */
+
+.bg-white {
+    background-color: #fff; /* Color de fondo blanco */
+}
+.container-contacto{
+    width: 40%;
+    padding: 3rem;
+    margin: 0 auto;
+    max-width: 1200px;
+}
+.p-8 {
+    padding: 2rem;
+}
+
+.rounded {
+    border-radius: 0.25rem; /* Borde redondeado de 4px */
+}
+
+.shadow-md {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* Sombra suave */
+}
+
+/* Estilo para el título del formulario */
+.text-2xl {
+    font-size: 1.5rem; /* Tamaño del texto del título */
+    line-height: 2rem; /* Altura de línea del texto del título */
+    font-weight: 600; /* Grosor de fuente */
+    margin-bottom: 1rem; /* Margen inferior del título */
+}
+
+/* Estilo para las etiquetas de texto */
+.text-gray-700 {
+    color: #4a5568; /* Color de texto gris */
+    font-weight: 500; /* Grosor de fuente */
+}
+
+/* Estilo para los campos de entrada de texto */
+input[type="text"],
+input[type="email"],
+textarea {
+    width: 100%; /* Ancho completo */
+    padding: 0.75rem; /* Padding interno de 12px en todos los lados */
+    border: 1px solid #e2e8f0; /* Borde delgada */
+    border-radius: 0.25rem; /* Borde redondeado de 4px */
+    outline: none; /* Quita el contorno en el foco */
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out; /* Transición suave */
+}
+
+/* Estilo para el campo de entrada de texto enfocado */
+input:focus,
+textarea:focus {
+    border-color: #3490dc; /* Cambia el color del borde al enfocar */
+}
+
+/* Estilo para el botón */
+button {
+    background-color: #3490dc; /* Color de fondo azul */
+    color: #fff; /* Color de texto blanco */
+    padding: 0.75rem 1rem; /* Padding del botón */
+    border: none; /* Sin borde */
+    border-radius: 0.25rem; /* Borde redondeado de 4px */
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+button:hover {
+    background-color: #2779bd;
+}
+
+.mb-4{
+    margin-bottom:2rem;
+}
+
+.mb-2{
+    margin-bottom:1rem;
+}
+.text-center{
+    text-align: center;
+}

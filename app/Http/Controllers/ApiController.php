@@ -7,10 +7,11 @@ use App\Models\User;
 use App\Models\Libro;
 use App\Models\Doctor;
 use App\Models\Cliente;
+use App\Mail\ContactForm;
 use App\Models\Especialidad;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Facade\FlareClient\Http\Client;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 
 class ApiController extends Controller
@@ -141,4 +142,9 @@ class ApiController extends Controller
 
        return response()->json($cliente->descargas);
     }
+
+    public function sendEmail(Request $request){
+        Mail::to(env('EMAIL_CONTACT'))->send(new ContactForm($request->all()));
+        return back()->with('mensaje','Se envió correctamente');
+     }
 }

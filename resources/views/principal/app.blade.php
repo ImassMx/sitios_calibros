@@ -25,7 +25,7 @@
             @endauth
             @guest
                 <li><a href="#pro">¿Quienes Somos?</a></li>
-                <li><a href="#contact">Contactenos</a></li>
+                <li><a href="/contacto">Contactenos</a></li>
             @endguest
         </ul>
         <div id="hamburguer">
