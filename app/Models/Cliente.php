@@ -5,7 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-class Cliente extends Authenticatable 
+
+class Cliente extends Authenticatable
 {
     use HasFactory;
 
@@ -19,6 +20,7 @@ class Cliente extends Authenticatable
         'codigo_postal',
         'alcaldia',
         'descargas',
+        'nombre_paciente',
         'ciudad',
         'estado',
         'libro_id',
@@ -32,11 +34,11 @@ class Cliente extends Authenticatable
 
     public function libro()
     {
-        return $this->hasMany(Libro::class,'id','libro_id')->withTrashed();
+        return $this->hasMany(Libro::class, 'id', 'libro_id')->withTrashed();
     }
 
     public function user()
     {
-        return $this->hasOne(User::class,'id','user_id');
+        return $this->hasOne(User::class, 'id', 'user_id');
     }
 }

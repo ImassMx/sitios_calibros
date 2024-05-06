@@ -48,19 +48,43 @@ const routes = [{
         component: () => import('../components/clasificacion/CrearClasificacion.vue')
     },
     {
-        path: '/admin/listar-clasificacion',
-        component: () => import('../components/clasificacion/ListarClasificacion.vue')
-    },
-    {
-        path: '/admin/editar-clasificacion/:id',
-        component: () => import('../components/clasificacion/EditarClasificacion.vue')
-    },
-    {
         path: '/admin/reporte/pacientes',
         component: () => import('../components/reporte/ListaReporte.vue')
     }, {
         path: '/admin/reporte/doctores',
         component: () => import('../components/reporte/ListaDoctores.vue')
+    },
+    {
+        path: '/admin/sale/list/book',
+        component: () => import('../components/ventas/libros/ListBook.vue')
+    },
+    {
+        path: '/admin/sale/create/book',
+        name:'sale.create.book',
+        component: () => import('../components/ventas/libros/CreateBook.vue')
+    },
+    {
+        path: '/admin/sale/edit/book/:id',
+        name:'sale.edit.book',
+        component: () => import('../components/ventas/libros/EditBook.vue')
+    },
+    {
+        path: '/admin/show/categories',
+        name:'show.categories',
+        component: () => import('../components/clasificacion/ListarClasificacion.vue')
+    },
+    {
+        path: '/admin/edit/categories/:id',
+        name:'edit.categories',
+        component: () => import('../components/clasificacion/EditarClasificacion.vue')
+    },
+    {
+        path: '/admin/reporte/libros/doctores',
+        component: () => import('../components/reporte/LibrosDoctores.vue')
+    },
+    {
+        path: '/admin/reporte/libros/pacientes',
+        component: () => import('../components/reporte/LibrosPacientes.vue')
     }
 
 ]

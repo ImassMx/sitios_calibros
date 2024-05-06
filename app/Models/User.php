@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Danielmlozano\LaravelConekta\Purchaser;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -12,7 +13,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, Purchaser;
     use HasRoles;
 
     /**
@@ -49,6 +50,10 @@ class User extends Authenticatable
     public function cliente()
     {
         return $this->hasOne(Cliente::class);
+    }
+
+    public function doctor(){
+        return $this->belongsTo(Doctor::class);
     }
     
 }

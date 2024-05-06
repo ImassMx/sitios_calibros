@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\Api\DonwloadController;
+use App\Http\Controllers\Api\PayController;
+use App\Http\Controllers\Api\ReportController;
 use App\Models\Estado;
 use App\Models\Clasificacion;
 use Illuminate\Support\Facades\Auth;
@@ -13,6 +16,7 @@ use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\ClasificacionController;
+use App\Http\Controllers\PaymentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +33,17 @@ Route::get('/', function () {
 
     return view('home');
 })->name('inicio');
+
+//MARKETPLACE
+Route::get('/marketplace', [App\Http\Controllers\MarketplaceController::class,'index']);
+Route::get('/marketplace/detalle/{uuid}', [App\Http\Controllers\MarketplaceController::class,'detalleLibro']);
+Route::get('/marketplace/carrito', [App\Http\Controllers\MarketplaceController::class,'carrito']);
+Route::get('/marketplace/pago', [App\Http\Controllers\MarketplaceController::class,'pago']);
+Route::get('/marketplace/compra', [App\Http\Controllers\MarketplaceController::class,'compra']);
+Route::get('/marketplace/pasarela', [App\Http\Controllers\MarketplaceController::class,'pasarela']);
+Route::get('/payment/confirmation', [App\Http\Controllers\MarketplaceController::class,'successPayment']);
+Route::get('/payment/failure', [App\Http\Controllers\MarketplaceController::class,'errorPayment']);
+
 
 Route::get('/contacto', [App\Http\Controllers\HomeController::class, 'contacto']);
 
@@ -48,7 +63,7 @@ Route::post('/des/{id}',[LibrosController::class,'desactivar']);
 Route::post('/act/{id}',[LibrosController::class,'activar']);
 Route::delete('/eliminar-libros/{id}',[LibrosController::class,'destroy']);
 //LIGAS
-Route::get('/descargas/{liga:slug}',[ClienteController::class,'zonaDescarga'])->name('zona.descarga')->middleware('auth');
+Route::get('/perfil/{id}',[ClienteController::class,'zonaDescarga'])->name('zona.descarga')->middleware('auth');
 Route::post('/descarga/{id}',[LigaController::class,'viewDescarga']);
 Route::get('/liga/{id}/edit',[LigaController::class,'edit']);
 Route::post('/update/liga/{id}',[LigaController::class,'update']);
@@ -56,11 +71,11 @@ Route::post('/delete-liga/{id}',[LigaController::class,'destroy']);
 
 //REGISTRO CLIENTE
 Route::get('/cliente',[ClienteController::class,'index']);
-Route::post('/registro/cliente',[ClienteController::class,'store'])->name('cliente.registrar');
+Route::post('/registro/paciente',[ClienteController::class,'store'])->name('cliente.registrar');
 Route::post('/logout/cliente',[LogoutController::class,'cerrarSesionCliente'])->name('logout.cliente');
 Route::get('/login',[ClienteController::class,'index'])->name('login.cliente');
-Route::post('/login',[ClienteController::class,'login']);
-Route::get('/registrar/cliente',[ClienteController::class,'registro'])->name('registro.cliente');
+Route::post('/login',[ClienteController::class,'login'])->name('post.login');
+Route::get('/registrar/paciente',[ClienteController::class,'registro'])->name('registro.cliente');
 //USUARIOS
 Route::post('/usuario/create',[UsuarioController::class,'store']);
 Route::get('/usuario/{id}/edit',[UsuarioController::class,'edit']);
@@ -71,17 +86,21 @@ Route::get('/registrar/doctor',[DoctorController::class,'index']);
 Route::post('/request/registrar/doctor',[DoctorController::class,'store']);
 Route::get('/validar/email/doctor',[DoctorController::class,'ValidarEmail']);
 Route::get('/validar/phone/doctor',[DoctorController::class,'ValidarPhone']);
-//CLASIFICACION
-Route::post('clasificacion/create',[ClasificacionController::class,'store']);
-Route::get('/clasificacion/{id}/edit',[ClasificacionController::class,'edit']);
-Route::post('/clasificacion/{id}',[ClasificacionController::class,'update']);
-Route::delete('/eleminiar-clasificacion/{id}',[ClasificacionController::class,'destroy']);
+
 //EXPORT EXCEL
 Route::get('/export/book',[LibrosController::class,'exportBook'])->name('export.excel');
 Route::get('/export/doctor',[DoctorController::class,'exportDoctor'])->name('export.doctor');
 Route::get('/export/cliente',[ClienteController::class,'exportClient'])->name('export.cliente');
+Route::get('/export/books/doctor',[ReportController::class,'exportBookDoctor']);
+Route::get('/export/books/paciente',[ReportController::class,'exportBookPaciente']);
+
 //ENVIO SMS DOCTOR
-Route::get('/zona/doctor/{users:name}',[DoctorController::class,'zonaDoctor'])->name('zona.doctor')->middleware('auth');
+Route::get('/zona/doctor/{uuid}',[DoctorController::class,'zonaDoctor'])->name('zona.doctor')->middleware('auth');
+Route::get('/pacientes/doctor/{uuid}',[DoctorController::class,'pacientesDoctor'])->name('paciente.zona.doctor')->middleware('auth');
+Route::get('/donwload/book/paciente/{uuid}',[DoctorController::class,'donwloadBook']);
+Route::get('/donwload/book/doctor/{book}',[DonwloadController::class,'donwloadBookDoctor']);
+
+
 Route::get('/login/doctor',[DoctorController::class,'viewDoctor'])->name('login.doctor');
 
 Route::get('/enviar/sms/doctor/{telefono}/{folio}',[DoctorController::class,'smsEnvia']);

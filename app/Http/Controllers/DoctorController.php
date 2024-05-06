@@ -6,115 +6,126 @@ use App\Models\Liga;
 use App\Models\User;
 use App\Models\Doctor;
 use GuzzleHttp\Client;
+use App\Mail\LigaDoctor;
+use App\Mail\LigaPaciente;
+use App\Mail\DoctorWelcome;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Exports\DoctorsExport;
-use App\Mail\DoctorWelcome;
-use App\Mail\LigaDoctor;
-use App\Mail\LigaPaciente;
+use App\Models\BookSale;
+use App\Models\ClientBook;
+use PhpParser\Node\Stmt\TryCatch;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Maatwebsite\Excel\Facades\Excel;
-use PhpParser\Node\Stmt\TryCatch;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 
 class DoctorController extends Controller
 {
 
-    public function index()
-    {
+    public function index(){
         return view('auth-doctor.register');
     }
 
-    public function store(Request $request)
-    {
-        $this->validate($request, [
-            'nombre' => 'required',
-            'apellidos' => 'required',
-            'especialidad' => 'required',
-            'id_slug' => 'required'
-        ], [
-            'nombre.required' => 'Ingrese su nombre porfavor',
-            'apellidos.required' => 'Ingrese sus apellidos por favor',
-            'especialidad.required' => 'Elija la especialidad a la que pertenece',
-            'id_slug.required' => 'La liga es invalida'
-        ]);
+    public function store(Request $request) {
+        try {
 
-        $liga = Liga::where('id', $request->id_slug)->first();
-
-
-        if ($liga->estado === 1) {
-            $user = new User();
-            $user->name = $request->nombre;
-            $user->email = $request->email;
-            $user->password = Hash::make($request->password);
-            $user->celular = $request->celular;
-            $user->save();
-
-            $folio = mt_rand(10000, 99999);
-
-            Doctor::create([
-                'user_id' => $user->id,
-                'especialidad_id' => $request->especialidad,
-                'nombres' => $request->nombre,
-                'liga_id' => $request->id_slug,
-                'apellidos' => $request->apellidos,
-                'cp' => $request->postal,
-                'folio' => $folio,
+            $this->validate($request, [
+                'nombre' => 'required',
+                'apellidos' => 'required',
+                'especialidad' => 'required',
+                'cedula' => 'required'
+            ], [
+                'nombre.required' => 'Ingrese su nombre porfavor',
+                'apellidos.required' => 'Ingrese sus apellidos por favor',
+                'especialidad.required' => 'Elija la especialidad a la que pertenece',
+                'cedula.required' => 'La cedula es requerida.'
             ]);
-
-            $dominio = $_SERVER['HTTP_HOST'];
-
-            if ($dominio === "127.0.0.1") {
-                $dominio = "http://127.0.0.1:8000";
-            } else {
+    
+                $user = new User();
+                $user->name = $request->nombre;
+                $user->email = $request->email;
+                $user->password = Hash::make($request->password);
+                $user->celular = $request->celular;
+                $user->save();
+    
+                $folio = mt_rand(10000, 99999);
+                $uuid = Str::uuid();
+                Doctor::create([
+                    'user_id' => $user->id,
+                    'especialidad_id' => $request->especialidad,
+                    'nombres' => $request->nombre,
+                    'apellidos' => $request->apellidos,
+                    'cp' => $request->postal,
+                    'folio' => $folio,
+                    'cedula'=>$request->cedula,
+                    'uuid'=> $uuid
+                ]);
+    
                 $dominio = $_SERVER['HTTP_HOST'];
-            }
+    
+                if ($dominio === "127.0.0.1") {
+                    $dominio = "http://127.0.0.1:8000";
+                } else {
+                    $dominio = $_SERVER['HTTP_HOST'];
+                }
+    
+                Mail::to($request->email)
+                    ->send(new DoctorWelcome($folio, $dominio));
+    
+                $token = $this->smsGetToken();
+    
+                $datos = [];
+                try {
+                    $mensaje = htmlspecialchars("Ingrese a esta liga para poder comprar los libros " . $dominio . '/login/doctor' . " su número de registro es " . $folio);
+    
+                    $liga = env("SMS_URL") . '/message';
+    
+                    $datos = [
+                        'phones' => [$request->celular],
+                        'message' => $mensaje
+                    ];
+    
+                    $headers = [
+                        'Authorization' => 'Bearer ' . $token,
+                        'Content-Type' => 'application/json',
+                        'Accept' => 'application/json'
+                    ];
+    
+                    $options = [
+                        'headers' => $headers,
+                        'json' => $datos
+                    ];
+    
+                    $client = new Client();
+    
+                    Log::info('datos' . json_encode($datos));
+    
+                    $rawResponse = $client->request('POST', $liga, $options)->getBody()->getContents();
+                } catch (\Exception $e) {
+                    $error = ["error" => "No se puede conectar al sistema de envio SMS =>" . $e->getMessage()];
+                    $cliente = '';
+    
+                    Log::info('error' . json_encode($error));
+                }
+    
+                auth()->attempt($request->only('email', 'password'));
+    
+                return response()->json([
+                    'error' => false,
+                    'folio' => $folio,
+                    'uuid' => $uuid
+                ]);
 
-            Mail::to($request->email)->send(new DoctorWelcome($folio, $dominio));
-
-            $token = $this->smsGetToken();
-
-            $datos = [];
-            try {
-                $mensaje = htmlspecialchars("Ingrese a esta liga para poder compartir el libro " . $dominio . '/login/doctor?folio=' . $folio . " su número de registro es " . $folio);
-
-                $liga = env("SMS_URL") . '/message';
-
-                $datos = [
-                    'phones' => [$request->celular],
-                    'message' => $mensaje
-                ];
-
-                $headers = [
-                    'Authorization' => 'Bearer ' . $token,
-                    'Content-Type' => 'application/json',
-                    'Accept' => 'application/json'
-                ];
-
-                $options = [
-                    'headers' => $headers,
-                    'json' => $datos
-                ];
-
-                $client = new Client();
-
-                Log::info('datos' . json_encode($datos));
-
-                $rawResponse = $client->request('POST', $liga, $options)->getBody()->getContents();
-            } catch (\Exception $e) {
-                $error = ["error" => "No se puede conectar al sistema de envio SMS =>" . $e->getMessage()];
-                $cliente = '';
-
-                Log::info('error' . json_encode($error));
-            }
-
-            auth()->attempt($request->only('email', 'password'));
-
-            return response()->json($folio);
-        } else {
-            return response()->json(1, 500);
+        } catch (\Throwable $th) {
+            Log::error($th);
+            return response()->json([
+                   "error" => "Hubo un error al registrar al doctor"
+            ],500);
         }
     }
 
@@ -223,23 +234,48 @@ class DoctorController extends Controller
             Log::info('error' . json_encode($error));
         }
     }
-    public function zonaDoctor()
-    {
-        return view('auth-doctor.zonaDoctor');
-    }
 
+    public function donwloadBook(Request $request,$uuid){
+
+        $book = BookSale::where('uuid',$uuid)->first();
+        $book_client = ClientBook::where('id',$request->client_books)->first();
+
+        if(!empty($book)){
+
+            $book_client->donwloads += 1;
+            $book_client->save();
+
+            $parsedUrl = parse_url($book->pdf);
+            return Storage::disk('s3')->download($parsedUrl['path'],$book->name.'.pdf');
+        }
+    }
+    
+    public function zonaDoctor($uuid) {
+        return view('auth-doctor.zonaDoctor',compact('uuid'));
+    }
 
     public function ZonaLoginDoctor(Request $request)
     {
-        if (!auth()->attempt($request->only(['email', 'password']), $request->remember)) {
+        $doctor = Doctor::where('folio',$request->folio)->first();
+        
+        if(empty($doctor)){
+            return back()->with('mensaje', 'El número de folio no existe.');
+        }
+
+        $user = User::where('id',$doctor->user_id)->first();
+
+        $request->merge(['email' => $user->email]);
+
+        $request->merge(['password' => '12345']);
+
+        if (!Auth::attempt($request->only(['email', 'password']), true)) {
             return back()->with('mensaje', 'El número de folio es incorrecto');
         }
 
-        $doctor = Doctor::where('folio', $request->folio)->first();
-        $user = User::find($doctor->user_id);
+        return redirect()->route('zona.doctor',["uuid"=>$doctor->uuid]);
+    }
 
-        $name = Str::slug($user->name, '-');
-
-        return redirect()->route('zona.doctor', ['users' => $name, 'folio' => $request->folio]);
+    public function pacientesDoctor($uuid){
+        return view('auth-doctor.pacientes',compact('uuid'));
     }
 }

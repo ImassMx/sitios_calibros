@@ -11,6 +11,7 @@ use App\Mail\ContactForm;
 use App\Models\Especialidad;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 
@@ -48,15 +49,17 @@ class ApiController extends Controller
 
     public function clientes(Request $request)
     {
-        $filtro = $request->buscador;
-        $clientes = Cliente::whereHas('user', function ($query) use ($filtro) {
-            $query->where('name', 'LIKE', '%' . $filtro . '%')
-                ->orWhere('folio', 'LIKE', '%' . $filtro . '%')
-                ->orWhere('nombre_doctor', 'LIKE', '%' . $filtro . '%');
-        })->with(['user', 'libro'])->orderBy("created_at","desc")->paginate(4);
-
-       
-        return response()->json($clientes);
+        try {
+            $filtro = $request->buscador;
+            $clientes = Cliente::whereHas('user', function ($query) use ($filtro) {
+                $query->where('name', 'LIKE', '%' . $filtro . '%')
+                    ->orWhere('folio', 'LIKE', '%' . $filtro . '%');
+            })->with(['user', 'libro'])->orderBy("created_at","desc")->paginate(4);
+    
+            return response()->json($clientes);
+        } catch (\Throwable $th) {
+            Log::error($th);
+        }
     }
 
     public function doctores(Request $request)

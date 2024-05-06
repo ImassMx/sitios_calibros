@@ -27,9 +27,9 @@
             <tbody>
               <tr v-for="cla in clasificacion.data" :key="cla.id">
                 <th scope="row cla-id">{{ cla.id }}</th>
-                <td class="cla-nombre">{{ cla.nombre }}</td>
+                <td class="cla-nombre">{{ cla.name }}</td>
                 <td class="d-flex justify-content-center gap-2">
-                  <router-link :to="`/admin/editar-clasificacion/${cla.id}`" class="btn btn-outline-primary"
+                  <router-link :to="`/admin/edit/categories/${cla.id}`" class="btn btn-outline-primary"
                     >Editar</router-link
                   >
                   <a @click="alerta(cla.id)" class="btn btn-outline-danger">
@@ -65,7 +65,7 @@ export default {
   methods: {
     traerClasificacion(page = 1) {
       axios
-        .get("/api/clasificacion?page="+page ,{params:{buscador:this.buscador}})
+        .get("/api/categories/show?page="+page ,{params:{buscador:this.buscador}})
         .then((response) => {
           this.clasificacion = response.data;
         })

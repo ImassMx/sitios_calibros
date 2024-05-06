@@ -33,11 +33,10 @@
                         {{ session('mensaje') }}
                     </div>
                 @endif
-            <form action="{{route('login.cliente')}}" method="POST">
+            <form action="{{route('post.login')}}" method="POST">
             @csrf
                 <label for="celular">Celular</label>
                 <input type="text" placeholder="Ingresa tu número de celular" id="celular" name="celular">
-                <input type="hidden"  name="password" value="12345">
                 <input type="submit" class="ingresar" value="Ingresar">
             </form>
         </div>
