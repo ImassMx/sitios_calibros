@@ -1,5 +1,12 @@
 <?php
 
+use App\Http\Controllers\Api\BooksController;
+use App\Http\Controllers\Api\CartController;
+use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\DoctorController;
+use App\Http\Controllers\Api\PayController;
+use App\Http\Controllers\Api\ReportController;
+use App\Http\Controllers\Api\SaleController;
 use App\Http\Controllers\ApiController;
 use App\Http\Controllers\ClasificacionController;
 use App\Http\Controllers\LigaController;
@@ -43,5 +50,35 @@ Route::get('/mostrar/nombre/doctor/{folio}',[ApiController::class,'getNombreDoct
 
 Route::get('/validacion/descargas/{id}',[ApiController::class,'validacionDescarga']);
 
+//VENTAS
+Route::get('/catalog/sale/books',[SaleController::class,'showBooks']);
+Route::post('/sale/book/create',[SaleController::class,'createBook']);
+Route::get('/catalog/category/books',[SaleController::class,'categoryBooks']);
+//MARKETPLACE
+Route::get('/catalog/categories/marketplace',[CategoryController::class,'categoriesMarketplace']);
+Route::get('/catalog/books/marketplace',[BooksController::class,'BooksMarketplace']);
+Route::post('/add/product/{book}',[BooksController::class,'addBooksCart']);
+Route::get('/info/cart/{user}',[CartController::class,'getCart']);
+Route::get('/catalog/products/{user}',[CartController::class,'catalogCart']);
+Route::post('/delete/product/{id}',[CartController::class,'deleteProduct']);
+Route::get('/information/doctor/{id}',[DoctorController::class,'informationDoctor']);
+//PAYMENT
+Route::post('/process/payment/{id}',[PayController::class,'processPay']);
 
+//books doctor
+Route::get('/books/doctor/{id}',[DoctorController::class,'getBooksDoctor']);
+Route::get('/infor/doctor/{id}',[DoctorController::class,'getInfoDoctor']);
+Route::get('/send/message',[DoctorController::class,'sendMessagePaciente']);
+Route::get('/send/email',[DoctorController::class,'sendEmailPaciente']);
+Route::get('/show/pacientes/{uuid}',[DoctorController::class,'getPacientesDoctor']);
+Route::delete('/delete/book/{id}',[DoctorController::class,'deleteBook']);
+Route::get('/get/book/{uuid}',[DoctorController::class,'getBook']);
+Route::post('/update/book/{uuid}',[DoctorController::class,'updateBook']);
+Route::get('/categories/show',[CategoryController::class,'showCategories']);
+Route::get('/categories/edit/{id}',[CategoryController::class,'editCategories']);
+Route::post('/categories/update/{id}',[CategoryController::class,'updateCategory']);
+//reportes
+Route::get('/report/books/doctor',[ReportController::class,'reportBooksDoctor']);
+Route::get('/report/books/paciente',[ReportController::class,'reportBooksPaciente']);
 
+Route::post('/webhook', [PayController::class,'confirmationConekta']);

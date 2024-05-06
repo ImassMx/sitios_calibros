@@ -1,4 +1,3 @@
-
 <table style="width:100%">
 </table>
 
@@ -15,35 +14,24 @@
             <th style="text-align: center;font-weight:bold;">APELLIDOS</th>
             <th style="text-align: center;font-weight:bold;">ESPECIALIDAD</th>
             <th style="text-align: center;font-weight:bold;">FOLIO</th>
-            <th style="text-align: center;font-weight:bold;">CLIENTE</th>
             <th style="text-align: center;font-weight:bold;">CÓDIGO POSTAL</th>
-            <th style="text-align: center;font-weight:bold;">FECHA DESCARGA</th>
-            <th style="text-align: center;font-weight:bold;">DESCARGAS</th>
+
         </tr>
     </thead>
     <tbody>
-    @foreach ($doctores as $doctor)
-        <tr>
+        @foreach ($doctores as $doctor)
+            <tr>
                 <td>{{ $doctor->id }}</td>
                 <td>{{ $doctor->nombres }}</td>
                 <td>{{ $doctor->apellidos }}</td>
                 <td>
                     {{ $doctor->especialidad->nombre }}
                 </td>
-                <td>{{$doctor->folio}}</td>
-                <td>
-                    {{ $doctor->ligas->nombre }}
-                </td>
+                <td>{{ $doctor->folio }}</td>
                 <td>
                     {{ $doctor->cp }}
                 </td>
-                <td>
-                    {{ $date::parse($doctor->fecha_descarga)->format('d-m-Y') }}
-                </td>
-                <td>
-                    {{$doctor->descargas}}
-                </td>
-        </tr>
-         @endforeach
+            </tr>
+        @endforeach
     </tbody>
 </table>

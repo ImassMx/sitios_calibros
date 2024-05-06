@@ -701,3 +701,17 @@ hr {
   text-transform: uppercase;
   font-weight: 300;
 }
+/*ESTILOS Markteplace*/
+
+.color-p{
+color: #5d025f !important;
+}
+.color-s{
+color: #21b380 !important;
+}
+.backg-p{
+background: #5d025f !important;
+}
+.backg-s{
+background: #21b380 !important;
+}

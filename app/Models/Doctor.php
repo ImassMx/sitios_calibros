@@ -18,13 +18,14 @@ class Doctor extends Model
 
   protected $fillable = [
     'especialidad_id',
-    'liga_id',
     'nombres',
     'apellidos',
     'folio',
     'descargas',
     'user_id',
-    'cp'
+    'cedula',
+    'cp',
+    'uuid'
   ];
 
   public function ligas()

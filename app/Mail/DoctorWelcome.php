@@ -10,7 +10,8 @@ use Illuminate\Queue\SerializesModels;
 class DoctorWelcome extends Mailable
 {
     use Queueable, SerializesModels;
-
+    public $folio;
+    public $dominio;
     /**
      * Create a new message instance.
      *
@@ -29,6 +30,11 @@ class DoctorWelcome extends Mailable
      */
     public function build()
     {
-        return $this->view('email.WelcomeDoctor',["folio"=>$this->folio,"dominio"=>$this->dominio])->subject("Bienvenida Doctor");
+        return $this->view('email.WelcomeDoctor',[
+            "folio"=>$this->folio,
+            "dominio"=>$this->dominio
+            ])
+            ->subject("Bienvenida Doctor")
+            ->attach('bienvenida/estres.pdf');
     }
 }

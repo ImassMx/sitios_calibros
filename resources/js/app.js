@@ -3,6 +3,7 @@ import axios from 'axios';
 import VueAxios from 'vue-axios';
 import {createApp} from 'vue'
 import {router} from './router/router'
+import store from './store'
 
 import CrearLibros from './components/libros/CrearLibros.vue'
 import ListarLibros from './components/libros/ListarLibros.vue'
@@ -23,12 +24,30 @@ import ReporteClientes from './components/reporte/ListaReporte.vue'
 import ReporteDoctores from './components/reporte/ListaDoctores.vue'
 import ZonaDoctor from './components/doctor/ZonaDoctor.vue'
 import LaravelVuePagination from 'laravel-vue-pagination';
+//VENTAS
+import CreateBook from './components/ventas/libros/CreateBook.vue'
+import ListBook from './components/ventas/libros/ListBook.vue'
+import EditBook from './components/ventas/libros/EditBook.vue'
+
+//MARKETPLACE
+import CatalogoLibros from './components/marketplace/CatalogoLibros.vue'
+import ShowCarrito from './components/marketplace/ShowCarrito.vue'
+import ResumenCarrito from './components/marketplace/ResumenCarrito.vue'
+import ShowPago from './components/marketplace/ShowPago.vue'
+//PACIENTE CARD
+import CardBook from './components/cliente/CardBook.vue'
+//DOCTOR
+import ListPaciente from './components/doctor/ListPaciente.vue'
+//REPORTES
+import LibrosDoctores from './components/reporte/LibrosDoctores.vue'
+import LibrosPacientes from './components/reporte/LibrosPacientes.vue'
 
 const app = createApp({})
 
 
 app.use(router)
 app.use(VueAxios,axios)
+app.use(store)
 app.component('CrearLibros', CrearLibros)
 app.component('ListarLibros', ListarLibros)
 app.component('CrearLigas', CrearLigas)
@@ -48,5 +67,21 @@ app.component('RegistrarCliente', RegistrarCliente)
 app.component('ReporteClientes', ReporteClientes)
 app.component('ReporteDoctores', ReporteDoctores)
 app.component('ZonaDoctor', ZonaDoctor)
+//VENTAS
+app.component('CreateBook', CreateBook)
+app.component('ListBook', ListBook)
+app.component('EditBook', EditBook)
+//MARKETPLACE
+app.component('CatalogoLibros', CatalogoLibros)
+app.component('ShowCarrito', ShowCarrito)
+app.component('ResumenCarrito', ResumenCarrito)
+app.component('ShowPago', ShowPago)
+//PACIENTE CLIENTE
+app.component('CardBook', CardBook)
+app.component('ListPaciente', ListPaciente)
+//REPORTE
+app.component('LibrosDoctores', LibrosDoctores)
+app.component('LibrosPacientes', LibrosPacientes)
+
 
 app.mount('#app')

@@ -26,9 +26,6 @@
                 <th scope="col">CODIGO POSTAL</th>
                 <th scope="col">ESPECIALIDAD</th>
                 <th scope="col">FOLIO</th>
-                <th scope="col">CLIENTE</th>
-                <th scope="col">DESCARGAS</th>
-                <th scope="col">FECHA DESCARGA</th>
               </tr>
             </thead>
             <tbody>
@@ -39,9 +36,6 @@
                 <td>{{doc.cp}}</td>
                 <td>{{doc.especialidad.nombre}}</td>
                 <td>{{doc.folio}}</td>
-                <td>{{doc.ligas.slug}}</td>
-                <td>{{doc.descargas}}</td>
-                <td>{{doc.fecha_descarga}}</td>
               </tr>              
             </tbody>
           </table>

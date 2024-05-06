@@ -7,15 +7,8 @@
       <div class="card mb-4">
         <div class="card-body">
           <div class="form-group col-md-4 mb-3">
-            <input
-              type="text"
-              class="form-control"
-              id="exampleInputEmail1"
-              aria-describedby="emailHelp"
-              placeholder="Buscar"
-              v-model="buscador"
-              @keyup="buscarCliente"
-            />
+            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+              placeholder="Buscar" v-model="buscador" @keyup="buscarCliente" />
           </div>
           <table class="table">
             <thead>
@@ -25,12 +18,7 @@
                 <th scope="col">FOLIO</th>
                 <th scope="col">CELULAR</th>
                 <th scope="col">CP.</th>
-                <th scope="col">CIUDAD</th>
                 <th scope="col">F. REGISTRO</th>
-                <th scope="col">F. DESCARGA</th>
-                <th scope="col">LIBRO DESCARGADO</th>
-                <th scope="col">DOCTOR</th>
-                <th scope="col">DESCARGAS</th>
               </tr>
             </thead>
             <tbody>
@@ -40,22 +28,11 @@
                 <td>{{ client.folio }}</td>
                 <td>{{ client.user.celular }}</td>
                 <td>{{ client.codigo_postal }}</td>
-                <td>{{ client.ciudad }}</td>
-                <td>{{ client.created_at.slice(0,10) }}</td>
-                <td>{{ client.fecha_descarga }}</td>
-                <td v-for="lib in client.libro" :key="lib.id">
-                  {{ lib.nombre }}
-                </td>
-                <td>{{ client.nombre_doctor }}</td>
-                <td>{{ client.descargas }}</td>
+                <td>{{ client.created_at.slice(0, 10) }}</td>
               </tr>
             </tbody>
           </table>
-          <Pagination
-            :data="clientes"
-            @pagination-change-page="traerClientes"
-            class="d-flex justify-content-center"
-          />
+          <Pagination :data="clientes" @pagination-change-page="traerClientes" class="d-flex justify-content-center" />
         </div>
       </div>
     </div>
@@ -82,7 +59,6 @@ export default {
         })
         .then((res) => {
           this.clientes = res.data;
-          console.log(res.data);
         });
     },
     buscarCliente() {
@@ -93,5 +69,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>
