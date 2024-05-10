@@ -111,10 +111,11 @@ class DoctorController extends Controller
                 } catch (\Exception $e) {
                     $error = ["error" => "No se puede conectar al sistema de envio SMS =>" . $e->getMessage()];
                     $cliente = '';
-    
                     Log::info('error' . json_encode($error));
                 }
-                Log::info($this->uuid);
+
+                $request->merge(['password' => $this->uuid]);
+
                 auth()->attempt($request->only('email', 'password'));
     
                 return response()->json([
