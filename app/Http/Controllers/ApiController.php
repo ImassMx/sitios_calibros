@@ -150,4 +150,22 @@ class ApiController extends Controller
         Mail::to(env('EMAIL_CONTACT'))->send(new ContactForm($request->all()));
         return back()->with('mensaje','Se envió correctamente');
      }
+
+     public function validateEmail(Request $request){
+        try {
+            $user = User::where('email',$request->email)->first();
+            return !empty($user) ? $user : null;
+        } catch (\Throwable $th) {
+            Log::error($th);
+        }
+     }
+
+     public function validatePhone(Request $request){
+        try {
+            $user = User::where('celular',$request->celular)->first();
+            return !empty($user) ? $user : null;
+        } catch (\Throwable $th) {
+            Log::error($th);
+        }
+     }
 }

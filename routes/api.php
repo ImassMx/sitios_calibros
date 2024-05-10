@@ -77,6 +77,10 @@ Route::post('/update/book/{uuid}',[DoctorController::class,'updateBook']);
 Route::get('/categories/show',[CategoryController::class,'showCategories']);
 Route::get('/categories/edit/{id}',[CategoryController::class,'editCategories']);
 Route::post('/categories/update/{id}',[CategoryController::class,'updateCategory']);
+Route::post('/category/create',[CategoryController::class,'createCategory']);
+Route::get('/validate/email',[ApiController::class,'validateEmail']);
+Route::get('/validate/phone',[ApiController::class,'validatePhone']);
+
 //reportes
 Route::get('/report/books/doctor',[ReportController::class,'reportBooksDoctor']);
 Route::get('/report/books/paciente',[ReportController::class,'reportBooksPaciente']);
