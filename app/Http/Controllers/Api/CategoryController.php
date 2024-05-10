@@ -62,4 +62,23 @@ class CategoryController extends Controller
             ]);
         }
     }
+
+    public function createCategory(Request $request){
+        try {
+            $category = new Category();
+            $category->name = $request->nombre;
+            $category->save();
+
+            return response()->json([
+                'error' => false,
+                'message' => 'Se actualizó correctamente la categoria.'
+            ]);
+        } catch (\Throwable $th) {
+            Log::error($th);
+            return response()->json([
+                'error' => true,
+                'message' => $th->getMessage()
+            ]);
+        }
+    }
 }

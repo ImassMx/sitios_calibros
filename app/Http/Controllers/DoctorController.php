@@ -26,6 +26,7 @@ use Illuminate\Support\Facades\Storage;
 
 class DoctorController extends Controller
 {
+    private $uuid;
 
     public function index(){
         return view('auth-doctor.register');
@@ -34,6 +35,7 @@ class DoctorController extends Controller
     public function store(Request $request) {
         try {
 
+            $this->uuid = Str::uuid();
             $this->validate($request, [
                 'nombre' => 'required',
                 'apellidos' => 'required',
@@ -45,16 +47,16 @@ class DoctorController extends Controller
                 'especialidad.required' => 'Elija la especialidad a la que pertenece',
                 'cedula.required' => 'La cedula es requerida.'
             ]);
-    
+      
                 $user = new User();
                 $user->name = $request->nombre;
                 $user->email = $request->email;
-                $user->password = Hash::make($request->password);
+                $user->password = Hash::make($this->uuid);
                 $user->celular = $request->celular;
                 $user->save();
     
                 $folio = mt_rand(10000, 99999);
-                $uuid = Str::uuid();
+
                 Doctor::create([
                     'user_id' => $user->id,
                     'especialidad_id' => $request->especialidad,
@@ -63,7 +65,7 @@ class DoctorController extends Controller
                     'cp' => $request->postal,
                     'folio' => $folio,
                     'cedula'=>$request->cedula,
-                    'uuid'=> $uuid
+                    'uuid'=> $this->uuid
                 ]);
     
                 $dominio = $_SERVER['HTTP_HOST'];
@@ -112,13 +114,13 @@ class DoctorController extends Controller
     
                     Log::info('error' . json_encode($error));
                 }
-    
+                Log::info($this->uuid);
                 auth()->attempt($request->only('email', 'password'));
     
                 return response()->json([
                     'error' => false,
                     'folio' => $folio,
-                    'uuid' => $uuid
+                    'uuid' => $this->uuid
                 ]);
 
         } catch (\Throwable $th) {
@@ -266,7 +268,7 @@ class DoctorController extends Controller
 
         $request->merge(['email' => $user->email]);
 
-        $request->merge(['password' => '12345']);
+        $request->merge(['password' => $doctor->uuid]);
 
         if (!Auth::attempt($request->only(['email', 'password']), true)) {
             return back()->with('mensaje', 'El número de folio es incorrecto');

@@ -9,10 +9,11 @@ use App\Models\Libro;
 use App\Models\Doctor;
 use App\Models\Estado;
 use App\Models\Cliente;
+use App\Models\ClientBook;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Exports\ClientExport;
 use App\Mail\PacienteWelcome;
-use App\Models\ClientBook;
 use Illuminate\Support\Facades\DB;
 use Facade\FlareClient\Http\Client;
 use Illuminate\Support\Facades\Log;
@@ -23,6 +24,7 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class ClienteController extends Controller
 {
+    private $uuid;
 
     public function index()
     {
@@ -32,11 +34,11 @@ class ClienteController extends Controller
     public function store(Request $request) {
 
         try {
-
+            $this->uuid = Str::uuid();
             $usuario = User::create([
                 'name' => $request->nombre_paciente,
                 'email' => $request->email,
-                'password' => Hash::make('12345'),
+                'password' => Hash::make($this->uuid),
                 'celular' => $request->celular
             ])->assignRole('Cliente');
 
@@ -46,6 +48,7 @@ class ClienteController extends Controller
                 'folio' => $request->folio,
                 'codigo_postal' => $request->codigo,
                 'name' => $request->nombre_paciente,
+                'uuid' => $this->uuid,
                 'created_at' => date('d-m-Y')
             ]);
 
@@ -57,6 +60,7 @@ class ClienteController extends Controller
                 $dominio = $_SERVER['HTTP_HOST'];
             }
 
+            $request->merge(['password' => $this->uuid]);
             //Mail::to($request->email)->send(new PacienteWelcome($doctor->folio, $dominio));
 
             auth()->attempt($request->only('email', 'password'));
@@ -76,15 +80,18 @@ class ClienteController extends Controller
 
     public function login(Request $request){
         try {
+            $user = User::where('celular', $request->celular)->with('cliente')->first();
 
-            $request->merge(['password' => '12345']);
+            if (empty($user)) {
+                return back()->with('mensaje', 'El número de celular no existe.');
+            }
+
+            $request->merge(['password' => $user->cliente->uuid]);
 
             if (!auth()->attempt($request->only(['celular', 'password']), $request->remember)) {
                 return back()->with('mensaje', 'El número de celular es incorrecto');
             }
 
-            $user = User::where('celular', $request->celular)->with('cliente')->first();
-    
             return redirect()->route('zona.descarga', $user->cliente->id);
         } catch (\Throwable $th) {
             Log::info($th);

@@ -1,6 +1,6 @@
 <template>
   <div class="container px-4">
-    <h1 class="mt-4">Crear Clasificación</h1>
+    <h1 class="mt-4">Crear Categoria</h1>
     <div class="m-5 col-lg-4 col-md-8">
       <form class="" v-on:submit.prevent="saveClasificacion">
         <div class="form-group mb-3">
@@ -9,7 +9,7 @@
             type="text"
             class="form-control"
             id="exampleInputEmail1"
-            placeholder="Ingresa el nombre de la clasificación"
+            placeholder="Ingresa el nombre de la categoria"
             aria-describedby="emailHelp"
             v-model="nombre"
           />
@@ -35,7 +35,7 @@ export default {
   methods: {
     saveClasificacion() {
       axios
-        .post("/clasificacion/create", { nombre: this.nombre })
+        .post("/api/category/create", { nombre: this.nombre })
         .then((response) => {
           this.nombre = "";
           this.showAlert()
@@ -47,7 +47,7 @@ export default {
         });
     },
     showAlert() {
-      Swal.fire("Correcto", "Clasificación creada correctamente", "success");
+      Swal.fire("Correcto", "Categoria creada correctamente", "success");
     },
   },
 };

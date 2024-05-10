@@ -5,11 +5,11 @@
     <form v-on:submit.prevent="saveClient()">
       <div>
         <label for="apellidoM">Folio</label>
-        <input type="text" placeholder="Ingrese el N° de folio" id="apellidoM" v-model="folio" @keyup="buscarCodigo"/>
+        <input type="text" placeholder="Ingrese el N° de folio" id="apellidoM" v-model="folio" @keyup="buscarCodigo" maxlength="5" />
       </div>
       <div>
         <label for="nombre">Nombre Doctor</label>
-        <input type="text" placeholder="Ingresa el nombre de su doctor" id="nombre" v-model="nombre_doctor" />
+        <input type="text" placeholder="Nombre Doctor" id="nombre" v-model="nombre_doctor" disabled/>
       </div>
       <div>
         <label for="apellidoP">Nombre Paciente </label>
@@ -17,15 +17,19 @@
       </div>
       <div>
         <label for="email">Email</label>
-        <input type="email" placeholder="Ingresa tu email" id="email" v-model="email" />
+        <input type="email" placeholder="Ingresa tu email" id="email" v-model="email" @keyup="buscarEmail" />
+        <label for="" class="message-error" v-if="messageEmail">{{ messageEmail }}</label>
       </div>
       <div>
         <label for="celular">Celular</label>
-        <input type="text" placeholder="Ingresa tu numero de celular" id="celular" v-model="celular" />
+        <input type="text" placeholder="Ingresa tu número de celular" id="celular" v-model="celular"
+          @input="buscarPhone" />
+        <label for="" class="message-error" v-if="messagePhone">{{ messagePhone }}</label>
+
       </div>
       <div>
         <label for="celular">Código Postal</label>
-        <input type="text" placeholder="Ingrese el código postal" id="celular" v-model="codigo"  />
+        <input type="text" placeholder="Ingrese el código postal" id="celular" v-model="codigo" />
       </div>
       <input type="submit" value="Registrarse" class="registrar" />
     </form>
@@ -46,20 +50,25 @@ export default {
       ciudad: "",
       estado: "",
       timeBuscador: "",
+      messageEmail: null,
+      messagePhone: null
     };
   },
   methods: {
     async getCodeDoctor() {
-        try {
-          const {data} = await axios.get("/api/infor/doctor/"+this.folio)
-          if(!data.error){
-            this.nombre_doctor = data.data.nombres + ' '+data.data.apellidos
-          }else{
-            this.nombre_doctor = ""
+      try {
+        if (this.folio.length === 5) {
+          const { data } = await axios.get("/api/infor/doctor/" + this.folio)
+          if (!data.error) {
+            this.nombre_doctor = data.data.nombres + ' ' + data.data.apellidos
+          } else {
+            this.nombre_doctor = ''
+            this.errorAlert()
           }
-        } catch (error) {
-          console.log(error)
         }
+      } catch (error) {
+        console.log(error)
+      }
     },
     buscarCodigo() {
       clearTimeout(this.timeBuscador);
@@ -79,8 +88,8 @@ export default {
           ciudad: this.ciudad,
           estado: this.estado
         }).then(res => {
-          if(!res.data.error){
-            window.location.href='/perfil/'+res.data.client_id
+          if (!res.data.error) {
+            window.location.href = '/perfil/' + res.data.client_id
           }
         }).catch(error => {
           if (error.response.status === 500) {
@@ -94,20 +103,35 @@ export default {
         text: "El número de folio es inválido",
       });
     },
-    limpiar() {
-      this.nombre_doctor = ''
-      this.nombre_paciente = ''
-      this.folio = ''
-      this.email = ''
-      this.celular = ''
-      this.password = ''
-      this.codigo = ''
-      this.alcaldia = ''
-      this.ciudad = ''
-      this.estado = ''
+    async buscarEmail() {
+      try {
+        this.messageEmail = null
+        const { data } = await axios.get('/api/validate/email', { params: { email: this.email } })
+        if (data) {
+          this.messageEmail = 'El email ya se encuentra registrado.'
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    async buscarPhone() {
+      try {
+        this.messagePhone = null
+        const { data } = await axios.get('/api/validate/phone', { params: { celular: this.celular } })
+        if (data) {
+          this.messagePhone = 'El N° de celular ya se encuentra registrado.'
+        }
+      } catch (error) {
+        console.log(error)
+      }
     }
   },
 };
 </script>
 
-<style></style>
+<style scoped>
+.message-error {
+  color: red;
+  font-size: 11px;
+}
+</style>

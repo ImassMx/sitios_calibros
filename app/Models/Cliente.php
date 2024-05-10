@@ -24,7 +24,8 @@ class Cliente extends Authenticatable
         'ciudad',
         'estado',
         'libro_id',
-        'fecha_descarga'
+        'fecha_descarga',
+        'uuid'
     ];
 
     public function estado()
