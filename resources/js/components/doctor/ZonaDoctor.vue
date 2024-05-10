@@ -170,6 +170,7 @@ h4 {
 }
 
 .container {
+    width: 1200px !important;
     margin-left: 4rem;
     margin-right: 4rem;
     padding-bottom: 10rem;

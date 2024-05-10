@@ -37,4 +37,8 @@ class MarketplaceController extends Controller
     public function successPayment(){
         return view('marketplace.avisos.success');
     }
+
+    public function errorPayment(){
+        return view('marketplace.avisos.error');
+    }
 }
