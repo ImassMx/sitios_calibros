@@ -95,8 +95,8 @@ class PayController extends Controller
                 'checkout' => array(
                     'allowed_payment_methods' => array("cash", "card", "bank_transfer"),
                     'type' => 'HostedPayment',
-                    'success_url' => 'http://127.0.0.1:8000/payment/confirmation?doctor=' . $doc->uuid,
-                    'failure_url' => 'http://127.0.0.1:8000/payment/failure?doctor=' . $doc->uuid,
+                    'success_url' => $host.'/payment/confirmation?doctor=' . $doc->uuid,
+                    'failure_url' => $host.'/payment/failure?doctor=' . $doc->uuid,
                     'monthly_installments_enabled' => true,
                     'monthly_installments_options' => array(3, 6, 9, 12),
                     "redirection_time" => 4
