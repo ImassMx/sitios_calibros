@@ -73,11 +73,9 @@ class PayController extends Controller
     private function createOrder($customer_id, $quantity, $price, $doc)
     {
         try {
-            $host = $_SERVER['HTTP_HOST'];
-            if ($host === '127.0.0.1:8000' || $host === 'localhost:8000') {
-                $host = 'http://' . $host;
-            }
-
+            $host = ($_SERVER['HTTP_HOST'] === '127.0.0.1:8000' || $_SERVER['HTTP_HOST'] === 'localhost:8000') ? 'http://' : 'https://';
+            $host .= $_SERVER['HTTP_HOST'];
+            
             $books = Cart::where('user_id', $doc->user_id)->pluck('id')->toArray();
             $this->user_id = $doc->user_id;
             $validOrderWithCheckout = array(
