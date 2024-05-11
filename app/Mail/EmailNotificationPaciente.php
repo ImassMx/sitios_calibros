@@ -57,11 +57,12 @@ class EmailNotificationPaciente extends Mailable
             $url = $this->dominio.'/login';
             $mensaje = "Ingresa a esta liga " . $this->dominio . "/login para que puedas descargar el libro " . $book->name .
                 " ingresando tu número de celular. \n La contraseña para leer el contenido del libro es : " . $book->password;
+        }else{
+            $url = $this->dominio . "/registrar/paciente?book=" . $book->uuid ;
+            $mensaje = "Ingresa a esta liga " . $this->dominio . "/registrar/paciente?book=" . $book->uuid . " 
+                 para que puedas descargar tu libro registrandote. \n La contraseña para leer el contenido del libro es : " . $book->password. " \n El número de Folio es: ". $doc->folio;
         }
-        $url = $this->dominio . "?book=" . $book->uuid ;
-        $mensaje = "Ingresa a esta liga " . $this->dominio . "?book=" . $book->uuid . " 
-            para que puedas descargar tu libro registrandote. \n La contraseña para leer el contenido del libro es : " . $book->password;
-
+        
         return $this->view('email.NotificationLiga',compact('url','mensaje'));
     }
 

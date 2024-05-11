@@ -75,10 +75,10 @@ class DoctorController extends Controller
     public function sendMessagePaciente(Request $request)
     {
         try {
-            $this->dominio = $_SERVER['HTTP_HOST'];
-            if($this->dominio !== 'https://registro.vistobuenoeditores.com.mx' || $this->dominio !== 'https://demo.vistobuenoeditores.com.mx'){
-                $this->dominio = 'http://127.0.0.1:8000';
-            }
+            
+            $this->dominio = ($_SERVER['HTTP_HOST'] === '127.0.0.1:8000' || $_SERVER['HTTP_HOST'] === 'localhost:8000') ? 'http://' : 'https://';
+            $this->dominio .= $_SERVER['HTTP_HOST'];
+
             $this->validateClient($request->phone,$request->book_id,$request->doctor);
             $token = $this->smsGetToken();
             try {
@@ -143,7 +143,9 @@ class DoctorController extends Controller
                 
             }
 
-            $dominio = $_SERVER['HTTP_HOST'];
+            $dominio = ($_SERVER['HTTP_HOST'] === '127.0.0.1:8000' || $_SERVER['HTTP_HOST'] === 'localhost:8000') ? 'http://' : 'https://';
+            $dominio .= $_SERVER['HTTP_HOST'];
+            
             Mail::to($request->email)
             ->send(new EmailNotificationPaciente($request->book_id,$request->doctor,$request->email,$dominio));
         } catch (\Throwable $th) {
@@ -244,8 +246,8 @@ class DoctorController extends Controller
                 " ingresando tu número de celular. \n La contraseña para leer el contenido del libro es : ". $book->password;
             }
 
-            return $this->messageMsm = "Ingresa a esta liga ".$this->dominio."?book=".$book->uuid." 
-            para que puedas descargar tu libro registrandote. \n La contraseña para leer el contenido del libro es : ". $book->password;
+            return $this->messageMsm = "Ingresa a esta liga ".$this->dominio."/registrar/paciente?book=".$book->uuid." 
+            para que puedas descargar tu libro registrandote. \n La contraseña para leer el contenido del libro es : ". $book->password . " \n El número de folio es :".$doc->folio;
 
         } catch (\Throwable $th) {
             Log::error($th);

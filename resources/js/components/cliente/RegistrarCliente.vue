@@ -31,13 +31,14 @@
         <label for="celular">Código Postal</label>
         <input type="text" placeholder="Ingrese el código postal" id="celular" v-model="codigo" />
       </div>
-      <input type="submit" value="Registrarse" class="registrar" />
+      <input type="submit" value="Registrarse" class="registrar" v-if="validatebook" />
     </form>
   </div>
 </template>
 
 <script>
 export default {
+  props:["book"],
   data() {
     return {
       nombre_doctor: "",
@@ -51,8 +52,20 @@ export default {
       estado: "",
       timeBuscador: "",
       messageEmail: null,
-      messagePhone: null
+      messagePhone: null,
+      validatebook: 1
     };
+  },
+  async created(){
+      const {data} = await axios.get('/api/validate/book/'+this.book)
+      if(!data.data){
+        this.validatebook = null
+        Swal.fire({
+        icon: "error",
+        title: "error",
+        text: "La url es inválida, solicite una url válida",
+      });
+      }
   },
   methods: {
     async getCodeDoctor() {
@@ -86,7 +99,8 @@ export default {
           codigo: this.codigo,
           alcaldia: this.alcaldia,
           ciudad: this.ciudad,
-          estado: this.estado
+          estado: this.estado,
+          book:this.book
         }).then(res => {
           if (!res.data.error) {
             window.location.href = '/perfil/' + res.data.client_id

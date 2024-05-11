@@ -1,5 +1,5 @@
 @extends('marketplace.app')
 
 @section('content-mkt')
-    <registrar-cliente></registrar-cliente>
+    <registrar-cliente book="{{$book}}"></registrar-cliente>
 @endsection
