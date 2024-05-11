@@ -108,10 +108,11 @@ class ClienteController extends Controller
         return view('principal.app', compact('paciente','books'));
     }
 
-    public function registro()
-    {
+    public function registro(Request $request)
+    {   
+        $book = $request->book;
         $estados = Estado::all();
-        return view('auth-cliente.register', compact('estados'));
+        return view('auth-cliente.register', compact('estados','book'));
     }
 
     public function exportClient()

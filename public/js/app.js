@@ -23029,6 +23029,7 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: ["book"],
   data: function data() {
     return {
       nombre_doctor: "",
@@ -23042,96 +23043,47 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       estado: "",
       timeBuscador: "",
       messageEmail: null,
-      messagePhone: null
+      messagePhone: null,
+      validatebook: 1
     };
+  },
+  created: function created() {
+    var _this = this;
+
+    return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+      var _yield$axios$get, data;
+
+      return _regeneratorRuntime().wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _context.next = 2;
+              return axios.get('/api/validate/book/' + _this.book);
+
+            case 2:
+              _yield$axios$get = _context.sent;
+              data = _yield$axios$get.data;
+
+              if (!data.data) {
+                _this.validatebook = null;
+                Swal.fire({
+                  icon: "error",
+                  title: "error",
+                  text: "La url es inválida, solicite una url válida"
+                });
+              }
+
+            case 5:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }))();
   },
   methods: {
     getCodeDoctor: function getCodeDoctor() {
-      var _this = this;
-
-      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-        var _yield$axios$get, data;
-
-        return _regeneratorRuntime().wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                _context.prev = 0;
-
-                if (!(_this.folio.length === 5)) {
-                  _context.next = 7;
-                  break;
-                }
-
-                _context.next = 4;
-                return axios.get("/api/infor/doctor/" + _this.folio);
-
-              case 4:
-                _yield$axios$get = _context.sent;
-                data = _yield$axios$get.data;
-
-                if (!data.error) {
-                  _this.nombre_doctor = data.data.nombres + ' ' + data.data.apellidos;
-                } else {
-                  _this.nombre_doctor = '';
-
-                  _this.errorAlert();
-                }
-
-              case 7:
-                _context.next = 12;
-                break;
-
-              case 9:
-                _context.prev = 9;
-                _context.t0 = _context["catch"](0);
-                console.log(_context.t0);
-
-              case 12:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee, null, [[0, 9]]);
-      }))();
-    },
-    buscarCodigo: function buscarCodigo() {
-      clearTimeout(this.timeBuscador);
-      this.timeBuscador = setTimeout(this.getCodeDoctor, 360);
-    },
-    saveClient: function saveClient() {
       var _this2 = this;
-
-      this.axios.post('/registro/paciente', {
-        nombre_doctor: this.nombre_doctor,
-        nombre_paciente: this.nombre_paciente,
-        folio: this.folio,
-        email: this.email,
-        celular: this.celular,
-        password: this.celular,
-        codigo: this.codigo,
-        alcaldia: this.alcaldia,
-        ciudad: this.ciudad,
-        estado: this.estado
-      }).then(function (res) {
-        if (!res.data.error) {
-          window.location.href = '/perfil/' + res.data.client_id;
-        }
-      })["catch"](function (error) {
-        if (error.response.status === 500) {
-          _this2.errorAlert();
-        }
-      });
-    },
-    errorAlert: function errorAlert() {
-      Swal.fire({
-        icon: "error",
-        title: "Hubo un error",
-        text: "El número de folio es inválido"
-      });
-    },
-    buscarEmail: function buscarEmail() {
-      var _this3 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
         var _yield$axios$get2, data;
@@ -23141,22 +23093,28 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context2.prev = _context2.next) {
               case 0:
                 _context2.prev = 0;
-                _this3.messageEmail = null;
+
+                if (!(_this2.folio.length === 5)) {
+                  _context2.next = 7;
+                  break;
+                }
+
                 _context2.next = 4;
-                return axios.get('/api/validate/email', {
-                  params: {
-                    email: _this3.email
-                  }
-                });
+                return axios.get("/api/infor/doctor/" + _this2.folio);
 
               case 4:
                 _yield$axios$get2 = _context2.sent;
                 data = _yield$axios$get2.data;
 
-                if (data) {
-                  _this3.messageEmail = 'El email ya se encuentra registrado.';
+                if (!data.error) {
+                  _this2.nombre_doctor = data.data.nombres + ' ' + data.data.apellidos;
+                } else {
+                  _this2.nombre_doctor = '';
+
+                  _this2.errorAlert();
                 }
 
+              case 7:
                 _context2.next = 12;
                 break;
 
@@ -23173,7 +23131,43 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee2, null, [[0, 9]]);
       }))();
     },
-    buscarPhone: function buscarPhone() {
+    buscarCodigo: function buscarCodigo() {
+      clearTimeout(this.timeBuscador);
+      this.timeBuscador = setTimeout(this.getCodeDoctor, 360);
+    },
+    saveClient: function saveClient() {
+      var _this3 = this;
+
+      this.axios.post('/registro/paciente', {
+        nombre_doctor: this.nombre_doctor,
+        nombre_paciente: this.nombre_paciente,
+        folio: this.folio,
+        email: this.email,
+        celular: this.celular,
+        password: this.celular,
+        codigo: this.codigo,
+        alcaldia: this.alcaldia,
+        ciudad: this.ciudad,
+        estado: this.estado,
+        book: this.book
+      }).then(function (res) {
+        if (!res.data.error) {
+          window.location.href = '/perfil/' + res.data.client_id;
+        }
+      })["catch"](function (error) {
+        if (error.response.status === 500) {
+          _this3.errorAlert();
+        }
+      });
+    },
+    errorAlert: function errorAlert() {
+      Swal.fire({
+        icon: "error",
+        title: "Hubo un error",
+        text: "El número de folio es inválido"
+      });
+    },
+    buscarEmail: function buscarEmail() {
       var _this4 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
@@ -23184,11 +23178,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context3.prev = _context3.next) {
               case 0:
                 _context3.prev = 0;
-                _this4.messagePhone = null;
+                _this4.messageEmail = null;
                 _context3.next = 4;
-                return axios.get('/api/validate/phone', {
+                return axios.get('/api/validate/email', {
                   params: {
-                    celular: _this4.celular
+                    email: _this4.email
                   }
                 });
 
@@ -23197,7 +23191,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 data = _yield$axios$get3.data;
 
                 if (data) {
-                  _this4.messagePhone = 'El N° de celular ya se encuentra registrado.';
+                  _this4.messageEmail = 'El email ya se encuentra registrado.';
                 }
 
                 _context3.next = 12;
@@ -23214,6 +23208,49 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             }
           }
         }, _callee3, null, [[0, 9]]);
+      }))();
+    },
+    buscarPhone: function buscarPhone() {
+      var _this5 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4() {
+        var _yield$axios$get4, data;
+
+        return _regeneratorRuntime().wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                _context4.prev = 0;
+                _this5.messagePhone = null;
+                _context4.next = 4;
+                return axios.get('/api/validate/phone', {
+                  params: {
+                    celular: _this5.celular
+                  }
+                });
+
+              case 4:
+                _yield$axios$get4 = _context4.sent;
+                data = _yield$axios$get4.data;
+
+                if (data) {
+                  _this5.messagePhone = 'El N° de celular ya se encuentra registrado.';
+                }
+
+                _context4.next = 12;
+                break;
+
+              case 9:
+                _context4.prev = 9;
+                _context4.t0 = _context4["catch"](0);
+                console.log(_context4.t0);
+
+              case 12:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4, null, [[0, 9]]);
       }))();
     }
   }
@@ -25980,16 +26017,12 @@ var _hoisted_10 = /*#__PURE__*/_withScopeId(function () {
   );
 });
 
-var _hoisted_11 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-    type: "submit",
-    value: "Registrarse",
-    "class": "registrar"
-  }, null, -1
-  /* HOISTED */
-  );
-});
-
+var _hoisted_11 = {
+  key: 0,
+  type: "submit",
+  value: "Registrarse",
+  "class": "registrar"
+};
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [_hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
     onSubmit: _cache[9] || (_cache[9] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function ($event) {
@@ -26064,7 +26097,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     })
   }, null, 512
   /* NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.codigo]])]), _hoisted_11], 32
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.codigo]])]), $data.validatebook ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("input", _hoisted_11)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 32
   /* HYDRATE_EVENTS */
   )]);
 }

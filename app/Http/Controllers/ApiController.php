@@ -8,6 +8,7 @@ use App\Models\Libro;
 use App\Models\Doctor;
 use App\Models\Cliente;
 use App\Mail\ContactForm;
+use App\Models\BookSale;
 use App\Models\Especialidad;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -164,6 +165,19 @@ class ApiController extends Controller
         try {
             $user = User::where('celular',$request->celular)->first();
             return !empty($user) ? $user : null;
+        } catch (\Throwable $th) {
+            Log::error($th);
+        }
+     }
+
+     public function validateBook($book){
+        try {
+            $bo = BookSale::where('uuid',$book)->first();
+            Log::info($bo);
+            return response()->json([
+                'data' => !empty($bo) ? $bo : null
+            ]);
+
         } catch (\Throwable $th) {
             Log::error($th);
         }

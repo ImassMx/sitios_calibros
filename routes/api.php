@@ -80,6 +80,7 @@ Route::post('/categories/update/{id}',[CategoryController::class,'updateCategory
 Route::post('/category/create',[CategoryController::class,'createCategory']);
 Route::get('/validate/email',[ApiController::class,'validateEmail']);
 Route::get('/validate/phone',[ApiController::class,'validatePhone']);
+Route::get('/validate/book/{id}',[ApiController::class,'validateBook']);
 
 //reportes
 Route::get('/report/books/doctor',[ReportController::class,'reportBooksDoctor']);
