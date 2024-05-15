@@ -10,7 +10,6 @@
             Pacientes</a>
         </div>
         <h2 class="sub-titulo">Mis Libros :</h2>
-        <p class="sub-titulo">Mis puntos: {{ Doctor.points }}</p>
         <div class="container-libros">
             <div class="card" v-for="book in Books" :key="book.id">
                 <img :src="book.book.image" :alt="book.name" class="img-book">

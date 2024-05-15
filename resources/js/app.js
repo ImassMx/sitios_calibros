@@ -42,6 +42,9 @@ import ListPaciente from './components/doctor/ListPaciente.vue'
 import LibrosDoctores from './components/reporte/LibrosDoctores.vue'
 import LibrosPacientes from './components/reporte/LibrosPacientes.vue'
 
+import ShowAviso from './components/ShowAviso.vue'
+
+
 const app = createApp({})
 
 
@@ -83,5 +86,6 @@ app.component('ListPaciente', ListPaciente)
 app.component('LibrosDoctores', LibrosDoctores)
 app.component('LibrosPacientes', LibrosPacientes)
 
+app.component('ShowAviso', ShowAviso)
 
 app.mount('#app')

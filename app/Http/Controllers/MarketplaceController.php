@@ -41,4 +41,5 @@ class MarketplaceController extends Controller
     public function errorPayment(){
         return view('marketplace.avisos.error');
     }
+
 }
