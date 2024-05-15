@@ -16,7 +16,6 @@
                     <td>
                         <h5 class="fw-bold">{{ pro.book.name }}</h5>
                         <p class="fw-bold text-muted m-0 p-0">Autor: {{ pro.book.author }}</p>
-                        <p class="text-muted mt-2 m-0 p-0">Puntos : {{ pro.book.points }}</p>
                         <p class="text-muted m-0 p-0">Categoria: {{ pro.book.category.name }}</p>
                     </td>
                     <td class="fw-bold color-s">$ {{ pro.book.price}}</td>
@@ -41,7 +40,6 @@
         <div class="card mb-3 p-3">
             <h5 class="fw-bold">Resumén de mi compra</h5>
             <p class="p-0 m-0 fw-bold">Libros: <span class="color-s">{{ cartCount }}</span></p>
-            <p class="p-0 m-0 fw-bold">Total puntos: <span class="color-s">{{ totalPoint }}</span></p>
             <a @click="processPayment()" class="btn  btn-sm text-center backg-p text-white" > Proceder al
                 pago</a>
         </div>
