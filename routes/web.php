@@ -43,6 +43,8 @@ Route::get('/marketplace/compra', [App\Http\Controllers\MarketplaceController::c
 Route::get('/marketplace/pasarela', [App\Http\Controllers\MarketplaceController::class,'pasarela']);
 Route::get('/payment/confirmation', [App\Http\Controllers\MarketplaceController::class,'successPayment']);
 Route::get('/payment/failure', [App\Http\Controllers\MarketplaceController::class,'errorPayment']);
+Route::get('/landing', [App\Http\Controllers\MarketplaceController::class,'landing']);
+
 
 
 Route::get('/contacto', [App\Http\Controllers\HomeController::class, 'contacto']);

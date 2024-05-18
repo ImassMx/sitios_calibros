@@ -4,7 +4,8 @@
             <div class="col-md-2 col-sm-12 pt-1">
                 <label class="fw-bold">Categorias</label>
                 <div class="form-check" v-for="cat in Categories" :key="cat.id">
-                    <input class="form-check-input" type="checkbox" :value="cat.id" v-model="categories" @change="selectCategories">
+                    <input class="form-check-input" type="checkbox" :value="cat.id" v-model="categories"
+                        @change="selectCategories">
                     <label class="form-check-label" for="flexCheckDefault">
                         {{ cat.name }}
                     </label>
@@ -24,11 +25,12 @@
                             <input type="text" class="form-control" aria-label="Busar" placeholder="Buscar"
                                 v-model="buscador" @keyup="buscarLibros">
                         </div>
-                        <!-- <div class="progress" style="height: 13px;">
-                            <div class="progress-bar bg-info" role="progressbar" style="width: 15%;" aria-valuenow="25"
-                                aria-valuemin="0" aria-valuemax="100">25%</div>
-                        </div> -->
-                        <!-- <p class="fw-bold">Mis puntos: <span class="color-p fw-bold">20 de 100</span></p> -->
+                        <div class="card mb-3 p-3 contenido-informacion">
+                            <p class="terminos">Para mayor información , términos y condiciones,aviso de privacidad
+                                acceder a:</p>
+                            <a href="www.vistobuenoeditores.com.mx">www.vistobuenoeditores.com.mx </a>
+                            <p class="terminos"><b>Nota: </b>Por ser libros digitales las devoluciones no aplican</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -44,7 +46,6 @@
                         <a :href="`/marketplace/detalle/${book.uuid}`" class="text-decoration-none">
                             <h5 class="card-title color-p fw-bold">{{ book.name }}</h5>
                         </a>
-                        <p class="card-text"> {{ book.points }} pts</p>
                         <h6 class="card-subtitle mb-2 text-muted"> $ {{ book.price }}</h6>
                         <a @click="addToBook(book.uuid)" class="btn btn-outline-success btn-sm"
                             style="cursor: pointer;">
@@ -84,7 +85,7 @@ export default {
             }
         }, async getBooks(page = 1) {
             try {
-                const { data } = await axios.get('/api/catalog/books/marketplace?page='+page, { params: { search: this.buscador, categoria:this.categories } })
+                const { data } = await axios.get('/api/catalog/books/marketplace?page=' + page, { params: { search: this.buscador, categoria: this.categories } })
                 this.Books = data
             } catch (error) {
                 console.log(error)
@@ -96,7 +97,7 @@ export default {
             clearTimeout(this.timeBuscador);
             this.timeBuscador = setTimeout(this.getBooks, 360);
         },
-        async selectCategories(){
+        async selectCategories() {
             await this.getBooks()
         }
     },
@@ -108,4 +109,8 @@ export default {
 }
 </script>
 
-<style></style>
+<style>
+.contenido-informacion{
+    text-align: start;
+}
+</style>
