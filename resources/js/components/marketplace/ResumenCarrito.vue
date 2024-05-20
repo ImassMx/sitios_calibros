@@ -43,6 +43,11 @@
             <a @click="processPayment()" class="btn  btn-sm text-center backg-p text-white" > Proceder al
                 pago</a>
         </div>
+        <div class="card mb-3 p-3">
+            <p class="terminos">Para mayor información , términos y condiciones,aviso de privacidad acceder a:</p>
+            <a href="www.vistobuenoeditores.com.mx">www.vistobuenoeditores.com.mx </a>
+            <p class="terminos"><b>Nota: </b>Por ser libros digitales las devoluciones no aplican</p>
+        </div>
     </div>
 </template>
 

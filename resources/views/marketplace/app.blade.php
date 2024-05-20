@@ -27,7 +27,6 @@
 
         .terminos {
             margin: 0;
-            font-weight: bold;
         }
 
         .container {

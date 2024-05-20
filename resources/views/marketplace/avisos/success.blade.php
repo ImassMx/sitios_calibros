@@ -17,7 +17,7 @@ margin-top: 4rem;
 </style>
 @section('content-mkt')
         <div style="width: 100%;display:flex;justify-content:center;align-items:center;flex-direction:column;">
-            <img src="{{asset('img/success.png')}}" alt="" style="width: 300px">
+            <img src="{{asset('img/success.png')}}" alt="" style="width: 200px;margin-top:3rem;">
             <h2  style="text-align: center; margin-top:1rem">Vamos a validar tu pago, en breve te llegará un correo.</h2>
             <show-aviso/>
         </div>

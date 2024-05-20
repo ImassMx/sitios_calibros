@@ -42,4 +42,8 @@ class MarketplaceController extends Controller
         return view('marketplace.avisos.error');
     }
 
+    public function landing(){
+        return view('marketplace.landing');
+    }
+
 }
