@@ -26,12 +26,7 @@
                 </div>
             </div>
             <div class="col-md-3 col-sm-12">
-                <div class="card mb-3 p-3 text-center">
-                    <h5>Adquiere <span class="fw-bold color-p">{{ $book->name }}</span></h5>
-                    <a href="/marketplace/carrito" class="btn  btn-sm text-center backg-p text-white"> Comprar</a>
-                    <button class="btn btn-outline-success btn-sm text-center "><img src="{{ asset('/img/shop.svg') }}"
-                            alt="buscar" width="20"> Añadir a carrito</button>
-                </div>
+                <show-comprar name="{{$book->name}}" uuid="{{$book->uuid}}" user="{{auth()->user()?? null}}"/>
                 <p style="margin: 0">Para mayor información , términos y condiciones,aviso de privacidad acceder a:</p>
                 <a href="https://vistobuenoeditores.com.mx">www.vistobuenoeditores.com.mx</a>
                 <p style="margin: 0"><b>Nota:</b> Por ser libros digitales las devoluciones no aplican.</p>
