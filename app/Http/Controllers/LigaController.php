@@ -59,7 +59,8 @@ class LigaController extends Controller
             'libro_id' => $request->book
         ]);
 
-        $dominio = $_SERVER['HTTP_HOST'];
+        $dominio = $request->getSchemeAndHttpHost();
+        
         $slug = $dominio . '/registrar/doctor?slug_id=' . $liga->id;
 
         $codigo = QrCode::size(300)->format('png')->generate($slug);
@@ -152,10 +153,18 @@ class LigaController extends Controller
         }
     }
 
-    public function donwload( Request $request)
+    public function donwload(Request $request ,$uuid,$name)
     {   
-  
-          return Storage::disk('local')->download('/public/qr/'.$request->image);
+        $dominio = $request->getSchemeAndHttpHost();
+
+        $url = $dominio.'/registrar/paciente?book='.$uuid; 
+
+        $qrCode = QrCode::format('png')->size(500)->generate($url);
+
+        $headers = ['Content-Type' => 'image/png'];
+        return response($qrCode, 200, $headers)->withHeaders([
+            'Content-Disposition' => 'attachment; filename="'.Str::slug($name).'.png"',
+        ]);
     }
  
 }

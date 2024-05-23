@@ -15,6 +15,7 @@
                 <img :src="book.book.image" :alt="book.name" class="img-book">
                 <p>{{ book.book.name }}</p>
                 <p><b> Contraseña : {{ book.book.password }}</b></p>
+                <a :href="`/download/qr/${book.book.uuid}/${book.book.name}`" class="btn-email" >Descargar Qr</a>
                 <button class="btn-email" @click="sendEmail(book.book.id)">Enviar por Email</button>
                 <button class="btn-celular" @click="sendPhone(book.book.id)">Enviar por Celular</button>
                 <a :href="`/donwload/book/doctor/${book.book.uuid}?purchased_book=${book.id}`" class="btn-celular">Descargar</a>

@@ -111,7 +111,7 @@ Route::post('/zona/login/doctor',[DoctorController::class,'ZonaLoginDoctor'])->n
 Route::post('/logout/doctor',[LogoutController::class,'cerrarSesionDoctor'])->name('logout.doctor');
 
 //DESCARGAR QR
-Route::get('/download/qr',[LigaController::class,'donwload']);
+Route::get('/download/qr/{uuid}/{name}',[LigaController::class,'donwload']);
 
 /* Route::view('/{any}', 'home')
 ->middleware(['auth'])

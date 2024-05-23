@@ -18,7 +18,7 @@ class BooksController extends Controller
         try {
 
             $filtro = $request->search;
-            $booksQuery = BookSale::where('name', 'LIKE', '%' . $filtro . '%');
+            $booksQuery = BookSale::where('name', 'LIKE', '%' . $filtro . '%')->where('active',1);
 
             if ($request->categoria) {
                 $booksQuery->whereIn('category_id', $request->categoria);

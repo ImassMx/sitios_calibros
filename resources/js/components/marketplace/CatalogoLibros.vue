@@ -2,59 +2,62 @@
     <div class="container-fluid bg-white mt-3">
         <div class="row pt-3">
             <div class="col-md-2 col-sm-12 pt-1">
-                <label class="fw-bold">Categorias</label>
+                <label class="fw-bold">Categorias</label> 
                 <div class="form-check" v-for="cat in Categories" :key="cat.id">
                     <input class="form-check-input" type="checkbox" :value="cat.id" v-model="categories"
                         @change="selectCategories">
-                    <label class="form-check-label" for="flexCheckDefault">
+                    <label class="form-check-label categoria" for="flexCheckDefault">
                         {{ cat.name }}
                     </label>
                 </div>
             </div>
-            <div class="col-md-10 col-sm-12">
+            <div class="col-md-10 col-sm-12 pb-3">
                 <div class="row">
-                    <div class="col-md-9 col-sm-12">
-                        <h1 class="text-center"><img src="/img/book.svg" class="img-fluid" alt="Libro" width="40">
-                            Libros
-                            disponibles</h1>
-                    </div>
-                    <div class="col-md-3 col-sm-12 text-end">
+                    <div class="col-md-9 col-sm-12 pb-0">
+                        <h1><img src="/img/book.svg" class="img-fluid" alt="Libro" width="40">
+                            Libros disponibles</h1>
                         <div class="input-group mb-2">
                             <button class="input-group-text backg-s"><img src="/img/search.svg" alt="buscar"
                                     width="20"></button>
                             <input type="text" class="form-control" aria-label="Busar" placeholder="Buscar"
                                 v-model="buscador" @keyup="buscarLibros">
                         </div>
-                        <div class="card mb-3 p-3 contenido-informacion">
-                            <p class="terminos">Para mayor información , términos y condiciones,aviso de privacidad
+                    </div>
+                    <div class="col-md-3 col-sm-12 text-end p-0">
+                        
+                        <div class="card mb-3 p-2 contenido-informacion">
+                            <p class="terminos">Para mayor información , términos y condiciones, aviso de privacidad
                                 acceder a:</p>
                             <a href="www.vistobuenoeditores.com.mx">www.vistobuenoeditores.com.mx </a>
                             <p class="terminos"><b>Nota: </b>Por ser libros digitales las devoluciones no aplican</p>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="row pt-3">
-            <div class="col-md-3 col-sm-12" v-for="book in Books.data" :key="book.id">
-                <div class="card border-light text-center" style="width: 250px;">
-                    <a href="/marketplace/detalle" class="text-decoration-none">
-                        <img :src="book.image" class="card-img-top" alt="Libro"
-                            style="height: 266px; object-fit: cover;">
-                    </a>
-                    <div class="card-body text-center">
-                        <a :href="`/marketplace/detalle/${book.uuid}`" class="text-decoration-none">
-                            <h5 class="card-title color-p fw-bold">{{ book.name }}</h5>
-                        </a>
-                        <h6 class="card-subtitle mb-2 text-muted"> $ {{ book.price }}</h6>
-                        <a @click="addToBook(book.uuid)" class="btn btn-outline-success btn-sm"
-                            style="cursor: pointer;">
-                            <img src="/img/shop.svg" alt="buscar" width="20"> Añadir a carrito
-                        </a>
+                <div class="row row-cols-1 row-cols-md-4 g-4">
+                    <div class="col" v-for="book in Books.data" :key="book.id">
+                        <div class="card h-100 ">
+                            <div class="card-header bg-white">
+                                <img :src="book.image" class="card-img-top" alt="Portada">
+                            </div>
+                            <div class="card-body bg-white">
+                            <h5 class="card-title text-capitalize color-p fw-bold">{{ book.name }}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted"> $ {{ book.price }}</h6>
+                            <a :href="`/marketplace/detalle/${book.uuid}`" class="btn btn-sm p-1"
+                                style="cursor: pointer;">
+                                <img src="/img/shopping.svg" alt="buscar" width="20"> Comprar
+                            </a>
+                            <a @click="addToBook(book.uuid)" class="btn btn-outline-success btn-sm"
+                                style="cursor: pointer;">
+                                <img src="/img/shop.svg" alt="buscar" width="20"> Añadir a carrito
+                            </a>
+                            </div>
+                        </div> 
+                        
                     </div>
+
                 </div>
             </div>
-        </div>
+        </div> 
         <Pagination :data="Books" @pagination-change-page="getBooks" class="d-flex justify-content-center" />
     </div>
 </template>
@@ -112,5 +115,6 @@ export default {
 <style>
 .contenido-informacion{
     text-align: start;
+    font-size: 12px;
 }
 </style>
