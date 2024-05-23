@@ -9,7 +9,17 @@
     <link rel="stylesheet" href="{{asset('css/style.css')}}">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
 </head>
-
+    <style>
+        .link-register{
+            font-size: 15px;
+            margin-top: 20px !important;
+            margin-bottom: 10px;
+            color: rgba(0, 0, 0, 0.55);
+        }
+        .label-link-register{
+            margin: 0px !important;
+        }
+    </style>
 <body>
     <nav class="menu">
         <img src="{{asset('img/logo.jpg')}}" alt="" class="logo">
@@ -39,7 +49,8 @@
             @csrf
                 <label for="celular">Ingrese su Código de Registro</label>
                 <input type="text" placeholder="Ingrese el código de registro" id="folio" name="folio">
-                <input type="submit" class="ingresar" value="Ingresar">
+                <label for="" class="label-link-register"><a href="/registrar/doctor" class="link-register">Registrate aquí.</a></label>
+                <input type="submit" class="ingresar" value="Ingresar" style="margin-top: 15px;">
             </form>
         </div>
     </div>

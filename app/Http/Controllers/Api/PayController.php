@@ -33,13 +33,15 @@ class PayController extends Controller
             $user = User::find($id);
             $doc = Doctor::where('user_id', $id)->first();
 
+            $dominio = $request->getSchemeAndHttpHost();
+
             $validCustomer = [
                 'name' => $user->name,
                 'email' => $user->email
             ];
 
             $customer = Customer::create($validCustomer);
-            $resOrder = $this->createOrder($customer->id, $request->quantity, (int) str_replace([',', '.'], '', $request->price), $doc);
+            $resOrder = $this->createOrder($customer->id, $request->quantity, (int) str_replace([',', '.'], '', $request->price), $doc,$dominio);
             return response()->json([
                 'error' => false,
                 'url' => $resOrder->checkout->url
@@ -70,11 +72,9 @@ class PayController extends Controller
         return response()->json(["message" => "success"], 200);
     }
 
-    private function createOrder($customer_id, $quantity, $price, $doc)
+    private function createOrder($customer_id, $quantity, $price, $doc,$dominio)
     {
         try {
-            $host = ($_SERVER['HTTP_HOST'] === '127.0.0.1:8000' || $_SERVER['HTTP_HOST'] === 'localhost:8000') ? 'http://' : 'https://';
-            $host .= $_SERVER['HTTP_HOST'];
             
             $books = Cart::where('user_id', $doc->user_id)->pluck('id')->toArray();
             $this->user_id = $doc->user_id;
@@ -93,8 +93,8 @@ class PayController extends Controller
                 'checkout' => array(
                     'allowed_payment_methods' => array("cash", "card", "bank_transfer"),
                     'type' => 'HostedPayment',
-                    'success_url' => $host.'/payment/confirmation?doctor=' . $doc->uuid,
-                    'failure_url' => $host.'/payment/failure?doctor=' . $doc->uuid,
+                    'success_url' => $dominio.'/payment/confirmation?doctor=' . $doc->uuid,
+                    'failure_url' => $dominio.'/payment/failure?doctor=' . $doc->uuid,
                     'monthly_installments_enabled' => true,
                     'monthly_installments_options' => array(3, 6, 9, 12),
                     "redirection_time" => 4

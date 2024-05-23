@@ -76,8 +76,7 @@ class DoctorController extends Controller
     {
         try {
             
-            $this->dominio = ($_SERVER['HTTP_HOST'] === '127.0.0.1:8000' || $_SERVER['HTTP_HOST'] === 'localhost:8000') ? 'http://' : 'https://';
-            $this->dominio .= $_SERVER['HTTP_HOST'];
+            $this->dominio = $request->getSchemeAndHttpHost();
 
             $this->validateClient($request->phone,$request->book_id,$request->doctor);
             $token = $this->smsGetToken();
@@ -143,8 +142,7 @@ class DoctorController extends Controller
                 
             }
 
-            $dominio = ($_SERVER['HTTP_HOST'] === '127.0.0.1:8000' || $_SERVER['HTTP_HOST'] === 'localhost:8000') ? 'http://' : 'https://';
-            $dominio .= $_SERVER['HTTP_HOST'];
+            $dominio = $request->getSchemeAndHttpHost();
             
             Mail::to($request->email)
             ->send(new EmailNotificationPaciente($request->book_id,$request->doctor,$request->email,$dominio));

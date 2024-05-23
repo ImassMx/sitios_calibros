@@ -68,13 +68,7 @@ class DoctorController extends Controller
                     'uuid'=> $this->uuid
                 ]);
     
-                $dominio = $_SERVER['HTTP_HOST'];
-    
-                if ($dominio === "127.0.0.1") {
-                    $dominio = "http://127.0.0.1:8000";
-                } else {
-                    $dominio = $_SERVER['HTTP_HOST'];
-                }
+                $dominio = $request->getSchemeAndHttpHost();
     
                 Mail::to($request->email)
                     ->send(new DoctorWelcome($folio, $dominio));

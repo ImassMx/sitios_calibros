@@ -101,6 +101,16 @@ class ApiController extends Controller
         return response()->json($email);
         }
     }
+
+    public function validateCedula(Request $request){
+        try {
+            $doctor = Doctor::where('cedula',$request->cedula)->first();
+
+            return response()->json(!empty($doctor) ? true : false);
+        } catch (\Throwable $th) {
+            Log::info($th);
+        }
+    }
     public function getDatosSlug(Request $request)
     {
         $liga = Liga::where('id',$request->id)->first();

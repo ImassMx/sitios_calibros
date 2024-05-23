@@ -18,21 +18,18 @@
     <div class="contenido-formulario">
       <form action="" v-on:submit.prevent="saveDoctor()">
         <h2 class="text-center">Registro del doctor para descargar el libro.</h2>
-        <div v-if="errors && errors.id_slug" class="invalida">
-          <p class="errors">{{ errors.id_slug[0] }}</p>
-        </div>
         <div>
           <label for="nombre">Nombre</label>
           <input type="text" placeholder="Ingresa tu nombre" id="nombre" v-model="nombre" />
-          <div v-if="errors && errors.nombre" class="content-error">
-            <p class="errors">{{ errors.nombre[0] }}</p>
+          <div v-if="errors.nombre" class="content-error">
+            <p class="errors">{{ errors.nombre }}</p>
           </div>
         </div>
         <div>
           <label for="apellidoP">Apellidos</label>
           <input type="text" placeholder="Ingresa tu Apellido Paterno" id="apellidoP" v-model="apellidos" />
-          <div v-if="errors && errors.apellidos" class="content-error">
-            <p class="errors">{{ errors.apellidos[0] }}</p>
+          <div v-if="errors.apellidos" class="content-error">
+            <p class="errors">{{ errors.apellidos }}</p>
           </div>
         </div>
         <div>
@@ -43,30 +40,31 @@
               {{ especial.nombre }}
             </option>
           </select>
-          <div v-if="errors && errors.especialidad" class="content-error">
-            <p class="errors">{{ errors.especialidad[0] }}</p>
+          <div v-if="errors.especialidad" class="content-error">
+            <p class="errors">{{ errors.especialidad }}</p>
           </div>
         </div>
         <div>
           <label for="">Cédula</label>
-          <input type="text" v-model="cedula" />
-          <div v-if="errors && errors.cedula" class="content-error">
-            <p class="errors">{{ errors.cedula[0] }}</p>
+          <input type="text" v-model="cedula" maxlength="9" @change="validateCedula" />
+          <div v-if="errors.cedula" class="content-error"  >
+            <p class="errors">{{ errors.cedula }}</p>
           </div>
         </div>
         <div>
           <label for="">Email</label>
           <input type="text" v-model="email" @keyup="validarCorreo" />
-          <p class="validacion-correo" v-if="messageEmail">{{ messageEmail }}</p>
+          <p class="validacion-correo" v-if="errors.email">{{ errors.email }}</p>
         </div>
         <div>
           <label for="">Código Postal</label>
           <input type="text" v-model="postal" maxlength="5" />
+          <p class="validacion-correo" v-if="errors.postal">{{ errors.postal }}</p>
         </div>
         <div>
           <label for="">Celular</label>
           <input type="text" v-model="celular" @keyup="validarCelular" />
-          <p class="validacion-celular" v-if="messageCel">{{ messageCel }}</p>
+          <p class="validacion-celular" v-if="errors.celular">{{ errors.celular }}</p>
         </div>
         <p v-html="messFolio"></p>
 
@@ -105,7 +103,8 @@ export default {
       messageCel: false,
       messageEmail: false,
       folio:"",
-      url_panel:""
+      url_panel:"",
+      errors:[]
     };
   },
   mounted() {
@@ -118,6 +117,11 @@ export default {
       });
     },
     saveDoctor() {
+      this.validated()
+      if(Object.keys(this.errors).length > 0){
+        return true;
+      }
+
       this.AlertProcess()
       this.axios
         .post("/request/registrar/doctor", {
@@ -164,7 +168,6 @@ export default {
       this.nombre = "";
       this.apellidos = "";
       this.especialidad = "";
-      this.id_slug = "";
       this.postal = "";
       this.email = "";
       this.celular = "";
@@ -175,12 +178,12 @@ export default {
       this.timeBuscador = setTimeout(this.validarEmail, 360);
     },
     validarEmail() {
+      delete this.errors.email
       axios
         .get("/validar/email/doctor", { params: { correo: this.email } })
         .then((res) => {
-          this.messageEmail = "";
           if (res.data.email) {
-            this.messageEmail = "El email ya esta registrado";
+            this.errors.email = "El email ya esta registrado";
           }
         });
     },
@@ -189,14 +192,26 @@ export default {
       this.timeBuscador = setTimeout(this.validarPhone, 360);
     },
     validarPhone() {
+      delete this.errors.celular
       axios
         .get("/validar/phone/doctor", { params: { celular: this.celular } })
         .then((res) => {
-          this.messageCel = "";
+          
           if (this.celular === res.data.celular) {
-            this.messageCel = "El número de celular ya esta registrado";
+            this.errors.celular = "El número de celular ya esta registrado";
           }
         });
+    },
+    async validateCedula(){
+      try {
+        delete this.errors.cedula
+        const {data} = await axios.get('/api/validate/cedula',{params:{cedula:this.cedula}})
+        if(data){
+          this.errors.cedula = 'El número de cedula ya se encuentra registrado'
+        }
+      } catch (error) {
+        console.log(error)
+      }
     },
     AlertProcess() {
       swal.fire({
@@ -210,6 +225,17 @@ export default {
           swal.showLoading();
         }
       });
+    },
+    validated(){
+          this.errors = []
+          if(this.nombre === "") this.errors.nombre = 'Debe ingresar su nombre.'
+          if(this.apellidos === "") this.errors.apellidos = 'Debe ingresar su apellido.'
+          if(this.especialidad === "") this.errors.especialidad = 'Debe seleccionar su especialidad.'
+          if(this.cedula === "") this.errors.cedula = 'Debe ingresar su cédula.'
+          if(this.email === "") this.errors.email = 'Debe ingresar su email.'
+          if(this.postal === "") this.errors.postal = 'Debe ingresar el código postal.'
+          if(this.celular === "") this.errors.celular = 'Debe ingresar su número de celular.'
+
     }
   },
 };

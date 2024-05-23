@@ -81,6 +81,7 @@ Route::post('/category/create',[CategoryController::class,'createCategory']);
 Route::get('/validate/email',[ApiController::class,'validateEmail']);
 Route::get('/validate/phone',[ApiController::class,'validatePhone']);
 Route::get('/validate/book/{id}',[ApiController::class,'validateBook']);
+Route::get('/validate/cedula',[ApiController::class,'validateCedula']);
 
 //reportes
 Route::get('/report/books/doctor',[ReportController::class,'reportBooksDoctor']);
