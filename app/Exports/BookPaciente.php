@@ -14,7 +14,7 @@ class BookPaciente implements  FromView,ShouldAutoSize
     */
     public function view(): View
     {
-        $books = ClientBook::with(['book','client','doctor'])->get();
+        $books = ClientBook::with(['book', 'client.user', 'doctor', 'client.sepomex'])->get();
         return view('export.pacienteBooks',compact('books'));
     }
 }

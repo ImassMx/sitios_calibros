@@ -16,12 +16,12 @@
 
                                 <th class="text-center" scope="col">NOMBRE</th>
                                 <th class="text-center" scope="col">IMAGEN</th>
-                                <th class="text-center" scope="col">CATEGORIA</th>
+                                <th class="text-center" scope="col">LÍNE TERAPÉUTICA</th>
                                 <th class="text-center" scope="col">PRECIO</th>
                                 <th class="text-center" scope="col">PUNTOS</th>
                                 <th class="text-center" scope="col">DESCARGAS</th>
-                                <th class="text-center" scope="col">PASSWORD</th>
-                                <th class="text-center" scope="col">ACCION</th>
+                                <th class="text-center" scope="col">CONTRASEÑA LIBRO</th>
+                                <th class="text-center" scope="col">ACCIÓN</th>
                             </tr>
                         </thead>
                         <tbody v-for="lib in Book.data" :key="lib.id">

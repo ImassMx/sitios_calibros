@@ -55,5 +55,9 @@ class User extends Authenticatable
     public function doctor(){
         return $this->belongsTo(Doctor::class);
     }
+
+    public function doctorReport(){
+        return $this->hasOne(Doctor::class);
+    }
     
 }

@@ -9,22 +9,30 @@
 <table>
     <thead>
         <tr>
-            <th style="text-align: center;font-weight:bold;">ID</th>
-            <th style="text-align: center;font-weight:bold;">DOCTOR</th>
-            <th style="text-align: center;font-weight:bold;">LIBRO</th>
-            <th style="text-align: center;font-weight:bold;">DESCARGAS</th>
-            <th style="text-align: center;font-weight:bold;">ULT. DESCARGA</th>
+            <th style="text-align: center;font-weight:bold;">PASSWORD</th>
+            <th style="text-align: center;font-weight:bold;">NOMBRES Y APELLIDOS</th>
+            <th style="text-align: center;font-weight:bold;">CÓDIGO MÉDICO</th>
+            <th style="text-align: center;font-weight:bold;">ESPECIALIDAD</th>
+            <th style="text-align: center;font-weight:bold;">CÓDIGO POSTAL</th>
+            <th style="text-align: center;font-weight:bold;">ALCALDIA</th>
+            <th style="text-align: center;font-weight:bold;">CIUDAD</th>
+            <th style="text-align: center;font-weight:bold;">FECHA DESCARGA</th>
+            <th style="text-align: center;font-weight:bold;">N. DESCARGAS PACIENTES</th>
         </tr>
     </thead>
     <tbody>
         @foreach ($books as $book)
             <tr>
-                <td>{{ $book->id }}</td>
+                <td>{{ $book->book->password }}</td>
                 <td>{{ $book->user->name }}</td>
-                <td>{{ $book->book->name }}</td>
-                <td>{{ $book->donwloads }}</td>
+                <td>{{ $book->user->doctorReport->folio }}</td>
+                <td>{{ $book->user->doctorReport->especialidad->nombre }}</td>
+                <td>{{ $book->user->doctorReport->cp }}</td>
+                <td>{{ $book->user->doctorReport->sepomex->d_mnpio ?? '' }}</td>
+                <td>{{ $book->user->doctorReport->sepomex->d_ciudad ?? '' }}</td>
+                <td>{{ Carbon\Carbon::parse($book->created_at)->format('d-m-Y H:i:s') }}</td>
                 <td>
-                    {{ Carbon\Carbon::parse($book->updated_at)->format('d-m-Y H:i:s') }}
+                    {{ $book->donwloads }}
                 </td>
             </tr>
         @endforeach

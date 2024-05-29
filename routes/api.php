@@ -86,5 +86,6 @@ Route::get('/validate/cedula',[ApiController::class,'validateCedula']);
 //reportes
 Route::get('/report/books/doctor',[ReportController::class,'reportBooksDoctor']);
 Route::get('/report/books/paciente',[ReportController::class,'reportBooksPaciente']);
+Route::get('/show/reporte/conamege',[ReportController::class,'reporteConamege']);
 
 Route::post('/webhook', [PayController::class,'confirmationConekta']);

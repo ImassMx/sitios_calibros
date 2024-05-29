@@ -10,26 +10,30 @@
 <table>
     <thead>
         <tr>
-            <th style="text-align: center;font-weight:bold;">ID</th>
-            <th style="text-align: center;font-weight:bold;">NOMBRE PACIENTE</th>
             <th style="text-align: center;font-weight:bold;">FOLIO</th>
+            <th style="text-align: center;font-weight:bold;">NOMBRE COMPLETO</th>
+            <th style="text-align: center;font-weight:bold;">EMAIL</th>
             <th style="text-align: center;font-weight:bold;">CELULAR</th>
             <th style="text-align: center;font-weight:bold;">CODIGO POSTAL</th>
-            <th style="text-align: center;font-weight:bold;">FECHA REGISTRO</th>
+            <th style="text-align: center;font-weight:bold;">ALCALDIA</th>
+            <th style="text-align: center;font-weight:bold;">CIUDAD</th>
         </tr>
     </thead>
     <tbody>
         @foreach ($clientes as $cliente)
             <tr>
-                <td>{{ $cliente->id }}</td>
-                <td>{{ $cliente->user->name }}</td>
                 <td>{{ $cliente->folio }}</td>
+                <td>{{ $cliente->user->name }}</td>
+                <td>{{ $cliente->user->email }}</td>
                 <td>{{ $cliente->user->celular }}</td>
                 <td>
                     {{ $cliente->codigo_postal }}
                 </td>
                 <td>
-                    {{ $date::parse($cliente->created_at)->format('d-m-Y') }}
+                    {{  $cliente->sepomex->d_mnpio ?? ''}}
+                </td>
+                <td>
+                    {{  $cliente->sepomex->d_ciudad ?? ''}}
                 </td>
             </tr>
         @endforeach

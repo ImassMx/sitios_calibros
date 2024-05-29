@@ -83,8 +83,8 @@
                                 <nav class="sb-sidenav-menu-nested nav">
                                     <router-link to="/admin/sale/create/book" class="nav-link text-white">Crear Libro</router-link>
                                     <router-link to="/admin/sale/list/book" class="nav-link text-white">Lista de Libros</router-link>
-                                    <router-link to="/admin/crear-clasificacion" class="nav-link text-white">Crear Categoria</router-link>
-                                    <router-link to="/admin/show/categories" class="nav-link text-white">Lista de Categorias</router-link>
+                                    <router-link to="/admin/crear-clasificacion" class="nav-link text-white">Crear Líneas T.</router-link>
+                                    <router-link to="/admin/show/categories" class="nav-link text-white">Lista de Líneas T.</router-link>
                                 </nav>
                             </div>
                            @endcan
@@ -116,6 +116,7 @@
                                     <router-link to="/admin/reporte/pacientes" class="nav-link text-white">Pacientes</router-link>
                                     <router-link to="/admin/reporte/libros/doctores" class="nav-link text-white">Libros Doctores</router-link>
                                     <router-link to="/admin/reporte/libros/pacientes" class="nav-link text-white">Libros Pacientes</router-link>
+                                    <router-link to="/admin/reporte/libros/conamege" class="nav-link text-white">Conamege</router-link>
                                 </nav>
                             </div>
 {{-- 

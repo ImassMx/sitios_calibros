@@ -12,8 +12,10 @@ use App\Mail\DoctorWelcome;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Exports\DoctorsExport;
+use App\Http\Controllers\Api\DonwloadController;
 use App\Models\BookSale;
 use App\Models\ClientBook;
+use App\Models\DownloadReportClient;
 use PhpParser\Node\Stmt\TryCatch;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -237,10 +239,17 @@ class DoctorController extends Controller
         $book = BookSale::where('uuid',$uuid)->first();
         $book_client = ClientBook::where('id',$request->client_books)->first();
 
+
         if(!empty($book)){
 
             $book_client->donwloads += 1;
             $book_client->save();
+
+            DownloadReportClient::create([
+                'client_id' => $book_client->cliente_id,
+                'doctor_id' => $book_client->doctor_id,
+                'book_sale_id' => $book_client->book_sale_id
+            ]);
 
             $parsedUrl = parse_url($book->pdf);
             return Storage::disk('s3')->download($parsedUrl['path'],$book->name.'.pdf');

@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Exports\BookDoctor;
-use App\Exports\BookPaciente;
 use App\Models\ClientBook;
+use App\Exports\BookDoctor;
 use Illuminate\Http\Request;
+use App\Exports\BookPaciente;
 use App\Models\PurchasedBook;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Maatwebsite\Excel\Facades\Excel;
@@ -16,18 +17,24 @@ class ReportController extends Controller
     public function reportBooksDoctor(Request $request)
     {
         try {
-            Log::info("entra acá");
+
             $filtro = $request->buscador;
-            $purchasedBooks = PurchasedBook::with(['user', 'book'])
-                ->where(function ($query) use ($filtro) {
-                    $query->whereHas('user', function ($userQuery) use ($filtro) {
-                        $userQuery->where('name', 'LIKE', '%' . $filtro . '%');
-                    })
-                        ->orWhereHas('book', function ($bookQuery) use ($filtro) {
-                            $bookQuery->where('name', 'LIKE', '%' . $filtro . '%');
-                        });
+            $purchasedBooks = PurchasedBook::with(['user.doctorReport.especialidad', 'book', 'user.doctorReport.sepomex'])
+            ->where(function ($query) use ($filtro) {
+                $query->whereHas('user', function ($userQuery) use ($filtro) {
+                    $userQuery->where('name', 'LIKE', '%' . $filtro . '%');
                 })
+                    ->orWhereHas('book', function ($bookQuery) use ($filtro) {
+                        $bookQuery->where('name', 'LIKE', '%' . $filtro . '%');
+                    });
+            })
                 ->paginate(10);
+
+            $purchasedBooks->each(function ($purchasedBook) {
+                $purchasedBook->loadCount(['clientBook as total_downloads' => function ($query) {
+                    $query->select(DB::raw('SUM(donwloads)'));
+                }]);
+            });
 
             return response()->json($purchasedBooks);
         } catch (\Throwable $th) {
@@ -43,7 +50,7 @@ class ReportController extends Controller
     {
         try {
             $filtro = $request->buscador;
-            $cliente = ClientBook::with(['book', 'client','doctor'])
+            $cliente = ClientBook::with(['book', 'client.user', 'doctor', 'client.sepomex'])
                 ->whereHas('book', function ($query) use ($filtro) {
                     $query->where('name', 'LIKE', "%$filtro%");
                 })
@@ -62,12 +69,27 @@ class ReportController extends Controller
         }
     }
 
-    public function exportBookDoctor(){
+    public function reporteConamege(Request $request){
+        try {
+            $filtro = $request->buscador;
+            
+            $books = ClientBook::with(['book','client.sepomex','doctor.especialidad','doctor.sepomex','reportBooksMonth'])
+                     ->withCount('reportBooksMonth as total_books_month')
+                     ->withCount('reportBooksTotal as total_books_total')
+                     ->paginate(10);
+            return response()->json($books);
+        } catch (\Throwable $th) {
+            Log::info($th);
+        }
+    }
+
+    public function exportBookDoctor()
+    {
         return Excel::download(new BookDoctor, 'Reporte Libros Doctor.xlsx');
     }
 
-    public function exportBookPaciente(){
+    public function exportBookPaciente()
+    {
         return Excel::download(new BookPaciente, 'Reporte Libros Paciente.xlsx');
-
     }
 }

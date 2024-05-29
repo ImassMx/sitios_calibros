@@ -55,8 +55,8 @@ class ApiController extends Controller
             $clientes = Cliente::whereHas('user', function ($query) use ($filtro) {
                 $query->where('name', 'LIKE', '%' . $filtro . '%')
                     ->orWhere('folio', 'LIKE', '%' . $filtro . '%');
-            })->with(['user', 'libro'])->orderBy("created_at","desc")->paginate(4);
-    
+            })->with(['user', 'libro','sepomex'])->orderBy("created_at","desc")->paginate(9);
+
             return response()->json($clientes);
         } catch (\Throwable $th) {
             Log::error($th);
@@ -71,12 +71,11 @@ class ApiController extends Controller
                 $query->where('nombre', 'LIKE', '%' . $filtro . '%')
                     ->orWhere('folio', 'LIKE', '%' . $filtro . '%')
                     ->orWhere('apellidos', 'LIKE', '%' . $filtro . '%')
-                    ->orWhere('nombres', 'LIKE', '%' . $filtro . '%')
-                    ;
-            })->with(['ligas', 'especialidad'])->orderBy("created_at","desc")->paginate(4);
+                    ->orWhere('nombres', 'LIKE', '%' . $filtro . '%');
+            })->with(['especialidad','user','sepomex'])
+            ->orderBy("created_at","desc")->paginate(10);
 
-
-        return response()->json($doctores);
+            return response()->json($doctores);
     }
 
     public function folio(Request $request)
@@ -94,11 +93,11 @@ class ApiController extends Controller
 
     public function ValidarEmail(Request $request)
     {
-       
-        if($request->correo){
-            $email = User::where('email','LIKE',$request->correo)->get();
-        dump($email);
-        return response()->json($email);
+
+        if ($request->correo) {
+            $email = User::where('email', 'LIKE', $request->correo)->get();
+            dump($email);
+            return response()->json($email);
         }
     }
 
@@ -116,7 +115,7 @@ class ApiController extends Controller
         $liga = Liga::where('id',$request->id)->first();
         $publicacion = DB::table('publicacions')->where('liga_id',$request->id)->first();
         $libro = Libro::find($publicacion->libro_id);
-
+ 
         return response()->json([$liga,$libro]);
     }
 

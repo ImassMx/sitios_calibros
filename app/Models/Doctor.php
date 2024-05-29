@@ -38,4 +38,21 @@ class Doctor extends Model
     return $this->hasOne(Especialidad::class, 'id', 'especialidad_id');
   }
 
+  public function user(){
+    return $this->hasOne(User::class,'id','user_id');
+  }
+
+  public function sepomex(){
+    return $this->belongsTo(Sepomex::class,'cp','d_codigo');
+  }
+
+  public function purchasedBooks()
+  {
+      return $this->hasMany(PurchasedBook::class, 'user_id', 'user_id');
+  }
+
+  public function clientBooks()
+  {
+      return $this->hasMany(ClientBook::class, 'doctor_id', 'id');
+  }
 }

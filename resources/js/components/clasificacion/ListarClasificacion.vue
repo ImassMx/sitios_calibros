@@ -1,6 +1,6 @@
 <template>
   <div class="container-fluid px-4">
-    <h1 class="mt-4 mb-3">Listado de Clasificaciones</h1>
+    <h1 class="mt-4 mb-3">Listado de líneas terapéuticas</h1>
     <div>
       <div class="card mb-4">
         <div class="card-body">
@@ -21,7 +21,7 @@
               <tr>
                 <th class="text-center" scope="col">ID</th>
                 <th class="text-center" scope="col">NOMBRE</th>
-                <th class="text-center" scope="col">ACCION</th>
+                <th class="text-center" scope="col">ACCIÓN</th>
               </tr>
             </thead>
             <tbody>

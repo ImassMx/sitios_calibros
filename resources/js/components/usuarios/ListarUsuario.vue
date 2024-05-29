@@ -22,7 +22,7 @@
                 <th class="text-center" scope="col">NOMBRE</th>
                 <th class="text-center" scope="col">USUARIO</th>
                 <th class="text-center" scope="col">ROL</th>
-                <th class="text-center" scope="col">ACCION</th>
+                <th class="text-center" scope="col">ACCIÓN</th>
               </tr>
             </thead>
             <tbody v-for="user in usuarios.data" :key="user.id">

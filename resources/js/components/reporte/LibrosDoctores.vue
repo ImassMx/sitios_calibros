@@ -10,24 +10,36 @@
                         <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
                             placeholder="Buscar" v-model="buscador" @keyup="buscarDoctor" />
                     </div>
-                    <table class="table">
+                    <div class="table-responsive">
+                        <table class="table">
                         <thead>
                             <tr>
-                                <th scope="col">ID</th>
-                                <th scope="col">DOCTOR</th>
-                                <th scope="col">LIBRO</th>
-                                <th scope="col">DESCARGAS</th>
+                                <th scope="col">CONTRASEÑA LIBRO</th>
+                                <th scope="col">NOMBRE Y APELLIDOS</th>
+                                <th scope="col">CODIGO MÉDICO</th>
+                                <th scope="col">ESPECIALIDAD</th>
+                                <th scope="col">CODIGO POSTAL</th>
+                                <th scope="col">ALCALDIA</th>
+                                <th scope="col">CIUDAD</th>
+                                <th scope="col">FECHA DESCARGA</th>
+                                <th scope="col">NUMERO DE DESCARGAS PACIENTES</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr v-for="doc in Books.data" :key="doc.id">
-                                <th scope="row">{{ doc.id }}</th>
-                                <td>{{ doc.user.name }}</td>
-                                <td>{{ doc.book.name }}</td>
-                                <td>{{ doc.donwloads }}</td>
+                                <th scope="row">{{ doc.book.password }}</th>
+                                <td>{{ doc.user.doctor_report.nombres }} {{ doc.user.doctor_report.apellidos }}</td>
+                                <td>{{ doc.user.doctor_report.folio }}</td>
+                                <td>{{ doc.user.doctor_report.especialidad.nombre }}</td>
+                                <td>{{ doc.user.doctor_report.cp }}</td>
+                                <td>{{ doc.user.doctor_report.sepomex?.d_mnpio }}</td>
+                                <td>{{ doc.user.doctor_report.sepomex?.d_ciudad }}</td>
+                                <td>{{ formatDate(doc.created_at)}}</td>
+                                <td>{{ doc.donwloads}}</td>
                             </tr>
                         </tbody>
                     </table>
+                    </div>
                     <Pagination :data="Books" @pagination-change-page="getBooksDoctors"
                         class="d-flex justify-content-center" />
                 </div>
@@ -61,6 +73,21 @@ export default {
         buscarDoctor() {
             clearTimeout(this.timeBuscador);
             this.timeBuscador = setTimeout(this.getBooksDoctors, 360);
+        },formatDate(date){
+            const createdAtDate = new Date(date);
+
+            // Opciones de formateo
+            const options = {
+                year: 'numeric',
+                month: 'numeric',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            };
+
+        
+            return new Intl.DateTimeFormat('en-EN', options).format(createdAtDate);
         }
     }
 

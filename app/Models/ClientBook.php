@@ -26,4 +26,26 @@ class ClientBook extends Model
     public function doctor(){
         return $this->hasOne(Doctor::class,'id','doctor_id');
     }
+
+    public function purchasedBook()
+    {
+        return $this->belongsTo(PurchasedBook::class, 'book_sale_id', 'book_sale_id')
+                    ->whereColumn('doctor_id', 'doctor_id');
+    }
+
+    public function reportBooksMonth(){
+        return $this->hasMany(DownloadReportClient::class,'client_id','cliente_id')
+                    ->whereColumn('doctor_id', 'doctor_id')
+                    ->whereColumn('book_sale_id', 'book_sale_id')
+                    ->whereMonth('created_at', now()->month);
+
+    }
+
+    public function reportBooksTotal(){
+        return $this->hasMany(DownloadReportClient::class,'client_id','cliente_id')
+                    ->whereColumn('doctor_id', 'doctor_id')
+                    ->whereColumn('book_sale_id', 'book_sale_id');
+
+    }
+
 }

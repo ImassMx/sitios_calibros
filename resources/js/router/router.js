@@ -85,6 +85,10 @@ const routes = [{
     {
         path: '/admin/reporte/libros/pacientes',
         component: () => import('../components/reporte/LibrosPacientes.vue')
+    },
+    {
+        path: '/admin/reporte/libros/conamege',
+        component: () => import('../components/reporte/Conamege.vue')
     }
 
 ]

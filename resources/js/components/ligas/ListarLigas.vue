@@ -21,7 +21,7 @@
                 <th class="text-center" scope="col">ID</th>
                 <th class="text-center" scope="col">NOMBRE</th>
                 <th class="text-center" scope="col">URL</th>
-                <th class="text-center" scope="col">ACCION</th>
+                <th class="text-center" scope="col">ACCIÓN</th>
               </tr>
             </thead>
             <tbody>

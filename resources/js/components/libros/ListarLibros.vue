@@ -28,7 +28,7 @@
                 <th class="text-center" scope="col">IMAGEN</th>
                 <th class="text-center" scope="col">ESTADO</th>
                 <th class="text-center" scope="col">N° DESCARGAS</th>
-                <th class="text-center" scope="col">ACCION</th>
+                <th class="text-center" scope="col">ACCIÓN</th>
               </tr>
             </thead>
             <tbody v-for="lib in Libros.data" :key="lib.id">
