@@ -11,7 +11,8 @@ class PurchasedBook extends Model
 
     protected $fillable = [
         'user_id',
-        'book_sale_id'
+        'book_sale_id',
+        'doctor_id'
     ];
 
 
@@ -21,5 +22,16 @@ class PurchasedBook extends Model
 
     public function user(){
         return $this->hasOne(User::class,'id','user_id');
+    } 
+    
+    public function doctor()
+    {
+        return $this->belongsTo(Doctor::class, 'user_id', 'user_id');
+    }
+
+    public function clientBook()
+    {
+        return $this->hasOne(ClientBook::class, 'book_sale_id', 'book_sale_id')
+                    ->whereColumn('doctor_id', 'doctor_id');
     }
 }

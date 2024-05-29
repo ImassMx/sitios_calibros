@@ -16,7 +16,7 @@ class DoctorsExport implements FromView,ShouldAutoSize
     */
     public function view():View
     {
-        $doctor = Doctor::with('ligas')->with('especialidad')->get();
+        $doctor = Doctor::with('ligas')->with(['especialidad','user','sepomex'])->get();
         $date = new Carbon();
 
         return view('export.Doctores',['doctores' => $doctor,'date'=> $date]);

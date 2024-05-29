@@ -42,4 +42,8 @@ class Cliente extends Authenticatable
     {
         return $this->hasOne(User::class, 'id', 'user_id');
     }
+
+    public function sepomex(){
+        return $this->hasOne(Sepomex::class,'d_codigo','codigo_postal');
+    }
 }

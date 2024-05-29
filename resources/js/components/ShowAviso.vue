@@ -1,7 +1,7 @@
 <template>
     <div class="content-factura">
-        <div class="content-factura-quest">
-            <h4>¿Deseas factura?</h4>
+        <div class="content-factura-quest text-center">
+            <h2>¿Deseas factura?</h2>
             <div class="content-check">
                 <input type="checkbox" id="checkbox" v-model="isChecked" @change="toggleMessage">
             <label for="checkbox">Sí</label>

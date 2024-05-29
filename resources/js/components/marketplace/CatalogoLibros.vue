@@ -2,7 +2,7 @@
     <div class="container-fluid bg-white mt-3">
         <div class="row pt-3">
             <div class="col-md-2 col-sm-12 pt-1">
-                <label class="fw-bold">Categorias</label> 
+                <label class="fw-bold color-p">Líneas Terapéuticas</label> 
                 <div class="form-check" v-for="cat in Categories" :key="cat.id">
                     <input class="form-check-input" type="checkbox" :value="cat.id" v-model="categories"
                         @change="selectCategories">
@@ -36,11 +36,14 @@
                 <div class="row row-cols-1 row-cols-md-4 g-4">
                     <div class="col" v-for="book in Books.data" :key="book.id">
                         <div class="card h-100 ">
-                            <div class="card-header bg-white">
-                                <img :src="book.image" class="card-img-top" alt="Portada">
+                            <div class="card-header bg-white" style="max-height:270px;min-height:270px">
+                                <a :href="`/marketplace/detalle/${book.uuid}`" class="btn btn-sm p-1"
+                                style="cursor: pointer;">
+                                    <img :src="book.image" class="card-img-top" alt="Portada" style="max-height:254px;">
+                                </a>
                             </div>
                             <div class="card-body bg-white">
-                            <h5 class="card-title text-capitalize color-p fw-bold">{{ book.name }}</h5>
+                            <h5 class="card-title text-lowercase color-p fw-bold" style="font-size:18px">{{ book.name }}</h5>
                             <h6 class="card-subtitle mb-2 text-muted"> $ {{ book.price }}</h6>
                             <a :href="`/marketplace/detalle/${book.uuid}`" class="btn btn-sm p-1"
                                 style="cursor: pointer;">

@@ -15,7 +15,7 @@ class ClientExport implements FromView, ShouldAutoSize
     */
     public function view():View
     {
-        $clientes = Cliente::with(['user','libro'])->get();
+        $clientes = Cliente::with(['user','libro','sepomex'])->get();
         $date = new Carbon();
         return view('export.Clientes',['clientes' => $clientes,'date' => $date]);
     }

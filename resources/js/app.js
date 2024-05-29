@@ -43,6 +43,7 @@ import ListPaciente from './components/doctor/ListPaciente.vue'
 //REPORTES
 import LibrosDoctores from './components/reporte/LibrosDoctores.vue'
 import LibrosPacientes from './components/reporte/LibrosPacientes.vue'
+import Conamege from './components/reporte/Conamege.vue'
 
 import ShowAviso from './components/ShowAviso.vue'
 
@@ -88,6 +89,7 @@ app.component('ListPaciente', ListPaciente)
 //REPORTE
 app.component('LibrosDoctores', LibrosDoctores)
 app.component('LibrosPacientes', LibrosPacientes)
+app.component('Conamege', Conamege)
 
 app.component('ShowAviso', ShowAviso)
 

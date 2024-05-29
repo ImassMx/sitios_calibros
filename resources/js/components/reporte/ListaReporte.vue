@@ -10,28 +10,32 @@
             <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
               placeholder="Buscar" v-model="buscador" @keyup="buscarCliente" />
           </div>
-          <table class="table">
-            <thead>
-              <tr>
-                <th scope="col">ID</th>
-                <th scope="col">NOMBRE</th>
-                <th scope="col">FOLIO</th>
-                <th scope="col">CELULAR</th>
-                <th scope="col">CP.</th>
-                <th scope="col">F. REGISTRO</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="client in clientes.data" :key="client.id">
-                <th scope="row">{{ client.id }}</th>
-                <td>{{ client.user.name }}</td>
-                <td>{{ client.folio }}</td>
-                <td>{{ client.user.celular }}</td>
-                <td>{{ client.codigo_postal }}</td>
-                <td>{{ client.created_at.slice(0, 10) }}</td>
-              </tr>
-            </tbody>
-          </table>
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">FOLIO</th>
+                  <th scope="col">NOMBRE COMPLETO</th>
+                  <th scope="col">EMAIL</th>
+                  <th scope="col">CELULAR</th>
+                  <th scope="col">CÓDIGO POSTAL</th>
+                  <th scope="col">ALCALDIA</th>
+                  <th scope="col">CIUDAD</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="client in clientes.data" :key="client.id">
+                  <td>{{ client.folio }}</td>
+                  <td>{{ client.user.name }}</td>
+                  <td>{{ client.user.celular }}</td>
+                  <td>{{ client.user.email }}</td>
+                  <td>{{ client.codigo_postal }}</td>
+                  <td>{{ client.sepomex?.d_mnpio }}</td>
+                  <td>{{ client.sepomex?.d_ciudad }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
           <Pagination :data="clientes" @pagination-change-page="traerClientes" class="d-flex justify-content-center" />
         </div>
       </div>

@@ -15,71 +15,71 @@
     @yield('styles')
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
-        .logout {
-            background: rgba(0, 0, 0, 0);
-            border: none;
-            font-size: 1rem;
-            cursor: pointer;
-            margin-top: .5rem;
-            color: #5D025F;
-            font-weight: bold;
-        }
+    .logout {
+        background: rgba(0, 0, 0, 0);
+        border: none;
+        font-size: 1rem;
+        cursor: pointer;
+        margin-top: .5rem;
+        color: #5D025F;
+        font-weight: bold;
+    }
 
-        .terminos {
-            margin: 0;
-        }
+    .terminos {
+        margin: 0;
+    }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 15px;
-        }
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 15px;
+    }
 
-        .title {
-            text-align: center;
-            margin-top: 3rem;
-            margin-bottom: 3rem;
-        }
+    .title {
+        text-align: center;
+        margin-top: 3rem;
+        margin-bottom: 3rem;
+    }
 
-        .card-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-        }
+    .card-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
 
-        .card-header {
-            padding: 10px;
-            background-color: #f0f0f0;
-            border-bottom: 1px solid #ddd;
-            border-top-left-radius: 5px;
-            border-top-right-radius: 5px;
-        }
+    .card-header {
+        padding: 10px;
+        background-color: #f0f0f0;
+        border-bottom: 1px solid #ddd;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+    }
 
-        .card-body {
-            padding: 20px;
-        }
+    .card-body {
+        padding: 20px;
+    }
 
-        .card-footer {
-            display: flex;
-            justify-content: space-between;
-            padding: 10px;
-        }
+    .card-footer {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px;
+    }
 
-        .btn-email,
-        .btn-sms {
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
+    .btn-email,
+    .btn-sms {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
 
-        .btn-email:hover,
-        .btn-sms:hover {
-            background-color: #0056b3;
-        }
+    .btn-email:hover,
+    .btn-sms:hover {
+        background-color: #0056b3;
+    }
     </style>
 
 </head>
@@ -90,20 +90,20 @@
             <img src="{{ asset('img/logo.jpg') }}" alt="" class="logo">
             <ul class="menu_items">
                 @guest
-                    <li><a href="#pro">¿Quienes Somos?</a></li>
-                    <li><a href="/marketplace">Marketplace</a></li>
-                    <li><a href="/contacto">Contactenos</a></li>
+                <li><a href="">¿Quienes Somos?</a></li>
+                <li><a href="/marketplace">Marketplace</a></li>
+                <li><a href="/contacto">Contactenos</a></li>
                 @endguest
                 @auth
-                    <form method="POST" action="{{ route('logout.doctor') }}">
-                        @csrf
-                        <button type="submit" class="logout">Cerrar Session</button>
-                    </form>
+                <form method="POST" action="{{ route('logout.doctor') }}">
+                    @csrf
+                    <button type="submit" class="logout">Cerrar Sesión</button>
+                </form>
                 @endauth
                 @auth
-                    @if (!auth()->user()->hasRole('Cliente'))
-                        <show-carrito user="{{ auth()->user()->id }}"></show-carrito>
-                    @endif
+                @if (!auth()->user()->hasRole('Cliente'))
+                <show-carrito user="{{ auth()->user()->id }}"></show-carrito>
+                @endif
                 @endauth
             </ul>
             <div id="hamburguer">
