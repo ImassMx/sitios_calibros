@@ -97,7 +97,7 @@
                 @auth
                 <form method="POST" action="{{ route('logout.doctor') }}">
                     @csrf
-                    <button type="submit" class="logout">Cerrar Sesión</button>
+                    <button type="submit" class="logout">Cerrar sesión</button>
                 </form>
                 @endauth
                 @auth
