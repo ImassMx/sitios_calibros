@@ -22,7 +22,8 @@ class ApiController extends Controller
     {
 
         $filtro = $request->buscador;
-        $libro = Libro::where('nombre', 'LIKE', '%' . $filtro . '%')->orderBy("created_at","desc")->paginate(5);
+        $libro = Libro::where('nombre', 'LIKE', '%' . $filtro . '%')
+                ->where('active',1)->orderBy("created_at","desc")->paginate(5);
         return response()->json($libro);
     }
 
@@ -187,6 +188,16 @@ class ApiController extends Controller
                 'data' => !empty($bo) ? $bo : null
             ]);
 
+        } catch (\Throwable $th) {
+            Log::error($th);
+        }
+     }
+
+     public function deleteBookSale(Request $request){
+        try {
+            $bookSale = BookSale::where('id',$request->book)->first();
+            $bookSale->active = 0;
+            $bookSale->save();
         } catch (\Throwable $th) {
             Log::error($th);
         }

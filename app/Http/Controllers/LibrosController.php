@@ -6,6 +6,7 @@ use App\Models\Libro;
 use Illuminate\Support\Str;
 use App\Exports\BooksExport;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Storage;
 
@@ -105,19 +106,7 @@ class LibrosController extends Controller
 
     public function destroy($id)
     {
-
-        $libro = Libro::find($id);
-        $libropdf = public_path('libros') . "/" . $libro->pdf;
-
-        if (file_exists($libropdf))
-            unlink($libropdf);
-
-        $port = public_path('admin/portada') . "/" . $libro->portada;
-
-        if (file_exists($port))
-            unlink($port);
-
-        $libro->delete();
+        Log::info($id);
     }
 
     public function desactivar($id)

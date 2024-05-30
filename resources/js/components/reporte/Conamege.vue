@@ -51,6 +51,7 @@
                 </div>
                 <Pagination :data="books" @pagination-change-page="traerReporte" class="d-flex justify-content-center" />
             </div>
+
           </div>
         </div>
       </div>

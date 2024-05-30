@@ -82,6 +82,7 @@ Route::get('/validate/email',[ApiController::class,'validateEmail']);
 Route::get('/validate/phone',[ApiController::class,'validatePhone']);
 Route::get('/validate/book/{id}',[ApiController::class,'validateBook']);
 Route::get('/validate/cedula',[ApiController::class,'validateCedula']);
+Route::post('/delete/book',[ApiController::class,'deleteBookSale']);
 
 //reportes
 Route::get('/report/books/doctor',[ReportController::class,'reportBooksDoctor']);

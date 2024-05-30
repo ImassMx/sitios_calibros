@@ -70,9 +70,9 @@ export default {
     }, created() {
         this.getBooks()
     }, methods: {
-        async getBooks() {
+        async getBooks(page=1) {
             try {
-                const { data } = await axios.get('/api/catalog/sale/books',{params:{buscador:this.buscador}})
+                const { data } = await axios.get('/api/catalog/sale/books?page='+page,{params:{buscador:this.buscador}})
                 this.Book = data
             } catch (error) {
                 console.log(error)
@@ -89,16 +89,20 @@ export default {
                 cancelButtonText: "No"
             }).then((result) => {
                 if (result.isConfirmed) {
-                    Swal.fire({
-                        title: "Deleted!",
-                        text: "Your file has been deleted.",
-                        icon: "success"
-                    });
+                    this.deleteBook(id)
+                    this.getBooks(1)
                 }
             });
         },buscarLibros(){
             clearTimeout(this.timeBuscador);
             this.timeBuscador = setTimeout(this.getBooks, 360);
+        },
+        async deleteBook(id){
+            try {
+                await axios.post('/api/delete/book',{book:id})
+            } catch (error) {
+                console.log(error)
+            }
         }
     }
 }
