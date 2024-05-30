@@ -22,6 +22,7 @@ class PayController extends Controller
     private $books_email;
     private $user_id;
     private $points;
+    private $price;
 
     public function __construct(){
         Conekta::setApiKey(config('conekta.secret'));
@@ -41,7 +42,8 @@ class PayController extends Controller
             ];
 
             $customer = Customer::create($validCustomer);
-            $resOrder = $this->createOrder($customer->id, $request->quantity, (int) str_replace([',', '.'], '', $request->price), $doc,$dominio);
+            $this->price = str_replace(',','',$request->price);
+            $resOrder = $this->createOrder($customer->id, $request->quantity, (float) str_replace([',', '.'], '', $request->price), $doc,$dominio);
             return response()->json([
                 'error' => false,
                 'url' => $resOrder->checkout->url
@@ -146,10 +148,12 @@ class PayController extends Controller
 
                     $cart = Cart::where('id', $id)->first();
                     $this->user_id = $cart->user_id;
+                    $doc = Doctor::where('user_id',$cart->user_id)->first();
 
                     $purchased = new PurchasedBook();
                     $purchased->user_id = $cart->user_id;
                     $purchased->book_sale_id = $cart->book_sale_id;
+                    $purchased->doctor_id = $doc->id;
                     $purchased->save();
 
                     $book = BookSale::where('id',$cart->book_sale_id)->first();
@@ -180,7 +184,7 @@ class PayController extends Controller
             $orders->order_payment_id = $order->id;
             $orders->items = $quantity;
             $orders->books = $books;
-            $orders->total = $price;
+            $orders->total = $this->price;
             $orders->save();
         } catch (\Throwable $th) {
             Log::error($th);

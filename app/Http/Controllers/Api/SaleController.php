@@ -24,6 +24,7 @@ class SaleController extends Controller
         try {
             $filtro = $request->buscador;
             $books = BookSale::where('name', 'LIKE', '%' . $filtro . '%')
+                ->where('active',1)
                 ->whereHas('category', function ($query) use ($filtro) {
                     $query->orWhere('name', 'LIKE', '%' . $filtro . '%');
                 })

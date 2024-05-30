@@ -25769,44 +25769,48 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   methods: {
     getBooks: function getBooks() {
-      var _this = this;
+      var _arguments = arguments,
+          _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-        var _yield$axios$get, data;
+        var page, _yield$axios$get, data;
 
         return _regeneratorRuntime().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _context.prev = 0;
-                _context.next = 3;
-                return axios.get('/api/catalog/sale/books', {
+                page = _arguments.length > 0 && _arguments[0] !== undefined ? _arguments[0] : 1;
+                _context.prev = 1;
+                _context.next = 4;
+                return axios.get('/api/catalog/sale/books?page=' + page, {
                   params: {
                     buscador: _this.buscador
                   }
                 });
 
-              case 3:
+              case 4:
                 _yield$axios$get = _context.sent;
                 data = _yield$axios$get.data;
                 _this.Book = data;
-                _context.next = 11;
+                _context.next = 12;
                 break;
 
-              case 8:
-                _context.prev = 8;
-                _context.t0 = _context["catch"](0);
+              case 9:
+                _context.prev = 9;
+                _context.t0 = _context["catch"](1);
                 console.log(_context.t0);
 
-              case 11:
+              case 12:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, null, [[0, 8]]);
+        }, _callee, null, [[1, 9]]);
       }))();
     },
     destroBook: function destroBook(id) {
+      var _this2 = this;
+
       Swal.fire({
         title: "¿Estas seguro que deseas eliminar?",
         text: "Esto ya no se puede revertir",
@@ -25818,17 +25822,44 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         cancelButtonText: "No"
       }).then(function (result) {
         if (result.isConfirmed) {
-          Swal.fire({
-            title: "Deleted!",
-            text: "Your file has been deleted.",
-            icon: "success"
-          });
+          _this2.deleteBook(id);
+
+          _this2.getBooks(1);
         }
       });
     },
     buscarLibros: function buscarLibros() {
       clearTimeout(this.timeBuscador);
       this.timeBuscador = setTimeout(this.getBooks, 360);
+    },
+    deleteBook: function deleteBook(id) {
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+        return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.prev = 0;
+                _context2.next = 3;
+                return axios.post('/api/delete/book', {
+                  book: id
+                });
+
+              case 3:
+                _context2.next = 8;
+                break;
+
+              case 5:
+                _context2.prev = 5;
+                _context2.t0 = _context2["catch"](0);
+                console.log(_context2.t0);
+
+              case 8:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, null, [[0, 5]]);
+      }))();
     }
   }
 });
