@@ -89,6 +89,10 @@ const routes = [{
     {
         path: '/admin/reporte/libros/conamege',
         component: () => import('../components/reporte/Conamege.vue')
+    },
+    {
+        path: '/admin/reporte/libros/ventas',
+        component: () => import('../components/reporte/Ventas.vue')
     }
 
 ]

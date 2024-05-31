@@ -16,11 +16,9 @@
                             <tr>
                                 <th scope="col">CONTRASEÑA LIBRO</th>
                                 <th scope="col">NOMBRE LIBRO</th>
-                                <th scope="col">CÓDIGO</th>
+                                <th scope="col">FOLIO MÉDICO</th>
                                 <th scope="col">NOMBRES Y APELLIDOS</th>
                                 <th scope="col">CÓDIGO POSTAL</th>
-                                <th scope="col">ALCALDIA</th>
-                                <th scope="col">CIUDAD</th>
                                 <th scope="col">FECHA DESCARGA</th>
                             </tr>
                         </thead>
@@ -31,8 +29,6 @@
                                 <td>{{ doc.doctor.folio }}</td>
                                 <td>{{ doc.client.user.name }}</td>
                                 <td>{{ doc.client.codigo_postal }}</td>
-                                <td>{{ doc.client.sepomex?.d_mnpio }}</td>
-                                <td>{{ doc.client.sepomex?.d_ciudad }}</td>
                                 <td>{{ formatDate(doc.created_at) }}</td>
                             </tr>
                         </tbody>

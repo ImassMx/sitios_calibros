@@ -95,6 +95,7 @@ Route::get('/export/doctor',[DoctorController::class,'exportDoctor'])->name('exp
 Route::get('/export/cliente',[ClienteController::class,'exportClient'])->name('export.cliente');
 Route::get('/export/books/doctor',[ReportController::class,'exportBookDoctor']);
 Route::get('/export/books/paciente',[ReportController::class,'exportBookPaciente']);
+Route::get('/export/books/ventas',[ReportController::class,'exportBookVentas']);
 
 //ENVIO SMS DOCTOR
 Route::get('/zona/doctor/{uuid}',[DoctorController::class,'zonaDoctor'])->name('zona.doctor')->middleware('auth');

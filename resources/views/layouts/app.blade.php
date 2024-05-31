@@ -116,24 +116,10 @@
                                     <router-link to="/admin/reporte/pacientes" class="nav-link text-white">Pacientes</router-link>
                                     <router-link to="/admin/reporte/libros/doctores" class="nav-link text-white">Libros Doctores</router-link>
                                     <router-link to="/admin/reporte/libros/pacientes" class="nav-link text-white">Libros Pacientes</router-link>
+                                    <router-link to="/admin/reporte/libros/ventas" class="nav-link text-white">Ventas</router-link>
                                     <router-link to="/admin/reporte/libros/conamege" class="nav-link text-white">Conamege</router-link>
                                 </nav>
                             </div>
-{{-- 
-                            <a class="nav-link collapsed text-white" href="#" data-bs-toggle="collapse"
-                                data-bs-target="#collapseVentas" aria-expanded="false" aria-controls="collapseLayouts">
-                                <div class="sb-nav-link-icon"><i class="fas fa-table text-white"></i></div>
-                                VENTAS
-                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                            </a>
-                            <div class="collapse" id="collapseVentas" aria-labelledby="headingOne"
-                                data-bs-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav">
-                                    <router-link to="/admin/sale/list/book" class="nav-link text-white">Libros</router-link>
-                                    <router-link to="/admin/reporte/doctores" class="nav-link text-white">Categorias</router-link>
-                                    <router-link to="/admin/reporte/pacientes" class="nav-link text-white">Reporte de Ventas</router-link>
-                                </nav>
-                            </div> --}}
                         </div>
             
                     </div>
