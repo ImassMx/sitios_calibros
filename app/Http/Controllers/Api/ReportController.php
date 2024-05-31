@@ -6,11 +6,14 @@ use App\Models\ClientBook;
 use App\Exports\BookDoctor;
 use Illuminate\Http\Request;
 use App\Exports\BookPaciente;
+use App\Exports\ReportVentas;
 use App\Models\PurchasedBook;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Maatwebsite\Excel\Facades\Excel;
+use Maatwebsite\Excel\Concerns\FromView;
+use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 
 class ReportController extends Controller
 {
@@ -38,7 +41,7 @@ class ReportController extends Controller
 
             return response()->json($purchasedBooks);
         } catch (\Throwable $th) {
-            Log::info($th);
+            Log::error($th);
             return response()->json([
                 'error' => true,
                 'message' => $th->getMessage()
@@ -61,7 +64,7 @@ class ReportController extends Controller
 
             return response()->json($cliente);
         } catch (\Throwable $th) {
-            Log::info($th);
+            Log::error($th);
             return response()->json([
                 'error' => true,
                 'message' => $th->getMessage()
@@ -79,7 +82,25 @@ class ReportController extends Controller
                      ->paginate(10);
             return response()->json($books);
         } catch (\Throwable $th) {
-            Log::info($th);
+            Log::error($th);
+        }
+    }
+
+
+    public function reporteVentas(Request $request){
+        try {
+
+            $filtro = $request->buscador;
+
+            $medicos = PurchasedBook::whereHas('doctor', function ($query) use ($filtro) {
+                $query->where('nombres', 'LIKE', '%' . $filtro . '%')
+                      ->orWhere('apellidos', 'LIKE', '%' . $filtro . '%');
+            })
+            ->with(['book', 'doctor'])->paginate(8); 
+
+            return response()->json($medicos);
+        } catch (\Throwable $th) {
+            Log::error($th);
         }
     }
 
@@ -91,5 +112,10 @@ class ReportController extends Controller
     public function exportBookPaciente()
     {
         return Excel::download(new BookPaciente, 'Reporte Libros Paciente.xlsx');
+    }
+
+    public function exportBookVentas(){
+        return Excel::download(new ReportVentas, 'Reporte Ventas.xlsx');
+
     }
 }

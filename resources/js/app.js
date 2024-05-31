@@ -44,6 +44,7 @@ import ListPaciente from './components/doctor/ListPaciente.vue'
 import LibrosDoctores from './components/reporte/LibrosDoctores.vue'
 import LibrosPacientes from './components/reporte/LibrosPacientes.vue'
 import Conamege from './components/reporte/Conamege.vue'
+import Ventas from './components/reporte/Ventas.vue'
 
 import ShowAviso from './components/ShowAviso.vue'
 
@@ -90,6 +91,7 @@ app.component('ListPaciente', ListPaciente)
 app.component('LibrosDoctores', LibrosDoctores)
 app.component('LibrosPacientes', LibrosPacientes)
 app.component('Conamege', Conamege)
+app.component('Ventas', Ventas)
 
 app.component('ShowAviso', ShowAviso)
 

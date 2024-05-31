@@ -1,8 +1,8 @@
 <template>
     <div class="container-fluid px-4">
-        <h1 class="mt-4 mb-3">Libros Doctores</h1>
+        <h1 class="mt-4 mb-3">Ventas</h1>
 
-        <a href="/export/books/doctor" class="btn btn-outline-success mb-3" download="Libros Doctores.xlsx">Exportar Reporte</a>
+        <a href="/export/books/ventas" class="btn btn-outline-success mb-3" download="Libros Doctores.xlsx">Exportar Reporte</a>
         <div>
             <div class="card mb-4">
                 <div class="card-body">
@@ -15,24 +15,30 @@
                         <thead>
                             <tr>
                                 <th scope="col">CONTRASEÑA LIBRO</th>
-                                <th scope="col">NOMBRE Y APELLIDOS</th>
-                                <th scope="col">CODIGO MÉDICO</th>
-                                <th scope="col">CODIGO POSTAL</th>
-                                <th scope="col">FECHA DESCARGA</th>
+                                <th scope="col">CANTIDAD COMPRADA</th>
+                                <th scope="col">COSTO UNITARIO</th>
+                                <th scope="col">IMPORTE PAGADO</th>
+                                <th scope="col">FECHA COMPRA</th>
+                                <th scope="col">FÓLIO MEDICO</th>
+                                <th scope="col">NOMBRES APELLIDOS</th>
+                                <th scope="col">CÓDIGO POSTAL</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr v-for="doc in Books.data" :key="doc.id">
                                 <th scope="row">{{ doc.book.password }}</th>
-                                <td>{{ doc.user.doctor_report.nombres }} {{ doc.user.doctor_report.apellidos }}</td>
-                                <td>{{ doc.user.doctor_report.folio }}</td>
-                                <td>{{ doc.user.doctor_report.cp }}</td>
+                                <td>1</td>
+                                <td>{{ doc.book.price }}</td>
+                                <td>{{ doc.book.price }}</td>
                                 <td>{{ formatDate(doc.created_at)}}</td>
+                                <td>{{ doc.doctor.folio }}</td>
+                                <td>{{ doc.doctor.nombres }} {{ doc.doctor.apellidos }}</td>
+                                <td>{{ doc.doctor.cp }}</td>
                             </tr>
                         </tbody>
                     </table>
                     </div>
-                    <Pagination :data="Books" @pagination-change-page="getBooksDoctors"
+                    <Pagination :data="Books" @pagination-change-page="getBooksVentas"
                         class="d-flex justify-content-center" />
                 </div>
             </div>
@@ -51,12 +57,12 @@ export default {
         }
     },
     mounted() {
-        this.getBooksDoctors()
+        this.getBooksVentas()
     },
     methods: {
-        async getBooksDoctors(page = 1) {
+        async getBooksVentas(page = 1) {
             try {
-                const { data } = await axios.get('/api/report/books/doctor?page=' + page, { params: { buscador: this.buscador } })
+                const { data } = await axios.get('/api/show/reporte/ventas?page=' + page, { params: { buscador: this.buscador } })
                 this.Books = data
             } catch (error) {
                 console.log(error)
@@ -64,7 +70,7 @@ export default {
         },
         buscarDoctor() {
             clearTimeout(this.timeBuscador);
-            this.timeBuscador = setTimeout(this.getBooksDoctors, 360);
+            this.timeBuscador = setTimeout(this.getBooksVentas, 360);
         },formatDate(date){
             const createdAtDate = new Date(date);
 

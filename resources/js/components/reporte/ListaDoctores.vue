@@ -25,6 +25,7 @@
                         <th scope="col">NOMBRE</th>
                         <th scope="col">APELLIDOS</th>
                         <th scope="col">ESPECIALIDAD</th>
+                        <th scope="col">CÉDULA PROF.</th>
                         <th scope="col">EMAIL</th>
                         <th scope="col">TELÉFONO</th>
                         <th scope="col">CÓDIGO POSTAL</th>
@@ -38,6 +39,7 @@
                         <td>{{ doc.nombres }}</td>
                         <td>{{ doc.apellidos }}</td>
                         <td>{{ doc.especialidad.nombre }}</td>
+                        <td>{{ doc.cedula ?? '' }}</td>
                         <td>{{ doc.user.email }}</td>
                         <td>{{ doc.user.celular }}</td>
                         <td>{{ doc.cp }}</td>
