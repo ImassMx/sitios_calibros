@@ -1,8 +1,25 @@
 <template>
   <div class="container-fluid px-4">
     <h1 class="mt-4 mb-3">Reporte de médicos</h1>
-
-    <a href="/export/doctor" class="btn btn-outline-success mb-3" download="Doctores.xlsx">Exportar Reporte</a>
+    <div class="row mb-3">
+            <div class="col-2 col-md-3 d-flex justify-content-start align-items-end">
+                <a :href="`/export/doctor?starDate=${startDate}&endDate=${endDate}`"
+                    class="btn btn-outline-success ">Exportar Reporte</a>
+            </div>
+            <div class="col-2 col-md-3">
+                <label for="startDate" class="form-label">Fecha de Inicio</label>
+                <input type="date" class="form-control" id="startDate" name="startDate" v-model="startDate"
+                    @change="updateStartDate">
+            </div>
+            <div class="col-2 col-md-3">
+                <label for="endDate" class="form-label">Fecha de Fin</label>
+                <input type="date" class="form-control" id="endDate" name="endDate" v-model="endDate"
+                    @change="updateEndDate">
+            </div>
+            <div class="col-2 col-md-3 d-flex justify-content-start align-items-end">
+                <a @click="clearFields" class="btn btn-outline-success ">Limpiar</a>
+            </div>
+        </div>
     <div>
       <div class="card mb-4">
     <div class="card-body">
@@ -71,7 +88,9 @@ export default {
       buscadorEspecilidad:"",
       timeBuscador: "",
       Especialidades : {},
-      special:''
+      special:'',
+      startDate: "",
+      endDate: ""
     }
   },
   mounted()
@@ -80,24 +99,31 @@ export default {
     this.getEspecialidades()
   },
   methods:{
-      traerDoctor(page=1)
-      {
-        axios.get('/api/show/reporte/doctores?page='+page,{params:{buscador:this.buscador}})
+    traerDoctor(page = 1) {
+      axios.get('/api/show/reporte/doctores?page=' + page, { params: { buscador: this.buscador, startDate : this.startDate,endDate: this.endDate } })
         .then(res => {
-            this.doctores = res.data
+          this.doctores = res.data
         })
         .catch(error => console.log())
-      },
-      buscarDoctor() {
+    },
+    buscarDoctor() {
       clearTimeout(this.timeBuscador);
       this.timeBuscador = setTimeout(this.traerDoctor, 360);
     },
-    getEspecialidades()
-    {
+    getEspecialidades() {
       axios.get('/api/especialidades')
-      .then( res =>{
-        this.Especialidades = res.data
-      })
+        .then(res => {
+          this.Especialidades = res.data
+        })
+    }, updateStartDate(){
+      this.traerDoctor();
+    },
+    updateEndDate(){
+      this.traerDoctor();
+    },clearFields(){
+      this.endDate = ''
+      this.startDate = ''
+      this.traerDoctor()
     }
   }
 

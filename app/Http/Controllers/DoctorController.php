@@ -128,9 +128,11 @@ class DoctorController extends Controller
         }
     }
 
-    public function exportDoctor()
+    public function exportDoctor(Request $request)
     {
-        return Excel::download(new DoctorsExport, 'Reporte Doctores.xlsx');
+        $startDate = $request->input('starDate');
+        $endDate = $request->input('endDate');
+        return Excel::download(new DoctorsExport($startDate,$endDate), 'Reporte Doctores.xlsx');
     }
 
     public function ValidarEmail(Request $request)

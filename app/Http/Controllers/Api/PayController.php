@@ -138,6 +138,7 @@ class PayController extends Controller
     private function verifyPayment($order)
     {
         try {
+
             $order = ModelsOrder::where('order_payment_id', $order)->first();
 
             if ($order->state === 'paid') {
@@ -149,14 +150,16 @@ class PayController extends Controller
                     $cart = Cart::where('id', $id)->first();
                     $this->user_id = $cart->user_id;
                     $doc = Doctor::where('user_id',$cart->user_id)->first();
+                    $book = BookSale::where('id',$cart->book_sale_id)->first();
 
                     $purchased = new PurchasedBook();
                     $purchased->user_id = $cart->user_id;
                     $purchased->book_sale_id = $cart->book_sale_id;
                     $purchased->doctor_id = $doc->id;
+                    $purchased->order_id = $order->order_payment_id;
+                    $purchased->price = $book->price;
                     $purchased->save();
 
-                    $book = BookSale::where('id',$cart->book_sale_id)->first();
                     $this->points += $book->points;
 
                     $this->books_email[] = $cart->book_sale_id;

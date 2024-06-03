@@ -2,7 +2,22 @@
   <div class="container-fluid px-4">
     <h1 class="mt-4 mb-3">Reporte de Pacientes</h1>
 
-    <a href="/export/cliente" class="btn btn-outline-success mb-3">Exportar Reporte</a>
+    <div class="row mb-3">
+      <div class="col-2 col-md-3 d-flex justify-content-start align-items-end">
+        <a :href="`/export/cliente?starDate=${startDate}&endDate=${endDate}`" class="btn btn-outline-success ">Exportar Reporte</a>
+      </div>
+      <div class="col-2 col-md-3">
+        <label for="startDate" class="form-label">Fecha de Inicio</label>
+        <input type="date" class="form-control" id="startDate" name="startDate" v-model="startDate" @change="updateStartDate">
+      </div>
+      <div class="col-2 col-md-3">
+        <label for="endDate" class="form-label">Fecha de Fin</label>
+        <input type="date" class="form-control" id="endDate" name="endDate" v-model="endDate" @change="updateEndDate">
+      </div>
+      <div class="col-2 col-md-3 d-flex justify-content-start align-items-end">
+        <a @click="clearFields" class="btn btn-outline-success ">Limpiar</a>
+      </div>
+    </div>
     <div>
       <div class="card mb-4">
         <div class="card-body">
@@ -27,8 +42,8 @@
                 <tr v-for="client in clientes.data" :key="client.id">
                   <td>{{ client.folio }}</td>
                   <td>{{ client.user.name }}</td>
-                  <td>{{ client.user.celular }}</td>
                   <td>{{ client.user.email }}</td>
+                  <td>{{ client.user.celular }}</td>
                   <td>{{ client.codigo_postal }}</td>
                   <td>{{ client.sepomex?.d_mnpio }}</td>
                   <td>{{ client.sepomex?.d_ciudad }}</td>
@@ -50,6 +65,8 @@ export default {
       clientes: {},
       buscador: "",
       timeBuscador: "",
+      startDate :"",
+      endDate : ""
     };
   },
   mounted() {
@@ -59,7 +76,7 @@ export default {
     traerClientes(page = 1) {
       axios
         .get("/api/show/clientes?page=" + page, {
-          params: { buscador: this.buscador },
+          params: { buscador: this.buscador , startDate : this.startDate,endDate: this.endDate },
         })
         .then((res) => {
           this.clientes = res.data;
@@ -69,6 +86,16 @@ export default {
       clearTimeout(this.timeBuscador);
       this.timeBuscador = setTimeout(this.traerClientes, 360);
     },
+    updateStartDate(){
+      this.traerClientes();
+    },
+    updateEndDate(){
+      this.traerClientes();
+    },clearFields(){
+      this.endDate = ''
+      this.startDate = ''
+      this.traerClientes()
+    }
   },
 };
 </script>

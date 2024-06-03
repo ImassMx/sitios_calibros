@@ -2,7 +2,25 @@
     <div class="container-fluid px-4">
         <h1 class="mt-4 mb-3">Libros Paciente</h1>
 
-        <a href="/export/books/paciente" class="btn btn-outline-success mb-3" download="Doctores.xlsx">Exportar Reporte</a>
+        <div class="row mb-3">
+            <div class="col-2 col-md-3 d-flex justify-content-start align-items-end">
+                <a :href="`/export/books/paciente?starDate=${startDate}&endDate=${endDate}`"
+                    class="btn btn-outline-success ">Exportar Reporte</a>
+            </div>
+            <div class="col-2 col-md-3">
+                <label for="startDate" class="form-label">Fecha de Inicio</label>
+                <input type="date" class="form-control" id="startDate" name="startDate" v-model="startDate"
+                    @change="updateStartDate">
+            </div>
+            <div class="col-2 col-md-3">
+                <label for="endDate" class="form-label">Fecha de Fin</label>
+                <input type="date" class="form-control" id="endDate" name="endDate" v-model="endDate"
+                    @change="updateEndDate">
+            </div>
+            <div class="col-2 col-md-3 d-flex justify-content-start align-items-end">
+                <a @click="clearFields" class="btn btn-outline-success ">Limpiar</a>
+            </div>
+        </div>
         <div>
             <div class="card mb-4">
                 <div class="card-body">
@@ -50,6 +68,8 @@ export default {
             Books: [],
             buscador: "",
             timeBuscador: "",
+            startDate: "",
+            endDate: ""
         }
     },
     mounted() {
@@ -58,7 +78,7 @@ export default {
     methods: {
         async getBookPaciente(page = 1) {
             try {
-                const { data } = await axios.get('/api/report/books/paciente?page=' + page, { params: { buscador: this.buscador } })
+                const { data } = await axios.get('/api/report/books/paciente?page=' + page, { params: { buscador: this.buscador, startDate : this.startDate,endDate: this.endDate } })
                 this.Books = data
             } catch (error) {
                 console.log(error)
@@ -70,7 +90,6 @@ export default {
         },formatDate(date){
             const createdAtDate = new Date(date);
 
-            // Opciones de formateo
             const options = {
                 year: 'numeric',
                 month: 'numeric',
@@ -80,9 +99,17 @@ export default {
                 second: '2-digit'
             };
 
-        
-            return new Intl.DateTimeFormat('en-EN', options).format(createdAtDate);
-        }
+            return new Intl.DateTimeFormat('en-ES', options).format(createdAtDate);
+        }, updateStartDate(){
+      this.getBookPaciente();
+    },
+    updateEndDate(){
+      this.getBookPaciente();
+    },clearFields(){
+      this.endDate = ''
+      this.startDate = ''
+      this.getBookPaciente()
+    }
     }
 
 };
