@@ -12,7 +12,9 @@ class PurchasedBook extends Model
     protected $fillable = [
         'user_id',
         'book_sale_id',
-        'doctor_id'
+        'doctor_id',
+        'order_id',
+        'price'
     ];
 
 

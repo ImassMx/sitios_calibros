@@ -53,10 +53,20 @@ class ApiController extends Controller
     {
         try {
             $filtro = $request->buscador;
+            $startDate = $request->input('startDate');
+            $endDate = $request->input('endDate');
+
             $clientes = Cliente::whereHas('user', function ($query) use ($filtro) {
                 $query->where('name', 'LIKE', '%' . $filtro . '%')
                     ->orWhere('folio', 'LIKE', '%' . $filtro . '%');
-            })->with(['user', 'libro','sepomex'])->orderBy("created_at","desc")->paginate(9);
+            })->with(['user', 'libro','sepomex'])
+            ->when($startDate, function ($query, $startDate) {
+                return $query->where('created_at', '>=', $startDate);
+            })
+            ->when($endDate, function ($query, $endDate) {
+                return $query->where('created_at', '<=', $endDate);
+            })
+            ->orderBy("created_at","desc")->paginate(9);
 
             return response()->json($clientes);
         } catch (\Throwable $th) {
@@ -67,6 +77,8 @@ class ApiController extends Controller
     public function doctores(Request $request)
     {
         $filtro = $request->buscador;   
+        $startDate = $request->input('startDate');
+        $endDate = $request->input('endDate');
 
         $doctores = Doctor::whereHas('especialidad', function ($query) use ($filtro) {
                 $query->where('nombre', 'LIKE', '%' . $filtro . '%')
@@ -74,6 +86,12 @@ class ApiController extends Controller
                     ->orWhere('apellidos', 'LIKE', '%' . $filtro . '%')
                     ->orWhere('nombres', 'LIKE', '%' . $filtro . '%');
             })->with(['especialidad','user','sepomex'])
+            ->when($startDate, function ($query, $startDate) {
+                return $query->where('created_at', '>=', $startDate);
+            })
+            ->when($endDate, function ($query, $endDate) {
+                return $query->where('created_at', '<=', $endDate);
+            })
             ->orderBy("created_at","desc")->paginate(10);
 
             return response()->json($doctores);

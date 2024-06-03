@@ -109,8 +109,11 @@ class ClienteController extends Controller
         return view('auth-cliente.register', compact('estados','book'));
     }
 
-    public function exportClient()
+    public function exportClient(Request $request)
     {
-        return Excel::download(new ClientExport, 'Reporte Pacientes.xlsx');
+        $startDate = $request->input('starDate');
+        $endDate = $request->input('endDate');
+
+        return Excel::download(new ClientExport($startDate,$endDate), 'Reporte Pacientes.xlsx');
     }
 }

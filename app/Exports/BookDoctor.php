@@ -12,11 +12,27 @@ use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 
 class BookDoctor implements FromView,ShouldAutoSize
 {
+    protected $startDate;
+    protected $endDate;
+
+    public function __construct($startDate,$endDate)
+    {
+        $this->startDate = $startDate;
+        $this->endDate = $endDate;
+    }
    
     public function view(): View
     {
-        $books = PurchasedBook::with(['user.doctorReport.especialidad', 'book', 'user.doctorReport.sepomex']);
+        $startDate = $this->startDate;
+        $endDate = $this->endDate;
 
+        $books = PurchasedBook::with(['user.doctorReport.especialidad', 'book', 'user.doctorReport.sepomex'])
+        ->when($startDate, function ($query, $startDate) {
+            return $query->where('created_at', '>=', $startDate);
+        })
+        ->when($endDate, function ($query, $endDate) {
+            return $query->where('created_at', '<=', $endDate);
+        });
 
         $books = $books->get();
 

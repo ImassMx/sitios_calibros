@@ -17,7 +17,6 @@
             <th style="text-align: center;font-weight:bold;">ALCALDIA</th>
             <th style="text-align: center;font-weight:bold;">CIUDAD</th>
             <th style="text-align: center;font-weight:bold;">FECHA DESCARGA</th>
-            <th style="text-align: center;font-weight:bold;">N. DESCARGAS PACIENTES</th>
         </tr>
     </thead>
     <tbody>
@@ -31,9 +30,6 @@
                 <td>{{ $book->user->doctorReport->sepomex->d_mnpio ?? '' }}</td>
                 <td>{{ $book->user->doctorReport->sepomex->d_ciudad ?? '' }}</td>
                 <td>{{ Carbon\Carbon::parse($book->created_at)->format('d-m-Y H:i:s') }}</td>
-                <td>
-                    {{ $book->donwloads }}
-                </td>
             </tr>
         @endforeach
     </tbody>

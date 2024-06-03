@@ -2,6 +2,21 @@
     <div class="container-fluid ">
       <div class="row">
         <h1 class="mt-4 mb-3">Reporte Conamege</h1>
+        <div class="row mb-3">
+            <div class="col-2 col-md-3">
+                <label for="startDate" class="form-label">Fecha de Inicio</label>
+                <input type="date" class="form-control" id="startDate" name="startDate" v-model="startDate"
+                    @change="updateStartDate">
+            </div>
+            <div class="col-2 col-md-3">
+                <label for="endDate" class="form-label">Fecha de Fin</label>
+                <input type="date" class="form-control" id="endDate" name="endDate" v-model="endDate"
+                    @change="updateEndDate">
+            </div>
+            <div class="col-2 col-md-3 d-flex justify-content-start align-items-end">
+                <a @click="clearFields" class="btn btn-outline-success ">Limpiar</a>
+            </div>
+        </div>
         <div class="col-md-12 col-sm-12 ">
           <div class="card mb-4">
             <div class="card-body w-100">
@@ -65,6 +80,8 @@
         books: {},
         buscador: "",
         timeBuscador: "",
+        startDate: "",
+            endDate: ""
       };
     },
     mounted() {
@@ -74,7 +91,7 @@
       traerReporte(page = 1) {
         axios
           .get("/api/show/reporte/conamege?page=" + page, {
-            params: { buscador: this.buscador },
+            params: { buscador: this.buscador, startDate : this.startDate,endDate: this.endDate  },
           })
           .then((res) => {
             this.books = res.data;
@@ -98,6 +115,15 @@
 
         
             return new Intl.DateTimeFormat('en-EN', options).format(createdAtDate);
+        }, updateStartDate() {
+            this.traerReporte();
+        },
+        updateEndDate() {
+            this.traerReporte();
+        }, clearFields() {
+            this.endDate = ''
+            this.startDate = ''
+            this.traerReporte()
         }
     },
   };

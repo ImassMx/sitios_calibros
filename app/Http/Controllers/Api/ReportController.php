@@ -22,16 +22,24 @@ class ReportController extends Controller
         try {
 
             $filtro = $request->buscador;
+            $startDate = $request->input('startDate');
+            $endDate = $request->input('endDate');
+
             $purchasedBooks = PurchasedBook::with(['user.doctorReport.especialidad', 'book', 'user.doctorReport.sepomex'])
-            ->where(function ($query) use ($filtro) {
-                $query->whereHas('user', function ($userQuery) use ($filtro) {
-                    $userQuery->where('name', 'LIKE', '%' . $filtro . '%');
+                ->where(function ($query) use ($filtro) {
+                    $query->whereHas('user', function ($userQuery) use ($filtro) {
+                        $userQuery->where('name', 'LIKE', '%' . $filtro . '%');
+                    })
+                        ->orWhereHas('book', function ($bookQuery) use ($filtro) {
+                            $bookQuery->where('name', 'LIKE', '%' . $filtro . '%');
+                        });
                 })
-                    ->orWhereHas('book', function ($bookQuery) use ($filtro) {
-                        $bookQuery->where('name', 'LIKE', '%' . $filtro . '%');
-                    });
-            })
-                ->paginate(10);
+                ->when($startDate, function ($query, $startDate) {
+                    return $query->where('created_at', '>=', $startDate);
+                })
+                ->when($endDate, function ($query, $endDate) {
+                    return $query->where('created_at', '<=', $endDate);
+                })->paginate(10);
 
             $purchasedBooks->each(function ($purchasedBook) {
                 $purchasedBook->loadCount(['clientBook as total_downloads' => function ($query) {
@@ -52,15 +60,28 @@ class ReportController extends Controller
     public function reportBooksPaciente(Request $request)
     {
         try {
+
             $filtro = $request->buscador;
+            $startDate = $request->input('startDate');
+            $endDate = $request->input('endDate');
+
             $cliente = ClientBook::with(['book', 'client.user', 'doctor', 'client.sepomex'])
-                ->whereHas('book', function ($query) use ($filtro) {
-                    $query->where('name', 'LIKE', "%$filtro%");
+                ->where(function ($query) use ($filtro) {
+                    $query->orWhereHas('book', function ($query) use ($filtro) {
+                        $query->where('name', 'LIKE', "%$filtro%");
+                    })
+                        ->orWhereHas('client', function ($query) use ($filtro) {
+                            $query->where('name', 'LIKE', "%$filtro%");
+                        });
                 })
-                ->orWhereHas('client', function ($query) use ($filtro) {
-                    $query->where('name', 'LIKE', "%$filtro%");
+                ->when($startDate, function ($query, $startDate) {
+                    return $query->where('created_at', '>=', $startDate);
+                })
+                ->when($endDate, function ($query, $endDate) {
+                    return $query->where('created_at', '<=', $endDate);
                 })
                 ->paginate(10);
+
 
             return response()->json($cliente);
         } catch (\Throwable $th) {
@@ -72,14 +93,26 @@ class ReportController extends Controller
         }
     }
 
-    public function reporteConamege(Request $request){
+    public function reporteConamege(Request $request)
+    {
         try {
             $filtro = $request->buscador;
-            
-            $books = ClientBook::with(['book','client.sepomex','doctor.especialidad','doctor.sepomex','reportBooksMonth'])
-                     ->withCount('reportBooksMonth as total_books_month')
-                     ->withCount('reportBooksTotal as total_books_total')
-                     ->paginate(10);
+            $startDate = $request->input('startDate');
+            $endDate = $request->input('endDate');
+            $books = ClientBook::with(['book', 'client.sepomex', 'doctor.especialidad', 'doctor.sepomex', 'reportBooksMonth'])
+                ->withCount('reportBooksMonth as total_books_month')
+                ->withCount('reportBooksTotal as total_books_total')
+                ->when(!empty($startDate), function ($query) use ($startDate) {
+                    return $query->where('created_at', '>=', $startDate);
+                })
+                ->when(!empty($endDate), function ($query) use ($endDate) {
+                    return $query->where('created_at', '<=', $endDate);
+                })
+                ->whereHas('doctor', function ($query) use ($filtro) {
+                    $query->where('nombres', 'LIKE', '%' . $filtro . '%')
+                          ->orWhere('apellidos', 'LIKE', '%' . $filtro . '%');
+                })
+                ->paginate(10);
             return response()->json($books);
         } catch (\Throwable $th) {
             Log::error($th);
@@ -87,16 +120,29 @@ class ReportController extends Controller
     }
 
 
-    public function reporteVentas(Request $request){
+    public function reporteVentas(Request $request)
+    {
         try {
 
             $filtro = $request->buscador;
+            $startDate = $request->input('startDate');
+            $endDate = $request->input('endDate');
 
             $medicos = PurchasedBook::whereHas('doctor', function ($query) use ($filtro) {
                 $query->where('nombres', 'LIKE', '%' . $filtro . '%')
                       ->orWhere('apellidos', 'LIKE', '%' . $filtro . '%');
             })
-            ->with(['book', 'doctor'])->paginate(8); 
+            ->when(!empty($startDate), function ($query) use ($startDate) {
+                return $query->where('created_at', '>=', $startDate);
+            })
+            ->when(!empty($endDate), function ($query) use ($endDate) {
+                return $query->where('created_at', '<=', $endDate);
+            })
+            ->orWhere('order_id','LIKE','%'.$filtro.'%')
+            ->with(['book', 'doctor'])
+            ->orderBy('created_at','desc')
+            ->paginate(8);
+            
 
             return response()->json($medicos);
         } catch (\Throwable $th) {
@@ -104,18 +150,24 @@ class ReportController extends Controller
         }
     }
 
-    public function exportBookDoctor()
+    public function exportBookDoctor(Request $request)
     {
-        return Excel::download(new BookDoctor, 'Reporte Libros Doctor.xlsx');
+        $startDate = $request->input('starDate');
+        $endDate = $request->input('endDate');
+        return Excel::download(new BookDoctor($startDate, $endDate), 'Reporte Libros Doctor.xlsx');
     }
 
-    public function exportBookPaciente()
+    public function exportBookPaciente(Request $request)
     {
-        return Excel::download(new BookPaciente, 'Reporte Libros Paciente.xlsx');
+        $startDate = $request->input('starDate');
+        $endDate = $request->input('endDate');
+        return Excel::download(new BookPaciente($startDate, $endDate), 'Reporte Libros Paciente.xlsx');
     }
 
-    public function exportBookVentas(){
-        return Excel::download(new ReportVentas, 'Reporte Ventas.xlsx');
-
+    public function exportBookVentas(Request $request)
+    {
+        $startDate = $request->input('starDate');
+        $endDate = $request->input('endDate');
+        return Excel::download(new ReportVentas($startDate, $endDate), 'Reporte Ventas.xlsx');
     }
 }
