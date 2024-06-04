@@ -22,16 +22,7 @@
                             <input type="text" class="form-control" aria-label="Busar" placeholder="Buscar"
                                 v-model="buscador" @keyup="buscarLibros">
                         </div>
-                    </div>
-                    <div class="col-md-3 col-sm-12 text-end p-0">
-                        
-                        <div class="card mb-3 p-2 contenido-informacion">
-                            <p class="terminos">Para mayor información , términos y condiciones, aviso de privacidad
-                                acceder a:</p>
-                            <a href="www.vistobuenoeditores.com.mx">www.vistobuenoeditores.com.mx </a>
-                            <p class="terminos"><b>Nota: </b>Por ser libros digitales las devoluciones no aplican</p>
-                        </div>
-                    </div>
+                    </div> 
                 </div>
                 <div class="row row-cols-1 row-cols-md-4 g-4">
                     <div class="col" v-for="book in Books.data" :key="book.id">

@@ -34,7 +34,7 @@
                                 <tr>
                                     <th scope="col">CONTRASEÑA LIBRO</th>
                                     <th scope="col">NOMBRE Y APELLIDOS</th>
-                                    <th scope="col">CODIGO MÉDICO</th>
+                                    <th scope="col">FOLIO MÉDICO</th>
                                     <th scope="col">CODIGO POSTAL</th>
                                     <th scope="col">FECHA DESCARGA</th>
                                 </tr>

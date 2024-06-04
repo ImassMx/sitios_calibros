@@ -26,10 +26,10 @@
               placeholder="Buscar" v-model="buscador" @keyup="buscarCliente" />
           </div>
           <div class="table-responsive">
-            <table class="table">
+            <table class="table table-sm">
               <thead>
                 <tr>
-                  <th scope="col">FOLIO</th>
+                  <th scope="col">FOLIO MÉDICO</th>
                   <th scope="col">NOMBRE COMPLETO</th>
                   <th scope="col">EMAIL</th>
                   <th scope="col">CELULAR</th>
