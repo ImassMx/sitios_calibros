@@ -68,6 +68,8 @@ Route::post('/process/payment/{id}',[PayController::class,'processPay']);
 //books doctor
 Route::get('/books/doctor/{id}',[DoctorController::class,'getBooksDoctor']);
 Route::get('/infor/doctor/{id}',[DoctorController::class,'getInfoDoctor']);
+Route::get('/editar/doctor/{uuid}',[DoctorController::class,'editarDoctor']);
+Route::post('/update/doctor/{uuid}',[DoctorController::class,'updateDoctor']);
 Route::get('/send/message',[DoctorController::class,'sendMessagePaciente']);
 Route::get('/send/email',[DoctorController::class,'sendEmailPaciente']);
 Route::get('/show/pacientes/{uuid}',[DoctorController::class,'getPacientesDoctor']);
@@ -75,6 +77,7 @@ Route::delete('/delete/book/{id}',[DoctorController::class,'deleteBook']);
 Route::get('/get/book/{uuid}',[DoctorController::class,'getBook']);
 Route::post('/update/book/{uuid}',[DoctorController::class,'updateBook']);
 Route::get('/categories/show',[CategoryController::class,'showCategories']);
+Route::post('/delete/categories/{category}',[CategoryController::class,'deleteCategories']);
 Route::get('/categories/edit/{id}',[CategoryController::class,'editCategories']);
 Route::post('/categories/update/{id}',[CategoryController::class,'updateCategory']);
 Route::post('/category/create',[CategoryController::class,'createCategory']);

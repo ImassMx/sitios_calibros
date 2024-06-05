@@ -286,4 +286,8 @@ class DoctorController extends Controller
     public function pacientesDoctor($uuid){
         return view('auth-doctor.pacientes',compact('uuid'));
     }
+
+    public function editarDoctor($uuid){
+        return view('auth-doctor.editarDoctor',compact('uuid'));
+    }
 }

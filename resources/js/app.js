@@ -40,6 +40,7 @@ import ShowComprar from './components/marketplace/ShowComprar.vue'
 import CardBook from './components/cliente/CardBook.vue'
 //DOCTOR
 import ListPaciente from './components/doctor/ListPaciente.vue'
+import EditarDoctor from './components/doctor/EditarDoctor.vue'
 //REPORTES
 import LibrosDoctores from './components/reporte/LibrosDoctores.vue'
 import LibrosPacientes from './components/reporte/LibrosPacientes.vue'
@@ -47,6 +48,7 @@ import Conamege from './components/reporte/Conamege.vue'
 import Ventas from './components/reporte/Ventas.vue'
 
 import ShowAviso from './components/ShowAviso.vue'
+import ShowBoton from './components/ShowBoton.vue'
 
 
 const app = createApp({})
@@ -94,5 +96,8 @@ app.component('Conamege', Conamege)
 app.component('Ventas', Ventas)
 
 app.component('ShowAviso', ShowAviso)
+app.component('ShowBoton', ShowBoton)
+
+app.component('EditarDoctor', EditarDoctor)
 
 app.mount('#app')

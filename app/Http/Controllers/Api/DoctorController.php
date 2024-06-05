@@ -328,4 +328,36 @@ class DoctorController extends Controller
             return $error;
         }
     }
+
+    public function editarDoctor($uuid){
+        try {
+            $doctor = Doctor::where('uuid',$uuid)->with('user')->first();
+            return response()->json($doctor);
+        } catch (\Throwable $th) {
+            Log::error($th);
+        }
+    }
+
+    public function updateDoctor(Request $request , $uuid){
+        try {
+ 
+            $doctor = Doctor::where('uuid',$uuid)->first();
+            $doctor->nombres = $request->nombre;
+            $doctor->apellidos = $request->apellido;
+            $doctor->cedula = $request->cedula;
+            $doctor->save();
+        
+            $user = User::where('id',$doctor->user_id)->first();
+            $user->name = $request->nombre;
+            $user->celular = $request->celular;
+            $user->save();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Se actualizó correctamente la información.'
+            ]);
+        } catch (\Throwable $th) {
+            Log::error($th);
+        }
+    }
 }

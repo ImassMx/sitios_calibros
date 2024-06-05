@@ -16,6 +16,7 @@
                     <div class="col-md-9 col-sm-12 pb-0">
                         <h1><img src="/img/book.svg" class="img-fluid" alt="Libro" width="40">
                             Libros disponibles</h1>
+                            <show-boton/>
                         <div class="input-group mb-2">
                             <button class="input-group-text backg-s"><img src="/img/search.svg" alt="buscar"
                                     width="20"></button>
@@ -57,8 +58,10 @@
 </template>
 
 <script>
+import ShowBoton from '../ShowBoton.vue'
 
 export default {
+  components: { ShowBoton },
     props: ["user"],
     data() {
         return {
