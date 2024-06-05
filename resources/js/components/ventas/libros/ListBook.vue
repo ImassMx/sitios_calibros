@@ -16,7 +16,11 @@
 
                                 <th class="text-center" scope="col">NOMBRE</th>
                                 <th class="text-center" scope="col">IMAGEN</th>
+<<<<<<< HEAD
                                 <th class="text-center" scope="col">LÍNEA TERAPÉUTICA</th>
+=======
+                                <th class="text-center" scope="col">LINEA TERAPÉUTICA</th>
+>>>>>>> 681cf3a (Subir avance se observaciones)
                                 <th class="text-center" scope="col">PRECIO</th>
                                 <th class="text-center" scope="col">PUNTOS</th>
                                 <th class="text-center" scope="col">DESCARGAS</th>

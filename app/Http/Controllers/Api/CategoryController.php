@@ -81,4 +81,20 @@ class CategoryController extends Controller
             ]);
         }
     }
+
+    public function deleteCategories($category){
+        try {
+            Category::where('id',$category)->delete();
+            return response()->json([
+                'error' => true,
+                'message' => 'Se eliminó correctamente'
+            ]);
+        } catch (\Throwable $th) {
+            Log::error($th);
+            return response()->json([
+                'error' => true,
+                'message' => $th->getMessage()
+            ]);
+        }
+    }
 }

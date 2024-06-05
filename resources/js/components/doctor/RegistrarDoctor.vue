@@ -69,7 +69,7 @@
               </div>
               <div class="col-md-12 col-sm-12 p-2">
                 <label for="">Celular</label>
-                <input type="text"  class="form-control"  v-model="celular" @keyup="validarCelular" />
+                <input type="text"  class="form-control"  v-model="celular" @keyup="validarCelular" placeholder="(Sí, actualizaste tu número agregalo aquí)"/>
                 <p class="validacion-celular" v-if="errors.celular">{{ errors.celular }}</p>
               </div>
               <div class="col-md-12 col-sm-12 p-2">          

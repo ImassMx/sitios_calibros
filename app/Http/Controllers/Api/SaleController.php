@@ -28,7 +28,9 @@ class SaleController extends Controller
                 ->whereHas('category', function ($query) use ($filtro) {
                     $query->orWhere('name', 'LIKE', '%' . $filtro . '%');
                 })
-                ->with('category')
+                ->with(['category' => function ($query) {
+                    $query->withTrashed();
+                }])
                 ->paginate(10);
             return response()->json($books);
         } catch (\Throwable $th) {

@@ -87,7 +87,7 @@ export default {
         cancelButtonText: "Cancelar",
       }).then((result) => {
         if (result.isConfirmed) {
-          this.axios.delete('/eleminiar-clasificacion/'+id)
+          this.axios.post('/api/delete/categories/'+id)
          .then( response => {
            this.traerClasificacion()
           Swal.fire("Eliminado", "Se elimino correctamente.", "success")

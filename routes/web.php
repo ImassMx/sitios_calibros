@@ -99,6 +99,7 @@ Route::get('/export/books/ventas',[ReportController::class,'exportBookVentas']);
 
 //ENVIO SMS DOCTOR
 Route::get('/zona/doctor/{uuid}',[DoctorController::class,'zonaDoctor'])->name('zona.doctor')->middleware('auth');
+Route::get('/editar/doctor/{uuid}',[DoctorController::class,'editarDoctor'])->name('zona.doctor')->middleware('auth');
 Route::get('/pacientes/doctor/{uuid}',[DoctorController::class,'pacientesDoctor'])->name('paciente.zona.doctor')->middleware('auth');
 Route::get('/donwload/book/paciente/{uuid}',[DoctorController::class,'donwloadBook']);
 Route::get('/donwload/book/doctor/{book}',[DonwloadController::class,'donwloadBookDoctor']);

@@ -37,7 +37,11 @@ class CartController extends Controller
 
     public function catalogCart($user){
         try {
-            $books = Cart::where('user_id',$user)->with('book.category')->get();
+            $books = Cart::where('user_id',$user)->with(['book' => function ($query) {
+                $query->withTrashed(); 
+            }, 'book.category' => function ($query) {
+                $query->withTrashed();
+            }])->get();
             return response()->json($books);
         } catch (\Throwable $th) {
             Log::error($th);

@@ -1,5 +1,6 @@
 <template>
     <div class="col-md-9 col-sm-12">
+        <show-boton/>
         <table class="table">
             <tbody>
                 <tr>
@@ -53,7 +54,9 @@
 
 <script>
 import { mapActions, mapState } from 'vuex'
+import ShowBoton from '../ShowBoton.vue';
 export default {
+  components: { ShowBoton },
     props:["user"]
     ,created(){
         this.getInfoCart(this.user);
