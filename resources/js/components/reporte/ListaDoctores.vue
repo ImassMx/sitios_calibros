@@ -38,7 +38,7 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th scope="col">FOLIO</th>
+                        <th scope="col">FOLIO MÉDICO</th>
                         <th scope="col">NOMBRE</th>
                         <th scope="col">APELLIDOS</th>
                         <th scope="col">ESPECIALIDAD</th>
