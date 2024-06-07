@@ -14,7 +14,10 @@ class MarketplaceController extends Controller
     }
 
     public function detalleLibro($uuid){
-        $book = BookSale::where('uuid',$uuid)->with('category')->first();
+        $book = BookSale::where('uuid',$uuid)->with(['category' => function ($query) {
+            $query->withTrashed(); 
+        }])->first();
+        
         return view('marketplace.detalleLibro',compact('book'));
     }
 
