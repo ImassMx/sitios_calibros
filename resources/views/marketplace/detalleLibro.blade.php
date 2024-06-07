@@ -18,7 +18,7 @@
                                 <p class="text-muted mt-2 m-0 p-0">Categoria: {{ $book->category->name }}</p>
                                 {{-- <p class="text-muted m-0 p-0">Número páginas: 00</p> --}}
                                 <hr>
-                                <p class="fw-bold">Sipnosis</p>
+                                <p class="fw-bold">Sipnosisss</p>
                                 <p class="card-text">{{ $book->description }}</p>
                             </div>
                         </div>
@@ -26,10 +26,15 @@
                 </div>
             </div>
             <div class="col-md-3 col-sm-12">
-                <show-comprar name="{{$book->name}}" uuid="{{$book->uuid}}" user="{{auth()->user()?? null}}"/>
-                <p style="margin: 0">Para mayor información , términos y condiciones,aviso de privacidad acceder a:</p>
-                <a href="https://vistobuenoeditores.com.mx">www.vistobuenoeditores.com.mx</a>
-                <p style="margin: 0"><b>Nota:</b> Por ser libros digitales las devoluciones no aplican.</p>
+                <div>
+                    <show-comprar name="{{ $book->name }}" uuid="{{ $book->uuid }}"
+                        user="{{ auth()->user() ?? null }}" />
+                </div>
+                <div class="card mb-3 p-3">
+                    <p class="terminos">Para mayor información , términos y condiciones,aviso de privacidad acceder a:</p>
+                    <a href="www.vistobuenoeditores.com.mx">www.vistobuenoeditores.com.mx </a>
+                    <p class="terminos"><b>Nota: </b>Por ser libros digitales las devoluciones no aplican</p>
+                </div>
             </div>
         </div>
         {{--         <div class="row pt-3">
