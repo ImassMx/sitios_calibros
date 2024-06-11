@@ -23,7 +23,7 @@
       <div>
         <label for="celular">Celular</label>
         <input type="text" placeholder="Ingresa tu número de celular" id="celular" v-model="celular"
-          @input="buscarPhone" />
+          @input="buscarPhone" maxlength="10" />
         <label for="" class="message-error" v-if="messagePhone">{{ messagePhone }}</label>
 
       </div>

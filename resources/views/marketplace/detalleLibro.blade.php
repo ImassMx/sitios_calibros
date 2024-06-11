@@ -18,7 +18,7 @@
                                 <p class="text-muted mt-2 m-0 p-0">Categoria: {{ $book->category->name }}</p>
                                 {{-- <p class="text-muted m-0 p-0">Número páginas: 00</p> --}}
                                 <hr>
-                                <p class="fw-bold">Sipnosisss</p>
+                                <p class="fw-bold">Sipnosis</p>
                                 <p class="card-text">{{ $book->description }}</p>
                             </div>
                         </div>

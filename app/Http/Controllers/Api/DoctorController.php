@@ -124,10 +124,8 @@ class DoctorController extends Controller
             $user = User::where('email',$request->email)->first();
 
             if(!empty($user)){
-                
                 $client = Cliente::where('user_id',$user->id)->first();
                 $doc = Doctor::where('uuid', $request->doctor)->first();
-
                 $book = ClientBook::where('cliente_id',$client->id)
                         ->where('book_sale_id',$request->book_id)
                         ->where('doctor_id',$doc->id)
