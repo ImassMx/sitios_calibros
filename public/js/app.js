@@ -26799,7 +26799,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     }),
     onInput: _cache[7] || (_cache[7] = function () {
       return $options.buscarPhone && $options.buscarPhone.apply($options, arguments);
-    })
+    }),
+    maxlength: "10"
   }, null, 544
   /* HYDRATE_EVENTS, NEED_PATCH */
   ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.celular]]), $data.messagePhone ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("label", _hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.messagePhone), 1

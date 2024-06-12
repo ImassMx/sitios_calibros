@@ -14,6 +14,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Exports\ClientExport;
 use App\Mail\PacienteWelcome;
+use App\Models\BookSale;
 use Illuminate\Support\Facades\DB;
 use Facade\FlareClient\Http\Client;
 use Illuminate\Support\Facades\Log;
@@ -34,6 +35,7 @@ class ClienteController extends Controller
     public function store(Request $request) {
 
         try {
+
             $this->uuid = Str::uuid();
             $usuario = User::create([
                 'name' => $request->nombre_paciente,
@@ -56,6 +58,16 @@ class ClienteController extends Controller
 
             $request->merge(['password' => $this->uuid]);
             //Mail::to($request->email)->send(new PacienteWelcome($doctor->folio, $dominio));
+
+            $doctor = Doctor::where('folio',$request->folio)->first();
+            $book = BookSale::where('uuid',$request->book)->first();
+
+            ClientBook::create([
+                'cliente_id' => $client->id,
+                'book_sale_id' => $book->id,
+                'doctor_id' => $doctor->id,
+                'donwloads' => 0
+            ]);
 
             auth()->attempt($request->only('email', 'password'));
             
