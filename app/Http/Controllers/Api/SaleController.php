@@ -46,9 +46,10 @@ class SaleController extends Controller
 
             //CREAR IMAGEN
             $image = $request->file('image');
-            $nameImage = 'books/' . Str::uuid() . "." . $image->extension();
+            $str_image = Str::uuid() . "." . $image->extension();
+            $nameImage = 'books/' . $str_image;
             Storage::disk('s3')->put($nameImage, file_get_contents($image));
-            $urlImage = config('filesystems.url_book').$nameImage;
+            $urlImage = config('filesystems.url_book').$str_image;
 
             //CREAR PDF
             $pdf = $request->file('pdf');

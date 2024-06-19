@@ -156,7 +156,8 @@ class DoctorController extends Controller
 
             if ($request->hasFile('image')) {
                 $image = $request->file('image');
-                $nameImage = 'books/' . Str::uuid() . "." . $image->extension();
+                $str_image = Str::uuid() . "." . $image->extension();
+                $nameImage = 'books/' . $str_image;
                 if (!empty($book->image)) {
                     $path_image = parse_url($book->image ?? '');
                     if (Storage::disk('s3')->exists($path_image['path'])) {
@@ -165,7 +166,7 @@ class DoctorController extends Controller
                 }
 
                 Storage::disk('s3')->put($nameImage, file_get_contents($image));
-                $urlImage = config('filesystems.url_book').$nameImage;
+                $urlImage = config('filesystems.url_book').$str_image;
 
             }
 
