@@ -14,7 +14,7 @@ return [
     */
 
     'default' => env('FILESYSTEM_DRIVER', 'local'),
-
+    'url_book' => env('URL_FRONTCLOUD'),
     /*
     |--------------------------------------------------------------------------
     | Filesystem Disks
