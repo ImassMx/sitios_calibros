@@ -151,7 +151,6 @@ class DoctorController extends Controller
 
     public function updateBook(Request $request ,$uuid){
         try {
-            Log::info($request->all());
 
             $book = BookSale::where('uuid',$uuid)->first();
 
@@ -164,8 +163,10 @@ class DoctorController extends Controller
                         Storage::disk('s3')->delete($path_image['path']);
                     }
                 }
+
                 Storage::disk('s3')->put($nameImage, file_get_contents($image));
-                $urlImage = Storage::disk('s3')->url($nameImage);
+                $urlImage = config('filesystems.url_book').$nameImage;
+
             }
 
             if ($request->hasFile('pdf')) {
