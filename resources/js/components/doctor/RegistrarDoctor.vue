@@ -1,7 +1,9 @@
 <template>
-<div class="container-fluid registro-bg">
-    <div class="row pt-3 pb-4">
+<div class="container-fluid">
+    <div class="row pt-3 pb-4 mt-2 registro-bg">
         <div class="col-md-6 col-sm-12 p-md-5">
+          <h1 class="font-weight-bold">¡Bienvenido(a) a su plataforma!</h1>
+          <h3>Esta a punto de concluir su registro</h3>
           <div class="espacio"></div>
           <h4 class="pt-4">Pensando en la salud y bienestar del paciente.</h4>
           <p>
@@ -20,28 +22,25 @@
         <div class="col-md-1 col-sm-12"></div>
         <div class="col-md-4 col-sm-12">
           <form action="" v-on:submit.prevent="saveDoctor()">
-            <div class="row" v-if="!folio">
-              <div class="col-md-12 col-sm-12 p-2">
-                <h2 class="text-center">Registro del médico.</h2>
-              </div>  
-              <div class="col-md-12 col-sm-12 p-2">
+            <div class="row bg-white p-2 border rounded" v-if="!folio"> 
+              <div class="col-md-12 col-sm-12 p-2"> 
                 <label for="nombre">Nombre</label>
-                <input class="form-control" type="text" placeholder="Ingresa tu nombre" id="nombre" v-model="nombre" />
+                <input class="form-control" type="text" placeholder="Escribir nombre" id="nombre" v-model="nombre" />
                 <div v-if="errors.nombre" class="content-error">
                   <p class="errors">{{ errors.nombre }}</p>
                 </div>
               </div>
               <div class="col-md-12 col-sm-12 p-2">
                 <label for="apellidoP">Apellidos</label>
-                <input type="text"  class="form-control"  placeholder="Ingresa tu Apellido Paterno" id="apellidoP" v-model="apellidos" />
+                <input type="text"  class="form-control"  placeholder="Escribir apellido paterno" id="apellidoP" v-model="apellidos" />
                 <div v-if="errors.apellidos" class="content-error">
                   <p class="errors">{{ errors.apellidos }}</p>
                 </div>
               </div>
               <div class="col-md-12 col-sm-12 p-2">
                 <label for="email">Especialidad</label>
-                <select placeholder="Ingresar Especialidad"  class="form-select" v-model="especialidad">
-                  <option value="">---Seleccione---</option>
+                <select placeholder="Escribirr especialidad"  class="form-select" v-model="especialidad">
+                  <option value="">Seleccionar...</option>
                   <option v-for="especial in especialidades" :key="especial.id" :value="especial.id">
                     {{ especial.nombre }}
                   </option>
@@ -50,50 +49,51 @@
                   <p class="errors">{{ errors.especialidad }}</p>
                 </div>
               </div>
-              <div class="col-md-12 col-sm-12 p-2">
+              <div class="col-md-8 col-sm-12 p-2">
                 <label for="">Email</label>
-                <input type="text"  class="form-control"  v-model="email" @keyup="validarCorreo" />
+                <input type="text"  class="form-control"  v-model="email" @keyup="validarCorreo" placeholder="ejemplo@gmail.com"/>
                 <p class="validacion-correo" v-if="errors.email">{{ errors.email }}</p>
+              </div>
+              <div class="col-md-4 col-sm-12 p-2">
+                <label for="">Código postal</label>
+                <input type="text"  class="form-control"  v-model="postal" maxlength="5" placeholder="00000"/>
+                <p class="validacion-correo" v-if="errors.postal">{{ errors.postal }}</p>
               </div>
               <div class="col-md-6 col-sm-12 p-2">
                 <label for="">Cédula</label>
-                <input type="text"  class="form-control"  v-model="cedula" maxlength="9" @change="validateCedula" />
+                <input type="text"  class="form-control"  v-model="cedula" maxlength="9" @change="validateCedula" placeholder="Escribirr cédula"/>
                 <div v-if="errors.cedula" class="content-error"  >
                   <p class="errors">{{ errors.cedula }}</p>
                 </div>
               </div>
               <div class="col-md-6 col-sm-12 p-2">
-                <label for="">Código Postal</label>
-                <input type="text"  class="form-control"  v-model="postal" maxlength="5" />
-                <p class="validacion-correo" v-if="errors.postal">{{ errors.postal }}</p>
-              </div>
-              <div class="col-md-12 col-sm-12 p-2">
                 <label for="">Celular</label>
-                <input type="text"  class="form-control"  v-model="celular" @keyup="validarCelular" placeholder="(Sí, actualizaste tu número agregalo aquí)"/>
+                <input type="text"  class="form-control"  v-model="celular" @keyup="validarCelular" placeholder="000-000-00-00"/>
+                <p class="p-0 m-0" style="font-size:12px">Sí, actualizaste tu número favor de Escribirrlo</p>
                 <p class="validacion-celular" v-if="errors.celular">{{ errors.celular }}</p>
               </div>
-              <div class="col-md-12 col-sm-12 p-2">          
+              <div class="col-md-12 col-sm-12 p-2 pt-0">          
                 <p v-html="messFolio"></p>
-                <input type="submit" value="Registrarse" class="registrar" />
+                <input type="submit" value="¡Registrarme ahora!" class="registrar" />
                 <div class="content-panel" v-if="folio">
                   <a :href="url_panel" class="registrar btn-panel">Ir a panel de libros</a>
                 </div>
               </div>        
             </div> 
-             <div class="row pt-md-5" v-if="folio">
-              <div class="col-md-12 col-sm-12 p-2 pt-md-5 mt-2">
+             <div class="row bg-white p-2 border rounded" v-if="folio">
+              <div class="col-md-12 col-sm-12 p-2 mt-2">
                 <h2 class="text-center">¡Registro exitoso!</h2>
               </div> 
               <div class="col-md-12 col-sm-12 p-2">  
-                <h5 class="text-center pb-2">En su correo recibirá toda la información
-                   necesaria para ingresar a la plataforma <br>A continuación podrá ver su folio:
+                <h5 class="text-center pb-2">¡En horabuena! ahora forma parte de la plataforma, en su correo recibirá
+                  su información de acceso.
                 </h5>        
-                <h4  class="text-center" v-html="messFolio"></h4> 
+                <h4  class="text-center pt-3 pb-3" v-html="messFolio"></h4> 
                 <p  class="text-center pt-2">Con este folio tendrá acceso a un libro ¡GRATUITO! que podrá
                   descargar dentro de la plataforma.
                 </p>
                 <div class="content-panel" v-if="folio">
-                  <a :href="url_panel" class="registrar btn-panel">Ir a panel de libros</a>
+                  <a :href="url_panel" class="registrar btn-panel mt-3 mb-3">¡Ingresar ahora!</a>
                 </div>
               </div>        
             </div>       
@@ -164,7 +164,7 @@ export default {
         .then((response) => {
           if (!response.data.error) {
             this.folio = response.data.folio;
-            this.messFolio = `Se le envió un email con su número de folio y link para que pueda acceder`;
+            this.messFolio = `Su número de folio ha sido enviado por correo y SMS`;
             this.url_panel = `/zona/doctor/${response.data.uuid}`
             this.limpiar()
             swal.close()
@@ -254,13 +254,13 @@ export default {
     },
     validated(){
           this.errors = []
-          if(this.nombre === "") this.errors.nombre = 'Debe ingresar su nombre.'
-          if(this.apellidos === "") this.errors.apellidos = 'Debe ingresar su apellido.'
+          if(this.nombre === "") this.errors.nombre = 'Debe Escribirr su nombre.'
+          if(this.apellidos === "") this.errors.apellidos = 'Debe Escribirr su apellido.'
           if(this.especialidad === "") this.errors.especialidad = 'Debe seleccionar su especialidad.'
-          if(this.cedula === "") this.errors.cedula = 'Debe ingresar su cédula.'
-          if(this.email === "") this.errors.email = 'Debe ingresar su email.'
-          if(this.postal === "") this.errors.postal = 'Debe ingresar el código postal.'
-          if(this.celular === "") this.errors.celular = 'Debe ingresar su número de celular.'
+          if(this.cedula === "") this.errors.cedula = 'Debe Escribirr su cédula.'
+          if(this.email === "") this.errors.email = 'Debe Escribirr su email.'
+          if(this.postal === "") this.errors.postal = 'Debe Escribirr el código postal.'
+          if(this.celular === "") this.errors.celular = 'Debe Escribirr su número de celular.'
 
     }
   },
@@ -273,8 +273,7 @@ export default {
 }
 
 .espacio{
-  padding-top: 130px; 
-  padding-left: 60px;
+  padding-top: 85px;  
 }
 .content-error p {
   margin: 0;
@@ -297,8 +296,8 @@ export default {
 } 
  
 .registro-bg { 
-  background-image: url("/img/template.jpg") !important;
-  background-position: center center; 
+  background-image: url("/img/template2.jpg") !important;
+  background-position: center center;  
   background: rgba(0, 0, 0, 0); 
 }  
  
