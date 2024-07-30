@@ -1,48 +1,40 @@
 <template>
-    <div class="container">
-        <h1 class="titulo">DR. {{ Doctor.nombres }} {{ Doctor.apellidos }}</h1>
-        <div class="content-btn">
-            <a href="/marketplace" class="btn-custom">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                    stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                    class="feather feather-shopping-cart">
-                    <circle cx="9" cy="21" r="1"></circle>
-                    <circle cx="20" cy="21" r="1"></circle>
-                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-                </svg>
-                Tienda</a>
-            <a :href="`/pacientes/doctor/${uuid}`" class="btn-custom">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                    stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                    class="feather feather-users">
-                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                    <circle cx="9" cy="7" r="4"></circle>
-                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                </svg>
-                Pacientes</a>
-            <a :href="`/editar/doctor/${uuid}`" class="btn-custom">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                    class="feather feather-edit">
-                    <path d="M11 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7"></path>
-                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-                </svg>
-
-                Editar Perfil</a>
-        </div>
-        <h2 class="sub-titulo">Mis libros comprados:</h2>
-        <div class="container-libros">
-            <div class="card" v-for="book in Books" :key="book.id">
-                <img :src="book.book.image" :alt="book.name" class="img-book">
-                <p>{{ book.book.name }}</p>
-                <p><b> Contraseña : {{ book.book.password }}</b></p>
-                <a :href="`/download/qr/${book.book.uuid}/${book.book.name}`" class="btn-email">Descargar Qr</a>
-                <button class="btn-email" @click="sendEmail(book.book.id)">Enviar por Email</button>
-                <button class="btn-celular" @click="sendPhone(book.book.id)">Enviar por Celular</button>
-                <a :href="`/donwload/book/doctor/${book.book.uuid}?purchased_book=${book.id}`"
-                    class="btn-celular">Descargar</a>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 pt-3">
+                 <h1 class="text-start">Bienvenido(a) Dr. 
+                    <span class="text-capitalize ">{{ Doctor.nombres }} {{ Doctor.apellidos }}</span></h1>
+                 <h3>Mis libros comprados:</h3>
             </div>
+        </div> 
+        <div class="row row-cols-1 row-cols-md-4 g-4  pb-5">
+                    <div class="col" v-for="book in Books" :key="book.id">
+                        <div class="card bg-white h-100 p-0">
+                            <div class="card-header bg-white" style="max-height:210px;min-height:210px"> 
+                                <img :src="book.book.image" :alt="book.name" class="card-img-top" style="max-height:195px;" >
+                            </div>
+                            <div class="card-body text-center p-1">
+                            <h5 class="card-title text-capitalize color-p fw-bold mt-2" style="font-size:18px"> 
+                                {{ book.book.name }}</h5>
+                            <h5 class="card-subtitle text-muted">Contraseña:</h5> 
+                            <p class="mb-2 text-muted">{{ book.book.password }}</p> 
+                            <hr class="mb-1"> 
+                            <div class="dropdown">
+                                <button class="btn button-style dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Acceder a mi libro
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                    <li><button class="dropdown-item" style="cursor: pointer;" @click="sendEmail(book.book.id)">Envíar por email</button></li>
+                                    <li><button class="dropdown-item" style="cursor: pointer;" @click="sendPhone(book.book.id)">Envíar por SMS</button></li>
+                                    <li><a class="dropdown-item" :href="`/donwload/book/doctor/${book.book.uuid}?purchased_book=${book.id}`">Descargar</a></li>
+                                    <li><a class="dropdown-item" :href="`/download/qr/${book.book.uuid}/${book.book.name}`">Descargar QR</a></li>
+                                </ul>
+                            </div>  
+                            </div>
+                        </div> 
+                        
+                    </div>
+
         </div>
     </div>
 
@@ -152,58 +144,18 @@ export default {
 </script>
 
 <style scoped>
-h1,
-h4 {
-    text-align: center;
-}
-
-.content-form {
-    display: flex;
-    justify-content: center;
-}
-
-.content-form form {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-}
-
-.btn {
-    padding: .4rem .5rem;
-    background: rgba(0, 0, 0, 0.0);
-    border: 2px solid #056743;
-    color: #056743;
+ 
+ .button-style{
+    margin-top: 10px;
+    padding: 8px 16px;
+    border: none;
+    background-color: #5D025F;
+    color: #fff;
+    font-size: 14px;
+    border-radius: 4px;
     cursor: pointer;
-    border-radius: 5px;
-    transition: all .4s;
-}
-
-.btn:hover {
-    background: #056743;
-    color: white;
-}
-
-.numero-cliente {
-    padding: .4rem .5rem;
-}
-
-.titulo {
-    margin-top: 3rem;
-    margin-bottom: 3rem;
-}
-
-.container {
-    width: 1200px !important;
-    margin-left: 4rem;
-    margin-right: 4rem;
-    padding-bottom: 10rem;
-}
-
-.container-libros {
-    display: flex;
-    flex-wrap: wrap;
-}
-
+    text-decoration: none;
+ }
 .card {
     flex: 0 0 calc(33.333% - 20px);
     /* Para 3 columnas con margen */
@@ -225,46 +177,5 @@ h4 {
 }
 
 /* Estilos adicionales de la tarjeta según sea necesario */
-.card p {
-    margin: 0;
-    font-size: 16px;
-    color: #333;
-}
-
-.card button , .card a{
-    margin-top: 10px;
-    padding: 8px 16px;
-    border: none;
-    background-color: #5D025F;
-    color: #fff;
-    font-size: 14px;
-    border-radius: 4px;
-    cursor: pointer;
-    text-decoration: none;
-}
-
-.card button:hover , .card a:hover{
-    background-color: #0056b3;
-}
-
-.img-book {
-    width: 100px;
-    height: 100px;
-}
-
-.btn-custom {
-    background-color: #5D025F;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    text-decoration: none;
-    margin-bottom: 2rem;
-
-}
-.content-btn{
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-}
+   
 </style>
