@@ -18,7 +18,7 @@
     .logout {
         background: rgba(0, 0, 0, 0);
         border: none;
-        font-size: 1rem;
+        font-size: 0.9rem;
         cursor: pointer;
         margin-top: .5rem;
         color: #5D025F;
@@ -95,15 +95,19 @@
                 <li><a href="/contacto">Contactenos</a></li>
                 @endguest
                 @auth
-                <form method="POST" action="{{ route('logout.doctor') }}">
-                    @csrf
-                    <button type="submit" class="logout">Cerrar sesión</button>
-                </form>
-                @endauth
-                @auth
-                @if (!auth()->user()->hasRole('Cliente'))
-                <show-carrito user="{{ auth()->user()->id }}"></show-carrito>
-                @endif
+                <ul class="nav nav-pills">
+                    @if (!auth()->user()->hasRole('Cliente'))
+                    <show-carrito user="{{ auth()->user()->id }}"></show-carrito>
+                    <menu-componente uuid="{{$uuid}}"></menu-componente>
+                    <li class="nav-item">
+                        <form method="POST" action="{{ route('logout.doctor') }}">
+                            @csrf
+                            <button type="submit" class="logout"><img src="/img/exit.svg" alt="buscar"
+                                    width="20">Salir</button>
+                        </form>
+                    </li>
+                    @endif
+                </ul>
                 @endauth
             </ul>
             <div id="hamburguer">
@@ -117,6 +121,9 @@
         @yield('content-mkt')
     </div>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
+    </script>
     <script src="
             https://cdn.jsdelivr.net/npm/conekta-card-tokenizer@1.0.1/dist/conekta.min.js
             "></script>
