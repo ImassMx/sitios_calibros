@@ -79,7 +79,7 @@
 </head>
 
 <body>
-    <div class="container-fluid p-0" id="app">
+    <div class="container-fluid p-1" id="app">
         <nav class="menu">
             <img src="{{ asset('img/logo.jpg') }}" alt="" class="logo">
             <ul class="menu_items">
@@ -111,9 +111,11 @@
                 </button>
             </div>
         </nav>
-        @yield('content-mkt')
+        <section class="pb-5 mb-5">
+            @yield('content-mkt')
+        </section>
         @auth
-        <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+        <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top mt-5">
             <div class="col-md-12 d-flex align-items-center">
                 <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
                     <svg class="bi" width="30" height="24">
