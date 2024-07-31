@@ -32,7 +32,7 @@ export default {
         }
     },    
     created() {
-        this.getInformacion() 
+         
     },
     methods: { 
          async getInformacion() {

@@ -2,8 +2,7 @@
     <div class="container mt-4 h-100 d-flex justify-content-center align-items-center">
         <div class="row w-100">
             <div class="col-md-5 offset-md-3">
-                <h3 class="card-title text-center">Editar Información</h3>
-                <a :href="`/zona/doctor/${uuid}`" class="btn btn-outline-primary">Regresar</a>
+                <h3 class="card-title text-center">Editar Información</h3> 
                 <form v-on:submit.prevent="updateDoctor()">
                     <div class="form-group mt-3">
                         <label for="username">Nombre</label>

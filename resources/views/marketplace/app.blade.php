@@ -29,12 +29,6 @@
         margin: 0;
     }
 
-    .container {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 0 15px;
-    }
-
     .title {
         text-align: center;
         margin-top: 3rem;
@@ -85,20 +79,19 @@
 </head>
 
 <body>
-    <div id="app">
+    <div class="container-fluid p-0" id="app">
         <nav class="menu">
             <img src="{{ asset('img/logo.jpg') }}" alt="" class="logo">
             <ul class="menu_items">
                 @guest
-                <li><a href="">¿Quienes Somos?</a></li>
-                <li><a href="/marketplace">Marketplace</a></li>
+                <li><a href="/">¿Quienes Somos?</a></li>
                 <li><a href="/contacto">Contactenos</a></li>
                 @endguest
                 @auth
                 <ul class="nav nav-pills">
                     @if (!auth()->user()->hasRole('Cliente'))
                     <show-carrito user="{{ auth()->user()->id }}"></show-carrito>
-                    <menu-componente uuid="{{$uuid}}"></menu-componente>
+                    <menu-componente></menu-componente>
                     <li class="nav-item">
                         <form method="POST" action="{{ route('logout.doctor') }}">
                             @csrf
@@ -119,6 +112,21 @@
             </div>
         </nav>
         @yield('content-mkt')
+        @auth
+        <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+            <div class="col-md-12 d-flex align-items-center">
+                <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
+                    <svg class="bi" width="30" height="24">
+                        <use xlink:href="#bootstrap" />
+                    </svg>
+                </a>
+                <span class="text-muted">
+                    Para mayor información , términos y condiciones, aviso de privacidad acceder a:
+                    <a href="https://www.vistobuenoeditores.com.mx">www.vistobuenoeditores.com.mx </a><br>
+                    <b>Nota: </b>Por ser libros digitales las devoluciones no aplican</span>
+            </div>
+        </footer>
+        @endauth
     </div>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
