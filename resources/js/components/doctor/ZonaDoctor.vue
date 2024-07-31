@@ -2,7 +2,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12 col-sm-12 pt-3">
-                 <h1 class="text-start">Bienvenido(a) Dr. 
+                 <h1 class="text-start fw-bold"><img src="/img/doctor.svg" class="img-fluid" alt="Libro" width="40">Bienvenido(a) Dr. 
                     <span class="text-capitalize ">{{ Doctor.nombres }} {{ Doctor.apellidos }}</span></h1>
                  <h3>Mis libros comprados:</h3>
             </div>

@@ -1,42 +1,44 @@
 <template>
-    <div class="container">
-       
-        <h1 class="title">Pacientes</h1>
-        <div class="content-btn">
-            <a  :href="`/zona/doctor/${uuid}`" class="btn-custom"> 
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-            Perfil</a>
+    <div class="container-fluid">
+        <div class="row pt-4">
+            <div class="col-md-12 col-sm-12 p-2">
+                <h1 class="fw-bold"><img src="/img/paciente.svg" class="img-fluid" alt="Libro" width="40"> Mis pacientes</h1> 
+                <input type="text" class="search" placeholder="Buscar..."  @keyup="buscarCliente" v-model="buscardor" style="width:350px"> 
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Cliente</th>
+                                <th>Libro</th>
+                                <th>Descargas</th>
+                                <th>Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="book in Books" :key="book.id">
+                                <td>{{ book.client.user.name }}</td>
+                                <td>{{ book.book.name }}</td>
+                                <td>{{ book.donwloads }}</td>
+                                <td><button class="delete-button" @click="deleteBook(book.id)">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                            fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round" class="feather feather-trash-2">
+                                            <polyline points="3 6 5 6 21 6"></polyline>
+                                            <path
+                                                d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
+                                            </path>
+                                            <line x1="10" y1="11" x2="10" y2="17"></line>
+                                            <line x1="14" y1="11" x2="14" y2="17"></line>
+                                        </svg>
+                                    </button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
         </div>
-        <input type="text" class="search" placeholder="Buscar..."  @keyup="buscarCliente" v-model="buscardor" >
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Cliente</th>
-                    <th>Libro</th>
-                    <th>Descargas</th>
-                    <th>Acción</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="book in Books" :key="book.id">
-                    <td>{{ book.client.user.name }}</td>
-                    <td>{{ book.book.name }}</td>
-                    <td>{{ book.donwloads }}</td>
-                    <td><button class="delete-button" @click="deleteBook(book.id)">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
-                                fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" class="feather feather-trash-2">
-                                <polyline points="3 6 5 6 21 6"></polyline>
-                                <path
-                                    d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
-                                </path>
-                                <line x1="10" y1="11" x2="10" y2="17"></line>
-                                <line x1="14" y1="11" x2="14" y2="17"></line>
-                            </svg>
-                        </button></td>
-                </tr>
-            </tbody>
-        </table>
+       
     </div>
 </template>
 
