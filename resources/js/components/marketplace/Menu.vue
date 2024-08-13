@@ -20,25 +20,20 @@
 <script>
 import axios from 'axios';
 export default {
-    props: ["uuid"],
+    props: ["user"],
     data() {
         return {
-            mensaje: '',
-            numero: '',
-            nombre: '',
-            folio: '',
-            Doctor: [],
-            Books: []
+            uuid:''
         }
     },    
     created() {
-         
+        this.getUuid()
     },
     methods: { 
-         async getInformacion() {
+         async getUuid() {
             try {
-                const { data } = await axios.get('/api/information/doctor/' + this.uuid)
-                this.Doctor = data.doctor
+                const { data } = await axios.get('/api/show/uuid/' + this.user)
+                this.uuid = data
             } catch (error) {
                 Swal.fire(error.response.data.message);
             }

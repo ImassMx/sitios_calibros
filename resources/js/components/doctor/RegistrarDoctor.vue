@@ -26,15 +26,15 @@
               <div class="col-md-12 col-sm-12 p-2"> 
                 <label for="nombre">Nombre</label>
                 <input class="form-control" type="text" placeholder="Escribir nombre" id="nombre" v-model="nombre" />
-                <div v-if="errors.nombre" class="content-error">
-                  <p class="errors">{{ errors.nombre }}</p>
+                <div v-if="errors && errors.nombre" class="content-error">
+                  <p class="errors">{{ errors.nombre[0] }}</p>
                 </div>
               </div>
               <div class="col-md-12 col-sm-12 p-2">
                 <label for="apellidoP">Apellidos</label>
                 <input type="text"  class="form-control"  placeholder="Escribir apellido paterno" id="apellidoP" v-model="apellidos" />
                 <div v-if="errors.apellidos" class="content-error">
-                  <p class="errors">{{ errors.apellidos }}</p>
+                  <p class="errors">{{ errors.apellidos[0] }}</p>
                 </div>
               </div>
               <div class="col-md-12 col-sm-12 p-2">
@@ -46,31 +46,31 @@
                   </option>
                 </select>
                 <div v-if="errors.especialidad" class="content-error">
-                  <p class="errors">{{ errors.especialidad }}</p>
+                  <p class="errors">{{ errors.especialidad[0] }}</p>
                 </div>
               </div>
               <div class="col-md-8 col-sm-12 p-2">
                 <label for="">Email</label>
-                <input type="text"  class="form-control"  v-model="email" @keyup="validarCorreo" placeholder="ejemplo@gmail.com"/>
-                <p class="validacion-correo" v-if="errors.email">{{ errors.email }}</p>
+                <input type="text"  class="form-control"  v-model="email"  placeholder="ejemplo@gmail.com"/>
+                <p class="validacion-correo" v-if="errors.email">{{ errors.email[0] }}</p>
               </div>
               <div class="col-md-4 col-sm-12 p-2">
                 <label for="">Código postal</label>
-                <input type="text"  class="form-control"  v-model="postal" maxlength="5" placeholder="00000"/>
-                <p class="validacion-correo" v-if="errors.postal">{{ errors.postal }}</p>
+                <input type="text"  class="form-control"  v-model="postal" maxlength="5" placeholder="00000" />
+                <p class="validacion-correo" v-if="errors.postal">{{ errors.postal[0] }}</p>
               </div>
               <div class="col-md-6 col-sm-12 p-2">
                 <label for="">Cédula</label>
                 <input type="text"  class="form-control"  v-model="cedula" maxlength="9" @change="validateCedula" placeholder="Escribirr cédula"/>
                 <div v-if="errors.cedula" class="content-error"  >
-                  <p class="errors">{{ errors.cedula }}</p>
+                  <p class="errors">{{ errors.cedula[0] }}</p>
                 </div>
               </div>
               <div class="col-md-6 col-sm-12 p-2">
                 <label for="">Celular</label>
-                <input type="text"  class="form-control"  v-model="celular" @keyup="validarCelular" placeholder="000-000-00-00"/>
+                <input type="text"  class="form-control"  v-model="celular" placeholder="000-000-00-00" maxlength="10"/>
                 <p class="p-0 m-0" style="font-size:12px">Sí, actualizaste tu número favor de Escribirrlo</p>
-                <p class="validacion-celular" v-if="errors.celular">{{ errors.celular }}</p>
+                <p class="validacion-celular" v-if="errors.celular">{{ errors.celular[0] }}</p>
               </div>
               <div class="col-md-12 col-sm-12 p-2 pt-0">          
                 <p v-html="messFolio"></p>
@@ -130,7 +130,7 @@ export default {
       messageEmail: false,
       folio:"",
       url_panel:"",
-      errors:[]
+      errors:{}
     };
   },
   mounted() {
@@ -143,10 +143,6 @@ export default {
       });
     },
     saveDoctor() {
-      this.validated()
-      if(Object.keys(this.errors).length > 0){
-        return true;
-      }
 
       this.AlertProcess()
       this.axios
@@ -199,41 +195,29 @@ export default {
       this.celular = "";
       this.cedula = ""
     },
-    validarCorreo() {
+    async validarCp() {
       clearTimeout(this.timeBuscador);
-      this.timeBuscador = setTimeout(this.validarEmail, 360);
-    },
-    validarEmail() {
-      delete this.errors.email
-      axios
-        .get("/validar/email/doctor", { params: { correo: this.email } })
-        .then((res) => {
-          if (res.data.email) {
-            this.errors.email = "El email ya esta registrado";
+      this.timeBuscador = setTimeout(async () => {
+        try {
+
+          const { data } = await axios.get('/api/validar/postal', { params: { postal: this.postal } })
+          if (!data) {
+            this.errors.postal = 'Código Postal inválido.'
+          } else {
+            this.errors.postal = null
           }
-        });
-    },
-    validarCelular() {
-      clearTimeout(this.timeBuscador);
-      this.timeBuscador = setTimeout(this.validarPhone, 360);
-    },
-    validarPhone() {
-      delete this.errors.celular
-      axios
-        .get("/validar/phone/doctor", { params: { celular: this.celular } })
-        .then((res) => {
-          
-          if (this.celular === res.data.celular) {
-            this.errors.celular = "El número de celular ya esta registrado";
-          }
-        });
+        } catch (error) {
+          console.log(error)
+        }
+      }, 360);
+
     },
     async validateCedula(){
       try {
         delete this.errors.cedula
         const {data} = await axios.get('/api/validate/cedula',{params:{cedula:this.cedula}})
         if(data){
-          this.errors.cedula = 'El número de cedula ya se encuentra registrado'
+          this.errors.cedula = 'El número de cédula ya se encuentra registrado'
         }
       } catch (error) {
         console.log(error)
@@ -251,17 +235,6 @@ export default {
           swal.showLoading();
         }
       });
-    },
-    validated(){
-          this.errors = []
-          if(this.nombre === "") this.errors.nombre = 'Debe Escribirr su nombre.'
-          if(this.apellidos === "") this.errors.apellidos = 'Debe Escribirr su apellido.'
-          if(this.especialidad === "") this.errors.especialidad = 'Debe seleccionar su especialidad.'
-          if(this.cedula === "") this.errors.cedula = 'Debe Escribirr su cédula.'
-          if(this.email === "") this.errors.email = 'Debe Escribirr su email.'
-          if(this.postal === "") this.errors.postal = 'Debe Escribirr el código postal.'
-          if(this.celular === "") this.errors.celular = 'Debe Escribirr su número de celular.'
-
     }
   },
 };

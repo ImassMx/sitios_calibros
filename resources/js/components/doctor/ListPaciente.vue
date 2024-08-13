@@ -3,7 +3,7 @@
         <div class="row pt-4">
             <div class="col-md-12 col-sm-12 p-2">
                 <h1 class="fw-bold"><img src="/img/paciente.svg" class="img-fluid" alt="Libro" width="40"> Mis pacientes</h1> 
-                <input type="text" class="search" placeholder="Buscar..."  @keyup="buscarCliente" v-model="buscardor" style="width:350px"> 
+                <input type="text" class="search" placeholder="Buscar..."  @keyup="buscarCliente" v-model="buscador" style="width:350px"> 
                 <div class="table-responsive">
                     <table class="table">
                         <thead>
@@ -15,7 +15,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="book in Books" :key="book.id">
+                            <tr v-for="book in Books.data" :key="book.id">
                                 <td>{{ book.client.user.name }}</td>
                                 <td>{{ book.book.name }}</td>
                                 <td>{{ book.donwloads }}</td>
@@ -34,6 +34,11 @@
                             </tr>
                         </tbody>
                     </table>
+                    <Pagination
+            :data="Books"
+            @pagination-change-page="getPacientesDoctor"
+            class="d-flex justify-content-center"
+          />
                 </div>
             </div>
             
@@ -56,9 +61,9 @@ export default {
         this.getPacientesDoctor()
     },
     methods: {
-        async getPacientesDoctor() {
+        async getPacientesDoctor(page = 1) {
             try {
-                const { data } = await axios.get('/api/show/pacientes/' + this.uuid,{params:{buscador:this.buscador}})
+                const { data } = await axios.get('/api/show/pacientes/'+ this.uuid+'?page='+ page ,{params:{buscador:this.buscador}})
                 if (!data.error) {
                     this.Books = data.data
                 }

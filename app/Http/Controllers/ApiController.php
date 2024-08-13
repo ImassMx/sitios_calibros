@@ -10,6 +10,7 @@ use App\Models\Cliente;
 use App\Mail\ContactForm;
 use App\Models\BookSale;
 use App\Models\Especialidad;
+use App\Models\Sepomex;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -216,6 +217,25 @@ class ApiController extends Controller
             $bookSale = BookSale::where('id',$request->book)->first();
             $bookSale->active = 0;
             $bookSale->save();
+        } catch (\Throwable $th) {
+            Log::error($th);
+        }
+     }
+
+     public function getUuidDoctor($id){
+        try {
+            $doctor = Doctor::where('user_id',$id)->first();
+            return response()->json($doctor->uuid);
+        } catch (\Throwable $th) {
+            Log::error(["Error getUuidDoctor" => $th]);
+        }
+     }
+
+
+     public function validatePostal(Request $request){
+        try {
+            $sepomex = Sepomex::where('d_codigo',$request->postal)->first();
+            return response()->json(!empty($sepomex) ? true : false);
         } catch (\Throwable $th) {
             Log::error($th);
         }

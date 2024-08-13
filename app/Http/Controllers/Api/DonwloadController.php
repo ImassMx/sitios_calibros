@@ -14,6 +14,9 @@ class DonwloadController extends Controller
 {
     public function donwloadBookDoctor(Request $request,$uuid){
         $book = BookSale::where('uuid',$uuid)->first();
+        $book->downloads +=1;
+        $book->save();
+
         $purchased = PurchasedBook::where('id',$request->purchased_book)->first();
         if(!empty($book)){
             $purchased->donwloads += 1;

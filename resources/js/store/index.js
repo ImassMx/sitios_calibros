@@ -41,6 +41,13 @@ export default createStore({
            timeout: 1500,
        });
       } catch (error) {
+        if(error.response.status === 401){
+          return iziToast.error({
+            message: error.response.data.message,
+            position: 'topRight',
+            timeout: 1500,
+        });
+        }
         window.location.href='/login/doctor'
         console.log(error)
       }

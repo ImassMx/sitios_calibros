@@ -35,14 +35,14 @@ Route::get('/', function () {
 })->name('inicio');
 
 //MARKETPLACE
-Route::get('/marketplace', [App\Http\Controllers\MarketplaceController::class,'index']);
-Route::get('/marketplace/detalle/{uuid}', [App\Http\Controllers\MarketplaceController::class,'detalleLibro']);
-Route::get('/marketplace/carrito', [App\Http\Controllers\MarketplaceController::class,'carrito']);
-Route::get('/marketplace/pago', [App\Http\Controllers\MarketplaceController::class,'pago']);
-Route::get('/marketplace/compra', [App\Http\Controllers\MarketplaceController::class,'compra']);
-Route::get('/marketplace/pasarela', [App\Http\Controllers\MarketplaceController::class,'pasarela']);
-Route::get('/payment/confirmation', [App\Http\Controllers\MarketplaceController::class,'successPayment']);
-Route::get('/payment/failure', [App\Http\Controllers\MarketplaceController::class,'errorPayment']);
+Route::get('/marketplace', [App\Http\Controllers\MarketplaceController::class,'index'])->middleware('auth')->name('marketplace.inicio');
+Route::get('/marketplace/detalle/{uuid}', [App\Http\Controllers\MarketplaceController::class,'detalleLibro'])->middleware('auth');
+Route::get('/marketplace/carrito', [App\Http\Controllers\MarketplaceController::class,'carrito'])->middleware('auth');
+Route::get('/marketplace/pago', [App\Http\Controllers\MarketplaceController::class,'pago'])->middleware('auth');
+Route::get('/marketplace/compra', [App\Http\Controllers\MarketplaceController::class,'compra'])->middleware('auth');
+Route::get('/marketplace/pasarela', [App\Http\Controllers\MarketplaceController::class,'pasarela'])->middleware('auth');
+Route::get('/payment/confirmation', [App\Http\Controllers\MarketplaceController::class,'successPayment'])->middleware('auth');
+Route::get('/payment/failure', [App\Http\Controllers\MarketplaceController::class,'errorPayment'])->middleware('auth');
 Route::get('/landing', [App\Http\Controllers\MarketplaceController::class,'landing']);
 
 
@@ -99,7 +99,7 @@ Route::get('/export/books/ventas',[ReportController::class,'exportBookVentas']);
 
 //ENVIO SMS DOCTOR
 Route::get('/zona/doctor/{uuid}',[DoctorController::class,'zonaDoctor'])->name('zona.doctor')->middleware('auth');
-Route::get('/editar/doctor/{uuid}',[DoctorController::class,'editarDoctor'])->name('zona.doctor')->middleware('auth');
+Route::get('/editar/doctor/{uuid}',[DoctorController::class,'editarDoctor'])->name('editar.doctor')->middleware('auth');
 Route::get('/pacientes/doctor/{uuid}',[DoctorController::class,'pacientesDoctor'])->name('paciente.zona.doctor')->middleware('auth');
 Route::get('/donwload/book/paciente/{uuid}',[DoctorController::class,'donwloadBook']);
 Route::get('/donwload/book/doctor/{book}',[DonwloadController::class,'donwloadBookDoctor']);
@@ -115,9 +115,6 @@ Route::post('/logout/doctor',[LogoutController::class,'cerrarSesionDoctor'])->na
 //DESCARGAR QR
 Route::get('/download/qr/{uuid}/{name}',[LigaController::class,'donwload']);
 
-/* Route::view('/{any}', 'home')
-->middleware(['auth'])
-->where('any','.*'); */
 
 Route::get('/admin/{any}', function () {
     return view('layouts.app');

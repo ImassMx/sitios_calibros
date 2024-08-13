@@ -91,7 +91,7 @@
                 <ul class="nav nav-pills">
                     @if (!auth()->user()->hasRole('Cliente'))
                     <show-carrito user="{{ auth()->user()->id }}"></show-carrito>
-                    <menu-componente></menu-componente>
+                    <menu-componente user="{{ auth()->user()->id }}"></menu-componente>
                     <li class="nav-item">
                         <form method="POST" action="{{ route('logout.doctor') }}">
                             @csrf

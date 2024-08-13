@@ -165,6 +165,7 @@ class PayController extends Controller
                     $this->books_email[] = $cart->book_sale_id;
 
                     $cart->delete();
+                    Log::info("Se eliminó correctamente");
                 }
 
                 $user = User::find($this->user_id);

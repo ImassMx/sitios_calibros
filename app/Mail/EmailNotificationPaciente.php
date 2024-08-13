@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Doctor;
 use App\Models\BookSale;
 use App\Models\ClientBook;
+use App\Models\Cliente;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Support\Facades\Log;
@@ -48,7 +49,7 @@ class EmailNotificationPaciente extends Mailable
         $book = BookSale::where('id', $this->book)->first();
         $doc = Doctor::where('uuid', $this->doctor)->first();
 
-        if (!empty($user)) {
+        if (!empty($user) && !empty($user->cliente)) {
             $client_book = new ClientBook();
             $client_book->cliente_id = $user->cliente->id;
             $client_book->book_sale_id = $book->id;
