@@ -49,7 +49,7 @@ class PayController extends Controller
                 'url' => $resOrder->checkout->url
             ]);
         } catch (\Throwable $th) {
-            Log::error($th);
+            Log::error(["processPay" => $th]);
             return response()->json([
                 'error' => true,
                 'message' => $th->getMessage()
@@ -112,7 +112,7 @@ class PayController extends Controller
             $this->registerOrder($order, implode(', ', $books), $quantity, $price);
             return $order;
         } catch (\Throwable $th) {
-            Log::error($th);
+            Log::error(["createOrder" => $th->getMessage()]);
         }
     }
 
@@ -131,7 +131,7 @@ class PayController extends Controller
                 }
             }
         } catch (\Throwable $th) {
-            Log::error($th);
+            Log::error(["updateOrder" => $th->getMessage()]);
         }
     }
 
@@ -165,7 +165,6 @@ class PayController extends Controller
                     $this->books_email[] = $cart->book_sale_id;
 
                     $cart->delete();
-                    Log::info("Se eliminó correctamente");
                 }
 
                 $user = User::find($this->user_id);
@@ -176,7 +175,7 @@ class PayController extends Controller
                 Mail::to($user->email)->send(new SendBooksMail($this->books_email,$doctor));
             }
         } catch (\Throwable $th) {
-            Log::error($th);
+            Log::error(["verifyPayment" => $th->getMessage()]);
         }
     }
 
@@ -191,7 +190,7 @@ class PayController extends Controller
             $orders->total = $this->price;
             $orders->save();
         } catch (\Throwable $th) {
-            Log::error($th);
+            Log::error(["registerOrder" => $th->getMessage()]);
         }
     }
 }

@@ -62,7 +62,6 @@ class DoctorController extends Controller
             if(!empty($doctor)){
                 $status = false;
             }
-
             return response()->json([
                 'error' => $status,
                 'data' => $doctor
@@ -141,7 +140,6 @@ class DoctorController extends Controller
                         ]);
                     }
                 }
-                
             }
 
             $dominio = $request->getSchemeAndHttpHost();
@@ -171,7 +169,6 @@ class DoctorController extends Controller
 
                 Storage::disk('s3')->put($nameImage, file_get_contents($image));
                 $urlImage = config('filesystems.url_book').$str_image;
-
             }
 
             if ($request->hasFile('pdf')) {

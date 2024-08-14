@@ -40,8 +40,10 @@ class BooksController extends Controller
 
             $libro = $this->isBook($book);
 
-            $toCart = Cart::where('user_id',json_decode($request->user)->id)
-            ->where('book_sale_id',$libro->id)->first();
+            $toCart = Cart::where([
+                'user_id' => json_decode($request->user)->id,
+                'book_sale_id' => $libro->id
+            ])->first();
 
             if(!empty($toCart)){
                 return response()->json(["message" => "El libro ya se encuentra en el carrito de compras"],401);

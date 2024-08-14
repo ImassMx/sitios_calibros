@@ -52,13 +52,12 @@ class SendBooksMail extends Mailable
         $fecha = Carbon::now();
         $fechaFormateada = $fecha->translatedFormat('j \d\e F \d\e\l Y');
 
-    $pdf = PDF::loadView('email.certificadoDoctor', ['doctor' => $this->doctor,'fecha' =>$fechaFormateada ]);
+        $pdf = PDF::loadView('email.certificadoDoctor', ['doctor' => $this->doctor,'fecha' =>$fechaFormateada ]);
 
-    $mail->attachData($pdf->output(), 'certificado.pdf', [
+        $mail->attachData($pdf->output(), 'certificado.pdf', [
         'mime' => 'application/pdf',
-    ]);
-
-
+        ]);
+        
         return $mail;
     }
 }

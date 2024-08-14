@@ -19,31 +19,25 @@ use Illuminate\Support\Facades\Storage;
 
 class ApiController extends Controller
 {
-    public function libros(Request $request)
-    {
-
+    public function libros(Request $request) {
         $filtro = $request->buscador;
         $libro = Libro::where('nombre', 'LIKE', '%' . $filtro . '%')
                 ->where('active',1)->orderBy("created_at","desc")->paginate(5);
         return response()->json($libro);
     }
 
-    public function ligas(Request $request)
-    {
+    public function ligas(Request $request) {
         $filtro = $request->buscador;
         $ligas = Liga::where("nombre","LIKE","%".$filtro."%")->where("estado","1")->orderBy("created_at","desc")->paginate(4);
         return response()->json($ligas);
     }
-    public function especialidad()
-    {
-        $especialida = Especialidad::orderBy("created_at","desc")->get();
 
+    public function especialidad() {
+        $especialida = Especialidad::orderBy("created_at","desc")->get();
         return response()->json($especialida);
     }
 
-    public function codigoPostal(Request $request)
-    {
-
+    public function codigoPostal(Request $request) {
         if ($request->codigo) {
             $info = DB::table('sepomex')->where('d_codigo', 'LIKE', $request->codigo)->first();
             return response()->json($info);
@@ -71,31 +65,35 @@ class ApiController extends Controller
 
             return response()->json($clientes);
         } catch (\Throwable $th) {
-            Log::error($th);
+            Log::error(["Error clientes" => $th->getMessage()]);
         }
     }
 
     public function doctores(Request $request)
     {
-        $filtro = $request->buscador;   
-        $startDate = $request->input('startDate');
-        $endDate = $request->input('endDate');
-
-        $doctores = Doctor::whereHas('especialidad', function ($query) use ($filtro) {
-                $query->where('nombre', 'LIKE', '%' . $filtro . '%')
-                    ->orWhere('folio', 'LIKE', '%' . $filtro . '%')
-                    ->orWhere('apellidos', 'LIKE', '%' . $filtro . '%')
-                    ->orWhere('nombres', 'LIKE', '%' . $filtro . '%');
-            })->with(['especialidad','user','sepomex'])
-            ->when($startDate, function ($query, $startDate) {
-                return $query->where('created_at', '>=', $startDate);
-            })
-            ->when($endDate, function ($query, $endDate) {
-                return $query->where('created_at', '<=', $endDate);
-            })
-            ->orderBy("created_at","desc")->paginate(10);
-
-            return response()->json($doctores);
+        try {
+            $filtro = $request->buscador;   
+            $startDate = $request->input('startDate');
+            $endDate = $request->input('endDate');
+    
+            $doctores = Doctor::whereHas('especialidad', function ($query) use ($filtro) {
+                    $query->where('nombre', 'LIKE', '%' . $filtro . '%')
+                        ->orWhere('folio', 'LIKE', '%' . $filtro . '%')
+                        ->orWhere('apellidos', 'LIKE', '%' . $filtro . '%')
+                        ->orWhere('nombres', 'LIKE', '%' . $filtro . '%');
+                })->with(['especialidad','user','sepomex'])
+                ->when($startDate, function ($query, $startDate) {
+                    return $query->where('created_at', '>=', $startDate);
+                })
+                ->when($endDate, function ($query, $endDate) {
+                    return $query->where('created_at', '<=', $endDate);
+                })
+                ->orderBy("created_at","desc")->paginate(10);
+    
+                return response()->json($doctores);
+        } catch (\Throwable $th) {
+            Log::error(["Error doctores" => $th->getMessage()]);
+        }
     }
 
     public function folio(Request $request)
@@ -111,12 +109,9 @@ class ApiController extends Controller
         }
     }
 
-    public function ValidarEmail(Request $request)
-    {
-
+    public function ValidarEmail(Request $request) {
         if ($request->correo) {
             $email = User::where('email', 'LIKE', $request->correo)->get();
-            dump($email);
             return response()->json($email);
         }
     }
@@ -124,10 +119,9 @@ class ApiController extends Controller
     public function validateCedula(Request $request){
         try {
             $doctor = Doctor::where('cedula',$request->cedula)->first();
-
             return response()->json(!empty($doctor) ? true : false);
         } catch (\Throwable $th) {
-            Log::info($th);
+            Log::error(["Error validateCedula" => $th->getMessage()]);
         }
     }
     public function getDatosSlug(Request $request)
@@ -149,31 +143,26 @@ class ApiController extends Controller
 
     public function getDatosDoctor($folio)
     {
-        $doctor = Doctor::where('folio',$folio)->first();
+        $doctor = Doctor::where('folio', $folio)->first();
 
-        if($doctor)
-        {
-          $user = User::find($doctor->user_id);
- 
-          return response()->json($user);
-        }else{
- 
-         return response()->json(500,2);
+        if ($doctor) {
+            $user = User::find($doctor->user_id);
+            return response()->json($user);
+        } else {
+            return response()->json(500, 2);
         }
     }
 
     public function getNombreDoctor($folio)
     {
-        $doctor = Doctor::where('folio',$folio)->first();
-          return response()->json($doctor);
-    
+        $doctor = Doctor::where('folio', $folio)->first();
+        return response()->json($doctor);
     }
 
     public function validacionDescarga($id)
-    {   
-       $cliente = Cliente::where("user_id",$id)->first();
-
-       return response()->json($cliente->descargas);
+    {
+        $cliente = Cliente::where("user_id", $id)->first();
+        return response()->json($cliente->descargas);
     }
 
     public function sendEmail(Request $request){
@@ -186,7 +175,7 @@ class ApiController extends Controller
             $user = User::where('email',$request->email)->first();
             return !empty($user) ? $user : null;
         } catch (\Throwable $th) {
-            Log::error($th);
+            Log::error(["Error validateEmail" => $th->getMessage()]);
         }
      }
 
@@ -195,20 +184,19 @@ class ApiController extends Controller
             $user = User::where('celular',$request->celular)->first();
             return !empty($user) ? $user : null;
         } catch (\Throwable $th) {
-            Log::error($th);
+            Log::error(["Error validatePhone" => $th->getMessage()]);
         }
      }
 
      public function validateBook($book){
         try {
             $bo = BookSale::where('uuid',$book)->first();
-            Log::info($bo);
             return response()->json([
                 'data' => !empty($bo) ? $bo : null
             ]);
 
         } catch (\Throwable $th) {
-            Log::error($th);
+            Log::error(["Error validateBook" => $th->getMessage()]);
         }
      }
 
@@ -218,7 +206,7 @@ class ApiController extends Controller
             $bookSale->active = 0;
             $bookSale->save();
         } catch (\Throwable $th) {
-            Log::error($th);
+            Log::error(["Error deleteBookSale" => $th->getMessage()]);
         }
      }
 
@@ -237,7 +225,7 @@ class ApiController extends Controller
             $sepomex = Sepomex::where('d_codigo',$request->postal)->first();
             return response()->json(!empty($sepomex) ? true : false);
         } catch (\Throwable $th) {
-            Log::error($th);
+            Log::error(["Error validatePostal" => $th->getMessage()]);
         }
      }
 }
