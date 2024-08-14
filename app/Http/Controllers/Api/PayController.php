@@ -173,7 +173,7 @@ class PayController extends Controller
                 $doctor->points += $this->points;
                 $doctor->save(); 
 
-                Mail::to($user->email)->send(new SendBooksMail($this->books_email));
+                Mail::to($user->email)->send(new SendBooksMail($this->books_email,$doctor));
             }
         } catch (\Throwable $th) {
             Log::error($th);

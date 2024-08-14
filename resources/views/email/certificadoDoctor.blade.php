@@ -72,9 +72,9 @@
 
 <body>
     <div class="hoja1">
-        <span class="texto" style="margin-top: 240px; margin-left: 233px; position: absolute;">NOMBRE_DOCTOR</span>
-        <span class="texto" style="margin-top: 320px; margin-left: 233px; position: absolute;">NOMBRE_LIBRO</span>
-        <span style="margin-top: 430px; margin-left: 270px; position: absolute;">FECHA</span>
+        <span class="texto" style="margin-top: 240px; margin-left: 233px; position: absolute;">{{$doctor->nombres}} {{$doctor->apellidos}}</span>
+        <span class="texto" style="margin-top: 320px; margin-left: 233px; position: absolute;"></span>
+        <span style="margin-top: 430px; margin-left: 270px; position: absolute;">{{$fecha}}</span>
     </div>
     <div style="page-break-before:always"></div>
     <div class="hoja2"></div>
