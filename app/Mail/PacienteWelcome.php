@@ -10,7 +10,8 @@ use Illuminate\Queue\SerializesModels;
 class PacienteWelcome extends Mailable
 {
     use Queueable, SerializesModels;
-
+    public $folio;
+    public $dominio;
     /**
      * Create a new message instance.
      *

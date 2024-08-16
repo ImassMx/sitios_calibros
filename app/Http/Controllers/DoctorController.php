@@ -7,48 +7,63 @@ use App\Models\User;
 use App\Models\Doctor;
 use GuzzleHttp\Client;
 use App\Mail\LigaDoctor;
+use App\Models\BookSale;
 use App\Mail\LigaPaciente;
+use App\Models\ClientBook;
 use App\Mail\DoctorWelcome;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Exports\DoctorsExport;
-use App\Http\Controllers\Api\DonwloadController;
-use App\Models\BookSale;
-use App\Models\ClientBook;
-use App\Models\DownloadReportClient;
 use PhpParser\Node\Stmt\TryCatch;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use App\Models\DownloadReportClient;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
+use App\Http\Controllers\Api\DonwloadController;
 
 class DoctorController extends Controller
 {
     private $uuid;
 
     public function index(){
+
+        if(auth()->check()){
+            return redirect()->route('marketplace.inicio');
+        }
         return view('auth-doctor.register');
     }
 
     public function store(Request $request) {
-        try {
+        $this->uuid = Str::uuid();
 
-            $this->uuid = Str::uuid();
-            $this->validate($request, [
-                'nombre' => 'required',
-                'apellidos' => 'required',
-                'especialidad' => 'required',
-                'cedula' => 'required'
-            ], [
-                'nombre.required' => 'Ingrese su nombre porfavor',
-                'apellidos.required' => 'Ingrese sus apellidos por favor',
-                'especialidad.required' => 'Elija la especialidad a la que pertenece',
-                'cedula.required' => 'La cedula es requerida.'
-            ]);
+        $validate =  Validator::make($request->all(), [
+            'nombre' => 'required',
+            'apellidos' => 'required',
+            'especialidad' => 'required',
+            'cedula' => 'required',
+            'email' => 'email|unique:users,email',
+            'postal' => 'required|exists:sepomex,d_codigo',
+            'celular' => 'required|unique:users,celular',
+        ], [
+            'nombre.required' => 'Ingrese su nombre porfavor',
+            'apellidos.required' => 'Ingrese sus apellidos por favor',
+            'especialidad.required' => 'Elija la especialidad a la que pertenece',
+            'cedula.required' => 'La cedula es requerida.',
+            'postal.required' => 'El código postal es requerido.',
+            'email.email' => 'Ingrese un email válido.',
+            'email.unique' => 'El email ya se encuentra registrado.',
+            'postal.exists' => 'El código postal no es válido.',
+            'celular.unique' => 'El número ya se encuentra registado.',
+            'celular.required' => 'El celular es requerido.',
+        ]);
+        $validate->validated();
+        try {
       
                 $user = new User();
                 $user->name = $request->nombre;
@@ -152,6 +167,9 @@ class DoctorController extends Controller
 
     public function viewDoctor()
     {
+        if(auth()->check()){
+            return redirect()->route('marketplace.inicio');
+        }
         return view('auth-doctor.login');
     }
 
@@ -239,6 +257,9 @@ class DoctorController extends Controller
     public function donwloadBook(Request $request,$uuid){
 
         $book = BookSale::where('uuid',$uuid)->first();
+        $book->downloads += 1;
+        $book->save();
+        
         $book_client = ClientBook::where('id',$request->client_books)->first();
 
 

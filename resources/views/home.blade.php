@@ -31,7 +31,7 @@
 
         <h1 class="titulo">Nos preocupamos por ti</h1>
         <p class="sub-titulo">Por eso te recomendamos estos libros para que cuides tu salud.</p>
-        <a href="{{route('registro.cliente')}}" class="descarga">Descargar</a>
+        <a href="{{route('login.cliente')}}" class="descarga">Descargar</a>
        </div>
        <div class="imagen">
             <img src="{{asset('img/undraw_doctor_kw-5-l (1).svg')}}" alt="">

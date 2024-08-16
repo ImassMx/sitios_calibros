@@ -18,7 +18,7 @@
     .logout {
         background: rgba(0, 0, 0, 0);
         border: none;
-        font-size: 1rem;
+        font-size: 0.9rem;
         cursor: pointer;
         margin-top: .5rem;
         color: #5D025F;
@@ -27,12 +27,6 @@
 
     .terminos {
         margin: 0;
-    }
-
-    .container {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 0 15px;
     }
 
     .title {
@@ -85,25 +79,28 @@
 </head>
 
 <body>
-    <div id="app">
+    <div class="container-fluid p-1" id="app">
         <nav class="menu">
             <img src="{{ asset('img/logo.jpg') }}" alt="" class="logo">
             <ul class="menu_items">
                 @guest
-                <li><a href="">¿Quienes Somos?</a></li>
-                <li><a href="/marketplace">Marketplace</a></li>
+                <li><a href="/">¿Quienes Somos?</a></li>
                 <li><a href="/contacto">Contactenos</a></li>
                 @endguest
                 @auth
-                <form method="POST" action="{{ route('logout.doctor') }}">
-                    @csrf
-                    <button type="submit" class="logout">Cerrar sesión</button>
-                </form>
-                @endauth
-                @auth
-                @if (!auth()->user()->hasRole('Cliente'))
-                <show-carrito user="{{ auth()->user()->id }}"></show-carrito>
-                @endif
+                <ul class="nav nav-pills">
+                    @if (!auth()->user()->hasRole('Cliente'))
+                    <show-carrito user="{{ auth()->user()->id }}"></show-carrito>
+                    <menu-componente user="{{ auth()->user()->id }}"></menu-componente>
+                    <li class="nav-item">
+                        <form method="POST" action="{{ route('logout.doctor') }}">
+                            @csrf
+                            <button type="submit" class="logout"><img src="/img/exit.svg" alt="buscar"
+                                    width="20">Salir</button>
+                        </form>
+                    </li>
+                    @endif
+                </ul>
                 @endauth
             </ul>
             <div id="hamburguer">
@@ -114,9 +111,29 @@
                 </button>
             </div>
         </nav>
-        @yield('content-mkt')
+        <section class="pb-5 mb-5">
+            @yield('content-mkt')
+        </section>
+        @auth
+        <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top mt-5">
+            <div class="col-md-12 d-flex align-items-center">
+                <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
+                    <svg class="bi" width="30" height="24">
+                        <use xlink:href="#bootstrap" />
+                    </svg>
+                </a>
+                <span class="text-muted">
+                    Para mayor información , términos y condiciones, aviso de privacidad acceder a:
+                    <a href="https://www.vistobuenoeditores.com.mx">www.vistobuenoeditores.com.mx </a><br>
+                    <b>Nota: </b>Por ser libros digitales las devoluciones no aplican</span>
+            </div>
+        </footer>
+        @endauth
     </div>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
+    </script>
     <script src="
             https://cdn.jsdelivr.net/npm/conekta-card-tokenizer@1.0.1/dist/conekta.min.js
             "></script>

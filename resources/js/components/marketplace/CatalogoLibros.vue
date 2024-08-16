@@ -12,11 +12,12 @@
                 </div>
             </div>
             <div class="col-md-10 col-sm-12 pb-3">
-                <div class="row">
-                    <div class="col-md-9 col-sm-12 pb-0">
+                <div class="row pb-2">
+                    <div class="col-md-8 col-sm-12 pb-0">
                         <h1><img src="/img/book.svg" class="img-fluid" alt="Libro" width="40">
-                            Libros disponibles</h1>
-                            <show-boton/>
+                            Libros disponibles</h1>  
+                    </div> 
+                    <div class="col-md-4 col-sm-12 pb-0"> 
                         <div class="input-group mb-2">
                             <button class="input-group-text backg-s"><img src="/img/search.svg" alt="buscar"
                                     width="20"></button>
@@ -34,16 +35,16 @@
                                     <img :src="book.image" class="card-img-top" alt="Portada" style="max-height:254px;">
                                 </a>
                             </div>
-                            <div class="card-body bg-white">
-                            <h5 class="card-title text-lowercase color-p fw-bold" style="font-size:18px">{{ book.name }}</h5>
-                            <h6 class="card-subtitle mb-2 text-muted"> $ {{ book.price }}</h6>
-                            <a :href="`/marketplace/detalle/${book.uuid}`" class="btn btn-sm p-1"
-                                style="cursor: pointer;">
-                                <img src="/img/shopping.svg" alt="buscar" width="20"> Comprar
-                            </a>
-                            <a @click="addToBook(book.uuid)" class="btn btn-outline-success btn-sm"
+                            <div class="card-body bg-white text-center pt-1 pb-1 mb-1">
+                            <h5 class="card-title text-capitalize color-p fw-bold" style="font-size:16px">{{ book.name }}</h5>
+                            <h5 class="card-subtitle mb-3 text-muted"> $ {{ book.price }}</h5>
+                            <a @click="addToBook(book.uuid)" class="btn btn-outline-success btn-sm mb-1"
                                 style="cursor: pointer;">
                                 <img src="/img/shop.svg" alt="buscar" width="20"> Añadir a carrito
+                            </a>
+                            <a :href="`/marketplace/detalle/${book.uuid}`" class="btn btn-sm color-p p-1 fw-bold"
+                                style="cursor: pointer;">
+                                <img src="/img/shopping.svg" alt="buscar" width="20"> Compra rápida
                             </a>
                             </div>
                         </div> 

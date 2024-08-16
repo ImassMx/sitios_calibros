@@ -35,6 +35,7 @@ import ShowCarrito from './components/marketplace/ShowCarrito.vue'
 import ResumenCarrito from './components/marketplace/ResumenCarrito.vue'
 import ShowPago from './components/marketplace/ShowPago.vue'
 import ShowComprar from './components/marketplace/ShowComprar.vue'
+import MenuComponente from './components/marketplace/Menu.vue'
 
 //PACIENTE CARD
 import CardBook from './components/cliente/CardBook.vue'
@@ -86,6 +87,7 @@ app.component('ShowCarrito', ShowCarrito)
 app.component('ResumenCarrito', ResumenCarrito)
 app.component('ShowPago', ShowPago)
 app.component('ShowComprar', ShowComprar)
+app.component('MenuComponente', MenuComponente)
 //PACIENTE CLIENTE
 app.component('CardBook', CardBook)
 app.component('ListPaciente', ListPaciente)

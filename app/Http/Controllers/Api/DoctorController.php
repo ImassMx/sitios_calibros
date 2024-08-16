@@ -62,7 +62,6 @@ class DoctorController extends Controller
             if(!empty($doctor)){
                 $status = false;
             }
-
             return response()->json([
                 'error' => $status,
                 'data' => $doctor
@@ -124,20 +123,23 @@ class DoctorController extends Controller
             $user = User::where('email',$request->email)->first();
 
             if(!empty($user)){
+             
                 $client = Cliente::where('user_id',$user->id)->first();
-                $doc = Doctor::where('uuid', $request->doctor)->first();
-                $book = ClientBook::where('cliente_id',$client->id)
-                        ->where('book_sale_id',$request->book_id)
-                        ->where('doctor_id',$doc->id)
-                        ->first();
-
-                if(!empty($book)){
-                    return response()->json([
-                        'error' => true,
-                        'message' => 'El cliente '. $user->name . ' ya tiene agregado este libro.'
-                    ]);
-                }
                 
+                if(!empty($client)){
+                    $doc = Doctor::where('uuid', $request->doctor)->first();
+                    $book = ClientBook::where('cliente_id',$client->id)
+                            ->where('book_sale_id',$request->book_id)
+                            ->where('doctor_id',$doc->id)
+                            ->first();
+    
+                    if(!empty($book)){
+                        return response()->json([
+                            'error' => true,
+                            'message' => 'El cliente '. $user->name . ' ya tiene agregado este libro.'
+                        ]);
+                    }
+                }
             }
 
             $dominio = $request->getSchemeAndHttpHost();
@@ -167,7 +169,6 @@ class DoctorController extends Controller
 
                 Storage::disk('s3')->put($nameImage, file_get_contents($image));
                 $urlImage = config('filesystems.url_book').$str_image;
-
             }
 
             if ($request->hasFile('pdf')) {
@@ -257,16 +258,13 @@ class DoctorController extends Controller
             $filtro = $request->buscador;
 
             $doctor = Doctor::where('uuid',$uuid)->first();
-
+   
             $books = ClientBook::where('doctor_id', $doctor->id)
             ->with(['book', 'client.user'])
-            ->whereHas('book', function ($query) use ($filtro) {
+            ->whereHas('client.user', function ($query) use ($filtro) {
                 $query->where('name', 'LIKE', '%' . $filtro . '%');
             })
-            ->orWhereHas('client.user', function ($query) use ($filtro) {
-                $query->where('name', 'LIKE', '%' . $filtro . '%');
-            })
-            ->get();
+            ->paginate(12);
 
             return response()->json([
                 'error' => false,

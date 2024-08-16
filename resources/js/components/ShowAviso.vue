@@ -1,18 +1,24 @@
 <template>
-    <div class="content-factura">
-        <div class="content-factura-quest text-center">
-            <h2>¿Deseas factura?</h2>
-            <div class="content-check">
-                <input type="checkbox" id="checkbox" v-model="isChecked" @change="toggleMessage">
-            <label for="checkbox">Sí</label>
+     <div class="col-md-9 col-sm-12 text-center pt-3"> 
+            <a href="/marketplace" class="btn-custom-nuevo" style="width:120px">Finalizar</a>
+            <p></p>
+            <button type="button" class="button-factura"  data-bs-toggle="modal" data-bs-target="#exampleModal">¿Cómo solicitar mi factura?</button>
+               
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Proceso de facturación</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <img src="/img/facturacion_img.jpg" alt="Facturacion" class="img-fluid"> 
+                    </div> 
+                    </div>
+                </div>
             </div>
-        </div>
-
-        <div v-if="isChecked" class="container-facturacion">
-            <img src="/img/facturacion_img.jpg" alt="" srcset="" class="img-facturacion">
-        </div>
     </div>
-    <a href="/marketplace" class="btn-custom-nuevo">Regresar a tienda</a>
+   
 </template>
 
 <script>
@@ -20,6 +26,11 @@ export default {
     data() {
         return {
             isChecked: false
+        }
+    },
+    methods:{
+        facturacion(){
+            this.isChecked=true
         }
     }
 }
@@ -40,5 +51,9 @@ export default {
 }
 .img-facturacion{
     width: 700px;
+}
+.button-factura{
+    border: 1px solid #fff;
+    background: #fff;
 }
 </style>

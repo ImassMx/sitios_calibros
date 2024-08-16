@@ -40,6 +40,7 @@ Route::get('/codigo/postal',[ApiController::class,'codigoPostal']);
 Route::get('/show/clientes',[ApiController::class,'clientes']);
 Route::get('/show/reporte/doctores',[ApiController::class,'doctores']);
 Route::get('/mostrar/folio',[ApiController::class,'folio']);
+Route::get('/validar/postal',[ApiController::class,'validatePostal']);
 
 Route::get('/mostrar/datos/slug',[ApiController::class,'getDatosSlug']);
 
@@ -86,6 +87,7 @@ Route::get('/validate/phone',[ApiController::class,'validatePhone']);
 Route::get('/validate/book/{id}',[ApiController::class,'validateBook']);
 Route::get('/validate/cedula',[ApiController::class,'validateCedula']);
 Route::post('/delete/book',[ApiController::class,'deleteBookSale']);
+Route::get('/show/uuid/{id}',[ApiController::class,'getUuidDoctor']);
 
 //reportes
 Route::get('/report/books/doctor',[ReportController::class,'reportBooksDoctor']);

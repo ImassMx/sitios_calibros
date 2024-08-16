@@ -424,7 +424,7 @@ main .imagen {
   border: 2px solid #056743;
   transition: all 0.4s;
   font-family: "Roboto", sans-serif;
-  text-transform: uppercase;
+  font-weight: bold; 
   color: #056743;
   border-radius: 5px;
 }

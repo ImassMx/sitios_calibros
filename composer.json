@@ -7,6 +7,7 @@
     "require": {
         "php": "^7.3|^8.0",
         "aws/aws-sdk-php": "^3.263",
+        "barryvdh/laravel-dompdf": "^2.2",
         "conekta/conekta-php": "4.3",
         "danielmlozano/laravel-conekta": "^1.1",
         "doctrine/dbal": "^3.3",
