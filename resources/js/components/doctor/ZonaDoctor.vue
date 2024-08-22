@@ -11,11 +11,13 @@
                     <div class="col" v-for="book in Books" :key="book.id">
                         <div class="card bg-white h-100 p-0">
                             <div class="card-header bg-white" style="max-height:210px;min-height:210px"> 
-                                <img :src="book.book.image" :alt="book.name" class="card-img-top" style="max-height:195px;" >
+                                <a :href="`/marketplace/detalle/${book.book.uuid}`">
+                                    <img :src="book.book.image" :alt="book.name" class="card-img-top" style="max-height:195px;" >
+                                </a>
                             </div>
                             <div class="card-body text-center p-1">
                             <h5 class="card-title text-capitalize color-p fw-bold mt-2" style="font-size:18px"> 
-                                {{ book.book.name }}</h5>
+                                <a :href="`/marketplace/detalle/${book.book.uuid}`" class="card-title text-capitalize color-p fw-bold" style="font-size:16px;text-decoration: none;">{{ book.book.name }}</a></h5>
                             <h5 class="card-subtitle text-muted">Contraseña:</h5> 
                             <p class="mb-2 text-muted">{{ book.book.password }}</p> 
                             <hr class="mb-1"> 
@@ -28,6 +30,7 @@
                                     <li><button class="dropdown-item" style="cursor: pointer;" @click="sendPhone(book.book.id)">Envíar por SMS</button></li>
                                     <li><a class="dropdown-item" :href="`/donwload/book/doctor/${book.book.uuid}?purchased_book=${book.id}`">Descargar</a></li>
                                     <li><a class="dropdown-item" :href="`/download/qr/${book.book.uuid}/${book.book.name}`">Descargar QR</a></li>
+                                    <li><a class="dropdown-item" :href="`/marketplace/detalle/${book.book.uuid}`">Visualizar</a></li>
                                 </ul>
                             </div>  
                             </div>

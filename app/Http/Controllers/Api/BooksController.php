@@ -24,7 +24,7 @@ class BooksController extends Controller
                 $booksQuery->whereIn('category_id', $request->categoria);
             }
             
-            $books = $booksQuery->paginate(8);
+            $books = $booksQuery->orderBy('name', 'asc')->paginate(8);
             
             return response()->json($books);
         } catch (\Throwable $th) {
