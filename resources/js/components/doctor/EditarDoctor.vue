@@ -28,6 +28,7 @@
                         <label for="celular">Celular</label>
                         <input type="text" class="form-control" id="celular" placeholder="Introduce tu celular"
                             v-model="celular">
+                        <p>Sí, actualizaste tu número favor de actualizarlo</p>
                     </div>
                     <button type="submit" class="btn btn-primary btn-block mt-4 backg-p w-100">Guardar</button>
                 </form>
