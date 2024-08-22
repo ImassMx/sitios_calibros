@@ -84,7 +84,6 @@
             <img src="{{ asset('img/logo.jpg') }}" alt="" class="logo">
             <ul class="menu_items">
                 @guest
-                <li><a href="/">¿Quienes Somos?</a></li>
                 <li><a href="/contacto">Contactenos</a></li>
                 @endguest
                 @auth
@@ -94,6 +93,15 @@
                     <menu-componente user="{{ auth()->user()->id }}"></menu-componente>
                     <li class="nav-item">
                         <form method="POST" action="{{ route('logout.doctor') }}">
+                            @csrf
+                            <button type="submit" class="logout"><img src="/img/exit.svg" alt="buscar"
+                                    width="20">Salir</button>
+                        </form>
+                    </li>
+                    @endif
+                    @if (auth()->user()->hasRole('Cliente'))
+                    <li class="nav-item">
+                        <form method="POST" action="{{ route('logout.cliente') }}">
                             @csrf
                             <button type="submit" class="logout"><img src="/img/exit.svg" alt="buscar"
                                     width="20">Salir</button>

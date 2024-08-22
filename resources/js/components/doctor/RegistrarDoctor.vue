@@ -61,7 +61,7 @@
               </div>
               <div class="col-md-6 col-sm-12 p-2">
                 <label for="">Cédula</label>
-                <input type="text"  class="form-control"  v-model="cedula" maxlength="9" @change="validateCedula" placeholder="Escribirr cédula"/>
+                <input type="text"  class="form-control"  v-model="cedula" maxlength="9" @change="validateCedula" placeholder="Escribir cédula"/>
                 <div v-if="errors.cedula" class="content-error"  >
                   <p class="errors">{{ errors.cedula[0] }}</p>
                 </div>
@@ -69,7 +69,7 @@
               <div class="col-md-6 col-sm-12 p-2">
                 <label for="">Celular</label>
                 <input type="text"  class="form-control"  v-model="celular" placeholder="000-000-00-00" maxlength="10"/>
-                <p class="p-0 m-0" style="font-size:12px">Sí, actualizaste tu número favor de Escribirrlo</p>
+                <p class="p-0 m-0" style="font-size:12px">Sí, actualizaste tu número favor de Escribirlo</p>
                 <p class="validacion-celular" v-if="errors.celular">{{ errors.celular[0] }}</p>
               </div>
               <div class="col-md-12 col-sm-12 p-2 pt-0">          

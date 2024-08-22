@@ -21,8 +21,8 @@
                         <div class="input-group mb-2">
                             <button class="input-group-text backg-s"><img src="/img/search.svg" alt="buscar"
                                     width="20"></button>
-                            <input type="text" class="form-control" aria-label="Busar" placeholder="Buscar"
-                                v-model="buscador" @keyup="buscarLibros">
+                            <input type="text" class="form-control" aria-label="Busar" placeholder="Buscar" 
+                                v-model="buscador" @keyup="buscarLibros" maxlength="35">
                         </div>
                     </div> 
                 </div>

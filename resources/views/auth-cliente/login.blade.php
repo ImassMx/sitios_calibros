@@ -14,8 +14,7 @@
     <nav class="menu">
         <img src="{{asset('img/logo.jpg')}}" alt="" class="logo">
         <ul class="menu_items">
-            <li><a href="#pro">¿Quienes Somos?</a></li>
-            <li><a href="#contact">Contactenos</a></li>
+            <li><a href="/contacto">Contactenos</a></li>
         </ul>
         <div id="hamburguer">
             <button>

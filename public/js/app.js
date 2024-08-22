@@ -27286,7 +27286,7 @@ var _hoisted_33 = /*#__PURE__*/_withScopeId(function () {
     style: {
       "font-size": "12px"
     }
-  }, "Sí, actualizaste tu número favor de Escribirrlo", -1
+  }, "Sí, actualizaste tu número favor de Escribirlo", -1
   /* HOISTED */
   );
 });
@@ -27439,7 +27439,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onChange: _cache[6] || (_cache[6] = function () {
       return $options.validateCedula && $options.validateCedula.apply($options, arguments);
     }),
-    placeholder: "Escribirr cédula"
+    placeholder: "Escribir cédula"
   }, null, 544
   /* HYDRATE_EVENTS, NEED_PATCH */
   ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.cedula]]), $data.errors.cedula ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_29, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_30, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.cedula[0]), 1
@@ -29311,7 +29311,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     }),
     onKeyup: _cache[3] || (_cache[3] = function () {
       return $options.buscarLibros && $options.buscarLibros.apply($options, arguments);
-    })
+    }),
+    maxlength: "35"
   }, null, 544
   /* HYDRATE_EVENTS, NEED_PATCH */
   ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.buscador]])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.Books.data, function (book) {
