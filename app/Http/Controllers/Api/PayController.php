@@ -166,11 +166,9 @@ class PayController extends Controller
 
                     $cart->delete();
                 }
-                Log::info($this->user_id);
+
                 $user = User::find($this->user_id);
-                Log::info($user);
                 $doctor = Doctor::where('user_id',$user->id)->first();
-                Log::info($doctor);
                 $doctor->points += $this->points;
                 $doctor->save(); 
 
