@@ -160,8 +160,7 @@ class ApiController extends Controller
         return response()->json($doctor);
     }
 
-    public function validacionDescarga($id)
-    {
+    public function validacionDescarga($id){
         $cliente = Cliente::where("user_id", $id)->first();
         return response()->json($cliente->descargas);
     }
@@ -237,21 +236,13 @@ class ApiController extends Controller
 
             if(!empty($doctor) && !empty($book)){
 
-                $purchased_book = PurchasedBook::where(
-                    [
-                        'user_id' => $user->id,
-                        'book_sale_id' => $book->id,
-                        'doctor_id' => $doctor->id
-                    ]
-                )->first();
+                $purchased_book = PurchasedBook::where(['user_id' => $user->id,'book_sale_id' => $book->id,'doctor_id' => $doctor->id])->first();
 
                 if(!empty($purchased_book)){
                     return response()->json(true);
                 }
-
                 return response()->json(false);
             }
-
             return response()->json(false);
 
         } catch (\Throwable $th) {
