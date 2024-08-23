@@ -42,7 +42,7 @@
         <div class="card mb-3 p-3">
             <h5 class="fw-bold pb-2">Resumén de mi compra</h5>
             <p class="p-0 m-0 fw-bold mb-1">Libros a comprar: <span class="color-s">{{ cartCount }}</span></p>
-            <p class="p-0 m-0 fw-bold mb-3">Total a pagar: <span class="color-s">$ {{ totalMount }} MNX</span></p>
+            <p class="p-0 m-0 fw-bold mb-3">Total a pagar: <span class="color-s">$ {{ totalMount }} MXN</span></p>
             <a @click="processPayment()" v-if="cartCount > 0" class="btn  btn-sm text-center backg-p text-white" > Proceder al
                 pago</a> 
         </div> 

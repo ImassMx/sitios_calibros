@@ -11,7 +11,7 @@ class CategoryController extends Controller
 {
     public function categoriesMarketplace(){
         try {
-            $categories = Category::all();
+            $categories = Category::orderBy('name', 'asc')->get();;
             return response()->json($categories);
         } catch (\Throwable $th) {
             Log::error($th);

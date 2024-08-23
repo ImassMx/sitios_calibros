@@ -1,7 +1,7 @@
 <template>
        
             <li class="nav-item">
-                <a class="nav-link menu-style" aria-current="page" :href="`/zona/doctor/${uuid}`">Inicio</a>
+                <a class="nav-link menu-style" aria-current="page" :href="`/zona/doctor/${uuid}`">Mis libros</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link menu-style" aria-current="page" href="/marketplace">Marketplace</a>

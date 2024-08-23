@@ -99,7 +99,7 @@ class PayController extends Controller
                     'failure_url' => $dominio.'/payment/failure?doctor=' . $doc->uuid,
                     'monthly_installments_enabled' => true,
                     'monthly_installments_options' => array(3, 6, 9, 12),
-                    "redirection_time" => 4
+                    "redirection_time" => 7
                 ),
                 'customer_info' => array(
                     'customer_id'   =>  $customer_id
@@ -175,7 +175,11 @@ class PayController extends Controller
                 Mail::to($user->email)->send(new SendBooksMail($this->books_email,$doctor));
             }
         } catch (\Throwable $th) {
-            Log::error(["verifyPayment" => $th->getMessage()]);
+            Log::error([
+                'funcion' => 'verifyPayment',
+                'message' => $th->getMessage(),
+                'line' => $th->getLine()
+               ]);
         }
     }
 

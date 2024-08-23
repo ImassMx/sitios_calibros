@@ -24,7 +24,7 @@
         <img class="img-fluid" src="{{asset('bienvenida/img4.jpg')}}" alt="Landing a Medicos_Abril24">
     </div>
     <div class="col-md-10 col-sm-12 text-center mb-0">
-        <a href="/registrar/doctor">
+        <a href="/login/doctor">
             <img class="img-fluid" src="{{asset('bienvenida/img5.jpg')}}" alt="Landing a Medicos_Abril24">
         </a>
     </div>

@@ -301,7 +301,7 @@ class DoctorController extends Controller
             return back()->with('mensaje', 'El número de folio es incorrecto');
         }
 
-        return redirect()->route('zona.doctor',["uuid"=>$doctor->uuid]);
+        return redirect()->route('marketplace.inicio');
     }
 
     public function pacientesDoctor($uuid){
