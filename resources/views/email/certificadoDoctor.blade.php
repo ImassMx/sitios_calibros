@@ -72,8 +72,8 @@
 
 <body>
     <div class="hoja1">
-        <span class="texto" style="margin-top: 240px; margin-left: 233px; position: absolute;">{{$doctor->nombres}} {{$doctor->apellidos}}</span>
-        <span class="texto" style="margin-top: 320px; margin-left: 233px; position: absolute;"></span>
+        <span class="texto" style="margin-top: 240px; margin-left: 233px; position: absolute;">{{ strtoupper($doctor->nombres .' ' .$doctor->apellidos )}}</span>
+        <span class="texto" style="margin-top: 320px; margin-left: 233px; position: absolute;">{{strtoupper($book)}}</span>
         <span style="margin-top: 430px; margin-left: 270px; position: absolute;">{{$fecha}}</span>
     </div>
     <div style="page-break-before:always"></div>
