@@ -10,6 +10,7 @@ use App\Models\Cliente;
 use App\Mail\ContactForm;
 use App\Models\BookSale;
 use App\Models\Especialidad;
+use App\Models\PurchasedBook;
 use App\Models\Sepomex;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -159,8 +160,7 @@ class ApiController extends Controller
         return response()->json($doctor);
     }
 
-    public function validacionDescarga($id)
-    {
+    public function validacionDescarga($id){
         $cliente = Cliente::where("user_id", $id)->first();
         return response()->json($cliente->descargas);
     }
@@ -219,13 +219,38 @@ class ApiController extends Controller
         }
      }
 
-
      public function validatePostal(Request $request){
         try {
             $sepomex = Sepomex::where('d_codigo',$request->postal)->first();
             return response()->json(!empty($sepomex) ? true : false);
         } catch (\Throwable $th) {
             Log::error(["Error validatePostal" => $th->getMessage()]);
+        }
+     }
+
+     public function validateBuyBook(Request $request){
+        try {
+            $user = json_decode($request->user);
+            $doctor = Doctor::where('user_id',$user->id)->first();
+            $book = BookSale::where('uuid',$request->book)->first();
+
+            if(!empty($doctor) && !empty($book)){
+
+                $purchased_book = PurchasedBook::where(['user_id' => $user->id,'book_sale_id' => $book->id,'doctor_id' => $doctor->id])->first();
+
+                if(!empty($purchased_book)){
+                    return response()->json(true);
+                }
+                return response()->json(false);
+            }
+            return response()->json(false);
+
+        } catch (\Throwable $th) {
+            Log::error([
+                'message' => $th->getMessage(),
+                'line' => $th->getLine(),
+                'function' => 'validateBuyBook'
+            ]);
         }
      }
 }

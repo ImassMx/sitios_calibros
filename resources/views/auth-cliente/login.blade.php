@@ -6,13 +6,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Libros Online</title>
-    <link rel="stylesheet" href="{{asset('css/style.css')}}">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
     <nav class="menu">
-        <img src="{{asset('img/logo.jpg')}}" alt="" class="logo">
+        <img src="{{ asset('img/logo.jpg') }}" alt="" class="logo">
         <ul class="menu_items">
             <li><a href="/contacto">Contactenos</a></li>
         </ul>
@@ -27,20 +27,23 @@
 
     <div class="content-login">
         <div class="login">
-        @if (session('mensaje'))
-                    <div class="alert alert-success" role="alert">
-                        {{ session('mensaje') }}
-                    </div>
-                @endif
-            <form action="{{route('post.login')}}" method="POST">
-            @csrf
+            @if (session('mensaje'))
+                <div class="alert alert-success" role="alert">
+                    {{ session('mensaje') }}
+                </div>
+            @endif
+            <form action="{{ route('post.login') }}" method="POST">
+                @csrf
                 <label for="celular">Celular</label>
                 <input type="text" placeholder="Ingresa tu número de celular" id="celular" name="celular">
+                @error('celular')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
                 <input type="submit" class="ingresar" value="Ingresar">
             </form>
         </div>
     </div>
-    <script src="{{asset('js/index.js')}}"></script>
+    <script src="{{ asset('js/index.js') }}"></script>
 </body>
 
 </html>

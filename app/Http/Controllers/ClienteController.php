@@ -22,6 +22,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Validator;
+
 
 class ClienteController extends Controller
 {
@@ -85,6 +87,17 @@ class ClienteController extends Controller
     }
 
     public function login(Request $request){
+
+        $validator = Validator::make($request->all(), [
+            'celular' => 'required|numeric|digits:10'
+        ],[
+            'celular.required' => 'El número es requerido.',
+            'celular.numeric' => 'Debe ingresar un alor numérico.',
+            'celular.digits' => 'El número debe ingresar 10 dígitos.'
+        ]);
+
+        $validator->validated();
+
         try {
             $user = User::where('celular', $request->celular)->with('cliente')->first();
 

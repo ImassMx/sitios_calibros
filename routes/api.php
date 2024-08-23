@@ -88,11 +88,13 @@ Route::get('/validate/book/{id}',[ApiController::class,'validateBook']);
 Route::get('/validate/cedula',[ApiController::class,'validateCedula']);
 Route::post('/delete/book',[ApiController::class,'deleteBookSale']);
 Route::get('/show/uuid/{id}',[ApiController::class,'getUuidDoctor']);
+Route::get('/validate/buy/book',[ApiController::class,'validateBuyBook']);
 
 //reportes
 Route::get('/report/books/doctor',[ReportController::class,'reportBooksDoctor']);
 Route::get('/report/books/paciente',[ReportController::class,'reportBooksPaciente']);
 Route::get('/show/reporte/conamege',[ReportController::class,'reporteConamege']);
 Route::get('/show/reporte/ventas',[ReportController::class,'reporteVentas']);
+
 
 Route::post('/webhook', [PayController::class,'confirmationConekta']);
