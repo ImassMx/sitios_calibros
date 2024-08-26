@@ -160,7 +160,7 @@ export default {
           if (!response.data.error) {
             this.folio = response.data.folio;
             this.messFolio = `Su número de folio ha sido enviado por correo y SMS`;
-            this.url_panel = `/zona/doctor/${response.data.uuid}`
+            this.url_panel = `/marketplace`
             this.limpiar()
             swal.close()
           }
