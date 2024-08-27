@@ -23657,7 +23657,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         if (!response.data.error) {
           _this2.folio = response.data.folio;
           _this2.messFolio = "Su n\xFAmero de folio ha sido enviado por correo y SMS";
-          _this2.url_panel = "/zona/doctor/".concat(response.data.uuid);
+          _this2.url_panel = "/marketplace";
 
           _this2.limpiar();
 
