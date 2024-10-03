@@ -16,6 +16,7 @@ use App\Mail\SendBooksMail;
 use App\Models\BookSale;
 use App\Models\Order as ModelsOrder;
 use Illuminate\Support\Facades\Mail;
+use Swift_TransportException;
 
 class PayController extends Controller
 {
@@ -77,7 +78,7 @@ class PayController extends Controller
     private function createOrder($customer_id, $quantity, $price, $doc,$dominio)
     {
         try {
-            
+
             $books = Cart::where('user_id', $doc->user_id)->pluck('id')->toArray();
             $this->user_id = $doc->user_id;
             $validOrderWithCheckout = array(
@@ -170,7 +171,7 @@ class PayController extends Controller
                 $user = User::find($this->user_id);
                 $doctor = Doctor::where('user_id',$user->id)->first();
                 $doctor->points += $this->points;
-                $doctor->save(); 
+                $doctor->save();
 
                 Mail::to($user->email)->send(new SendBooksMail($this->books_email,$doctor));
             }
@@ -179,6 +180,14 @@ class PayController extends Controller
                 'funcion' => 'verifyPayment',
                 'message' => $th->getMessage(),
                 'line' => $th->getLine()
+               ]);
+        } catch (Swift_TransportException $e) {
+            Log::error([
+                'funcion' => 'verifyPayment',
+                'email' => $user->email,
+                'message' => $e->getMessage(),
+                'line' => $e->getLine(),
+                'trace' => $e->getTraceAsString()
                ]);
         }
     }
