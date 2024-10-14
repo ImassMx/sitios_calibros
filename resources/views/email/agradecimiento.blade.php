@@ -13,12 +13,13 @@
         }
     </style>
 <body>
-    <img src="https://app-legalhelp.s3.amazonaws.com/books/Agradecimiento.jpg" alt="Imagen Agradecimiento" width="100%" height="100%">
-
+    <img src="{{asset('/img/agradecimiento.jpg' )}}" alt="Imagen Agradecimiento" width="100%" height="100%">
     @foreach ($libros as $book)
-        <p>Libro : {{$book->name}}</p>
-        <p>Contraseña: {{$book->password}}</p>
+        <p>Libro : {{$book["name"]}}</p>
+        <p>Contraseña: {{$book["password"]}}</p>
+        <p>Link: <a href="{{$book["url"]}}">{{$book["name"]}}</a></p>
     @endforeach
+    <label for="">Las ligas caducan 3 horas despues de recibido este correo.</label>
     <div class="content-aviso">
         <p>Para facturar, favor de enviar un correo al siguiente email.</p>
         <p><b>facturas@vistobuenoeditoreas.com.mx.</b></p>

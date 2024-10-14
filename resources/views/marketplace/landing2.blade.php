@@ -23,7 +23,7 @@
     <div class="col-md-10 col-sm-12 text-center mb-0">
         <img class="img-fluid" src="{{asset('bienvenida/img4.jpg')}}" alt="Landing a Medicos_Abril24">
     </div>
-     <landing></landing>
+    <otra-campania></otra-campania>
 </div>
 
 @endsection

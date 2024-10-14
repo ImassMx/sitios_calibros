@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\BooksController;
+use App\Http\Controllers\Api\CampaniaController;
 use App\Http\Controllers\Api\CartController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\DoctorController;
@@ -89,6 +90,8 @@ Route::get('/validate/cedula',[ApiController::class,'validateCedula']);
 Route::post('/delete/book',[ApiController::class,'deleteBookSale']);
 Route::get('/show/uuid/{id}',[ApiController::class,'getUuidDoctor']);
 Route::get('/validate/buy/book',[ApiController::class,'validateBuyBook']);
+Route::get('/save/campania/{campania}',[CampaniaController::class,'campaniaSave']);
+Route::get('/clic/acceder/{campania}',[CampaniaController::class,'clicAcceder']);
 
 //reportes
 Route::get('/report/books/doctor',[ReportController::class,'reportBooksDoctor']);

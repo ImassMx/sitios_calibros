@@ -51,6 +51,8 @@ import Ventas from './components/reporte/Ventas.vue'
 import ShowAviso from './components/ShowAviso.vue'
 import ShowBoton from './components/ShowBoton.vue'
 
+import landing from './components/campania/landing.vue';
+import OtraCampania from './components/campania/OtraCampania.vue';
 
 const app = createApp({})
 
@@ -101,5 +103,8 @@ app.component('ShowAviso', ShowAviso)
 app.component('ShowBoton', ShowBoton)
 
 app.component('EditarDoctor', EditarDoctor)
+
+app.component('landing', landing)
+app.component('OtraCampania', OtraCampania)
 
 app.mount('#app')

@@ -49,4 +49,8 @@ class MarketplaceController extends Controller
         return view('marketplace.landing');
     }
 
+    public function landing2(){
+        return view('marketplace.landing2');
+    }
+
 }

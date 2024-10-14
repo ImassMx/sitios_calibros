@@ -44,6 +44,7 @@ Route::get('/marketplace/pasarela', [App\Http\Controllers\MarketplaceController:
 Route::get('/payment/confirmation', [App\Http\Controllers\MarketplaceController::class,'successPayment'])->middleware('auth');
 Route::get('/payment/failure', [App\Http\Controllers\MarketplaceController::class,'errorPayment'])->middleware('auth');
 Route::get('/landing', [App\Http\Controllers\MarketplaceController::class,'landing']);
+Route::get('/landing2', [App\Http\Controllers\MarketplaceController::class,'landing2']);
 
 
 
