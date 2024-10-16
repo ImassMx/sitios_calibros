@@ -15,6 +15,7 @@ use App\Http\Controllers\Controller;
 use App\Mail\SendBooksMail;
 use App\Models\BookSale;
 use App\Models\Order as ModelsOrder;
+use App\Services\PaymentService;
 use Illuminate\Support\Facades\Mail;
 use Swift_TransportException;
 
@@ -36,7 +37,7 @@ class PayController extends Controller
             $doc = Doctor::where('user_id', $id)->first();
 
             $dominio = $request->getSchemeAndHttpHost();
-
+   
             $validCustomer = [
                 'name' => $user->name,
                 'email' => $user->email
@@ -100,7 +101,7 @@ class PayController extends Controller
                     'failure_url' => $dominio.'/payment/failure?doctor=' . $doc->uuid,
                     'monthly_installments_enabled' => true,
                     'monthly_installments_options' => array(3, 6, 9, 12),
-                    "redirection_time" => 7
+                    "redirection_time" => 30
                 ),
                 'customer_info' => array(
                     'customer_id'   =>  $customer_id
@@ -169,12 +170,14 @@ class PayController extends Controller
                 }
 
                 $user = User::find($this->user_id);
+
                 $doctor = Doctor::where('user_id',$user->id)->first();
-                $doctor->points += $this->points;
-                $doctor->save();
+                
+                PaymentService::updatedPointsDoctorService($doctor ,$this->points);
 
                 Mail::to($user->email)->send(new SendBooksMail($this->books_email,$doctor));
             }
+            
         } catch (\Throwable $th) {
             Log::error([
                 'funcion' => 'verifyPayment',

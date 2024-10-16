@@ -12,14 +12,14 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use PDF; // Asegúrate de importar la clase PDF
-
+use Swift_TransportException;
 
 class SendBooksMail extends Mailable
 {
     use Queueable, SerializesModels;
     public $books;
     public $doctor;
-    public $bookCurrent;
+
     /**
      * Create a new message instance.
      *
@@ -38,34 +38,48 @@ class SendBooksMail extends Mailable
      */
     public function build()
     {
+
         try {
             $libros = BookSale::whereIn('id', $this->books)->get();
 
-            $mail = $this->view('email.agradecimiento',[
-                            'libros' => $libros
-                ])->subject('Compra Libros');
-    
+            $bookUrls = [];
             foreach ($libros as $bookUrl) {
                 $parsedUrl = parse_url($bookUrl->pdf);
-                $mail->attachFromStorageDisk('s3', '/'.$parsedUrl['path'],Str::slug($bookUrl->name).'.pdf');
+
+                $temporalUrl = Storage::disk('s3')->temporaryUrl(
+                    ltrim($parsedUrl['path'], '/'),
+                    Carbon::now()->addMinutes(180)
+                );
+
+                $bookUrls[] = [
+                    'name' => $bookUrl->name,
+                    'url' => $temporalUrl,
+                    'password' => $bookUrl->password
+                ];
             }
-    
+
+            $mail = $this->view('email.agradecimiento', [
+                'libros' => $bookUrls
+            ])->subject('Compra Libros');
+
+
             Carbon::setLocale('es');
             $fecha = Carbon::now();
             $fechaFormateada = $fecha->translatedFormat('j \d\e F \d\e\l Y');
-    
-            $pdf = PDF::loadView('email.certificadoDoctor', ['doctor' => $this->doctor,'fecha' =>$fechaFormateada,'book' => $libros[0]['name'] ]);
-    
+
+            $pdf = PDF::loadView('email.certificadoDoctor', ['doctor' => $this->doctor, 'fecha' => $fechaFormateada, 'book' => $libros[0]['name']]);
+
             $mail->attachData($pdf->output(), 'certificado.pdf', [
-            'mime' => 'application/pdf',
+                'mime' => 'application/pdf',
             ]);
-            
+
             return $mail;
+
         } catch (\Throwable $th) {
             Log::error([
-             'funcion' => 'SendBooksMail',
-             'message' => $th->getMessage(),
-             'line' => $th->getLine()
+                'funcion' => 'SendBooksMail',
+                'message' => $th->getMessage(),
+                'line' => $th->getLine()
             ]);
         }
     }
