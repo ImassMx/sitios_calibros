@@ -23,7 +23,7 @@ class CampaniaController extends Controller
             $ip = $request->ip();
             CampaniaService::saveClicService($compania,$ip);
         } catch (\Throwable $th) {
-            Log::error(["Error campaniaSave" => $th->getMessage()]);
+            Log::error(["Error clicAcceder" => $th->getMessage()]);
         }
     }
 }

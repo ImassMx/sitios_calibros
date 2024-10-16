@@ -39,41 +39,48 @@ class SendBooksMail extends Mailable
     public function build()
     {
 
-        $libros = BookSale::whereIn('id', $this->books)->get();
+        try {
+            $libros = BookSale::whereIn('id', $this->books)->get();
 
-        $bookUrls = [];
-        foreach ($libros as $bookUrl) {
-            $parsedUrl = parse_url($bookUrl->pdf);
+            $bookUrls = [];
+            foreach ($libros as $bookUrl) {
+                $parsedUrl = parse_url($bookUrl->pdf);
 
-            $temporalUrl = Storage::disk('s3')->temporaryUrl(
-                ltrim($parsedUrl['path'], '/'),
-                Carbon::now()->addMinutes(180)
-            );
+                $temporalUrl = Storage::disk('s3')->temporaryUrl(
+                    ltrim($parsedUrl['path'], '/'),
+                    Carbon::now()->addMinutes(180)
+                );
 
-            $bookUrls[] = [
-                'name' => $bookUrl->name,
-                'url' => $temporalUrl,
-                'password' => $bookUrl->password
-            ];
+                $bookUrls[] = [
+                    'name' => $bookUrl->name,
+                    'url' => $temporalUrl,
+                    'password' => $bookUrl->password
+                ];
+            }
+
+            $mail = $this->view('email.agradecimiento', [
+                'libros' => $bookUrls
+            ])->subject('Compra Libros');
+
+
+            Carbon::setLocale('es');
+            $fecha = Carbon::now();
+            $fechaFormateada = $fecha->translatedFormat('j \d\e F \d\e\l Y');
+
+            $pdf = PDF::loadView('email.certificadoDoctor', ['doctor' => $this->doctor, 'fecha' => $fechaFormateada, 'book' => $libros[0]['name']]);
+
+            $mail->attachData($pdf->output(), 'certificado.pdf', [
+                'mime' => 'application/pdf',
+            ]);
+
+            return $mail;
+
+        } catch (\Throwable $th) {
+            Log::error([
+                'funcion' => 'SendBooksMail',
+                'message' => $th->getMessage(),
+                'line' => $th->getLine()
+            ]);
         }
-
-        Log::info(["Ligas Libros" => $bookUrls]);
-
-        $mail = $this->view('email.agradecimiento', [
-            'libros' => $bookUrls
-        ])->subject('Compra Libros');
-
-
-        Carbon::setLocale('es');
-        $fecha = Carbon::now();
-        $fechaFormateada = $fecha->translatedFormat('j \d\e F \d\e\l Y');
-
-        $pdf = PDF::loadView('email.certificadoDoctor', ['doctor' => $this->doctor, 'fecha' => $fechaFormateada, 'book' => $libros[0]['name']]);
-
-        $mail->attachData($pdf->output(), 'certificado.pdf', [
-            'mime' => 'application/pdf',
-        ]);
-
-        return $mail;
     }
 }

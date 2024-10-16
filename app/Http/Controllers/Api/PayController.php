@@ -15,6 +15,7 @@ use App\Http\Controllers\Controller;
 use App\Mail\SendBooksMail;
 use App\Models\BookSale;
 use App\Models\Order as ModelsOrder;
+use App\Services\PaymentService;
 use Illuminate\Support\Facades\Mail;
 use Swift_TransportException;
 
@@ -169,10 +170,11 @@ class PayController extends Controller
                 }
 
                 $user = User::find($this->user_id);
+
                 $doctor = Doctor::where('user_id',$user->id)->first();
-                $doctor->points += $this->points;
-                $doctor->save();
                 
+                PaymentService::updatedPointsDoctorService($doctor ,$this->points);
+
                 Mail::to($user->email)->send(new SendBooksMail($this->books_email,$doctor));
             }
             

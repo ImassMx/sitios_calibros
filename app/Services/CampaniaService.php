@@ -36,7 +36,7 @@ class CampaniaService {
             }
 
         } catch (\Throwable $th) {
-            Log::error(["Error saveCompaniaService" => $th->getMessage()]);
+            Log::error(["Error saveClicService" => $th->getMessage()]);
         }
     }
 }
